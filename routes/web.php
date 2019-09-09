@@ -39,6 +39,6 @@ Route::get('/404', function () {
     return view('404');
 })->name('404');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
