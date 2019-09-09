@@ -34,9 +34,10 @@
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Password" required="">
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-primary block full-width m-b"
+                onclick="location.href='{{ route('dashboard') }}'">Login</button>
 
-                <a href="#"><small>Forgot password?</small></a>
+                <a href="{{ route('forgot_password') }}"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="{{ route('register') }}">Create an account</a>
             </form>
