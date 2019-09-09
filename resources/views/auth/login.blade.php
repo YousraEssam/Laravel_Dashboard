@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSRF Token -->
-    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
-
     <title>INSPINIA | Login</title>
 
     <link href="{{ asset('theme/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
+    {!! htmlScriptTagJsApi() !!}
 
 </head>
 
@@ -61,14 +59,24 @@
                         </div>
                     </div>
                 </div>
-                <!-- <button type="submit" class="btn btn-primary block full-width m-b" -->
-                <!-- onclick="location.href='{{ route('dashboard') }}'">{{ __('Login') }}</button> -->
+                
+                <div class="form-group">
+                    <div class="col-md-6 offset-md-4">
+                        <div class="form-check">
+                            {!! htmlFormSnippet() !!}
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary block full-width m-b">{{ __('Login') }}</button>
                 @if (Route::has('password.request'))
                     <a href="{{ route('forgot_password') }}"><small>  {{ __('Forgot Your Password?') }}</small></a>
                 @endif
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="{{ route('register') }}">{{ __('Create an account') }}</a>
+            
+            
+            
             </form>
             <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>
