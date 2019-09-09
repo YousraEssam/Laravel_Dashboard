@@ -33,7 +33,7 @@
             <form class="m-t" role="form" method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" 
                             placeholder="Email or Phone Number" name="email" required="" autocomplete="email" autofocus>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
