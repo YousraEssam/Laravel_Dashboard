@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>INSPINIA - Landing Page</title>
 
@@ -34,12 +37,30 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="page-scroll" href="#page-top">Home</a></li>
+                        <!-- <li><a class="page-scroll" href="#page-top">Home</a></li>
                         <li><a class="page-scroll" href="#features">Features</a></li>
                         <li><a class="page-scroll" href="#team">Team</a></li>
                         <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
                         <li><a class="page-scroll" href="#pricing">Pricing</a></li>
-                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li> -->
+                        @guest
+                            <li><a class="page-scroll" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                            @if (Route::has('register'))
+                                <li><a class="page-scroll" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            @endif
+                        @else
+                            <li>
+                                <a class="page-scroll" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                           
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endguest
                     </ul>
                 </div>
             </div>
@@ -461,6 +482,7 @@
     </div>
 
 </section>
+
 <section id="pricing" class="pricing">
     <div class="container">
         <div class="row m-b-lg">

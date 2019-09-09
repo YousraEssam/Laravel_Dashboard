@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>INSPINIA | Verification</title>
 
     <link href="{{ asset('theme/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -20,26 +20,24 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
-
                 <h1 class="logo-name">IN+</h1>
-
             </div>
             <h3>Welcome to IN+</h3>
+            <p>{{ __('Verify Your Email Address') }}</p>
 
-            <p>Login in. To see it in action.</p>
-            <form class="m-t" role="form" action="index.html">
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email or Phone Number" required="">
+            @if (session('resent'))
+                <div class="alert alert-success" role="alert">
+                    {{ __('A fresh verification link has been sent to your email address.') }}
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b"
-                onclick="location.href='{{ route('dashboard') }}'">Login</button>
+            @endif
 
-                <a href="{{ route('forgot_password') }}"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="{{ route('register') }}">Create an account</a>
+            {{ __('Before proceeding, please check your email for a verification link.') }}
+            {{ __('If you did not receive the email') }},
+
+            <form class="m-t" role="form" method="POST" action="{{ route('verification.resend') }}">
+                @csrf
+                <button type="submit" class="btn btn-primary block full-width m-b">
+                    {{ __('click here to request another') }}</button>
             </form>
             <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>

@@ -12,15 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return view('layouts.landing');
 })->name('landing');
 
 Route::get('/login', function () {
-    return view('login');
+    return view('auth.login');
 })->name('login');
 
 Route::get('/register', function () {
-    return view('register');
+    return view('auth.register');
 })->name('register');
 
 Route::get('/dashboard', function () {
@@ -38,3 +38,7 @@ Route::get('/500', function () {
 Route::get('/404', function () {
     return view('404');
 })->name('404');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
