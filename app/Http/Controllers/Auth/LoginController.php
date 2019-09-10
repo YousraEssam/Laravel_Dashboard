@@ -92,6 +92,8 @@ class LoginController extends Controller
         $key = $this->cache->get($this->throttleKey($request));
     
         if($key > $this->max_attempts){
+            $this->cache->forget($this->throttleKey($request));
+            
             throw ValidationException::withMessages([
                 $this->username() => [trans('auth.failed')],
                 'recaptcha' => 'No!!',
