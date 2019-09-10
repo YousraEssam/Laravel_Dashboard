@@ -47,10 +47,16 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         if(is_numeric($request->get($this->username()))){
-            return ['phone_number'=>$request->get($this->username()),'password'=>$request->get('password')];
+            return [
+                'phone_number'=>$request->get($this->username()),
+                'password'=>$request->get('password')
+            ];
         }
-        elseif (filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)) {
-            return ['email' => $request->get($this->username()), 'password'=>$request->get('password')];
+        else{
+            return [
+                'email' => $request->get($this->username()), 
+                'password'=>$request->get('password')
+            ];
         }
     }
 
@@ -71,15 +77,4 @@ class LoginController extends Controller
         ]);
     }
 
-    public function maxAttempts()
-    {
-        //Lock on 4th Failed Login Attempt
-        return 3;
-    }
-
-    public function decayMinutes()
-    {
-        //Lock for 2 minutes
-        return 2;
-    }
 }
