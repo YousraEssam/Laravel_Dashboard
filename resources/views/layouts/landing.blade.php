@@ -37,12 +37,6 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- <li><a class="page-scroll" href="#page-top">Home</a></li>
-                        <li><a class="page-scroll" href="#features">Features</a></li>
-                        <li><a class="page-scroll" href="#team">Team</a></li>
-                        <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
-                        <li><a class="page-scroll" href="#pricing">Pricing</a></li>
-                        <li><a class="page-scroll" href="#contact">Contact</a></li> -->
                         @guest
                             <li><a class="page-scroll" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             @if (Route::has('register'))
