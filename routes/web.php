@@ -27,18 +27,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/forgot_password', function () {
-    return view('forgot_password');
-})->name('forgot_password');
-
-Route::get('/500', function () {
-    return view('500');
-})->name('500');
-
-Route::get('/404', function () {
-    return view('404');
-})->name('404');
-
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('roles', 'RolesController');

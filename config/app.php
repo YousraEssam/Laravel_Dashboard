@@ -179,6 +179,12 @@ return [
          * ReCaptchaServiceProvider...
          */
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
+
+        /*
+        * Roles and Permission Spatie Service Provider..
+        */
+        Spatie\Permission\PermissionServiceProvider::class,
+
     ],
 
     /*
