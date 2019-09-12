@@ -51,7 +51,7 @@ class LoginController extends Controller
     {
         if(is_numeric($request->get($this->username()))){
             return [
-                'phone_number'=>$request->get($this->username()),
+                'phone'=>$request->get($this->username()),
                 'password'=>$request->get('password')
             ];
         }

@@ -34,9 +34,9 @@
         @enderror
     </div>
     <div class="form-group">
-        <input type="tel" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" 
-        placeholder="Phone Number" value="{{ old('phone_number') }}" required="" autocomplete="phone_number" autofocus>
-        @error('phone_number')
+        <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror" 
+        placeholder="Phone Number" value="{{ old('phone') }}" required="" autocomplete="phone" autofocus>
+        @error('phone')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
