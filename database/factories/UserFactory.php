@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,19 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
-    return [
-        'first_name' => $faker->name,
-        'last_name' => $faker->name,
-        'phone' => $faker->phoneNumber,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => Hash::make('secret1234'),
-        'remember_token' => Str::random(10),
-    ];
-});
+// $factory->define(User::class, function (Faker $faker) {
+//     $user = [
+//         'first_name' => $faker->name,
+//         'last_name' => $faker->name,
+//         'phone' => $faker->phoneNumber,
+//         'email' => $faker->unique()->safeEmail,
+//         'email_verified_at' => now(),
+//         'password' => Hash::make('secret1234'),
+//         'remember_token' => Str::random(10),
+//     ];
+//     $role = Role::select('id')->where('name','Visitor')->get();
+//     dd($role);
+//     $user->assignRole([$role->id]);
+
+//     return $user;
+// });

@@ -13,34 +13,20 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
-
-    </div>
 </div>
+
+@if ($message = Session::get('success'))
+<div class="alert alert-success">
+    <p>{{ $message }}</p>
+</div>
+@endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
 <div class="row">
     <div class="col-lg-12">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Basic Data Tables example with responsive plugin</h5>
-            <div class="ibox-tools">
-                <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
-                </a>
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-wrench"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#">Config option 1</a>
-                    </li>
-                    <li><a href="#">Config option 2</a>
-                    </li>
-                </ul>
-                <a class="close-link">
-                    <i class="fa fa-times"></i>
-                </a>
-            </div>
+            <h5>Roles Table</h5>
         </div>
 
         <div class="ibox-content">
@@ -83,7 +69,7 @@
             </label>
         </div>
         <div class="dataTables_info" id="DataTables_Table_0_info" role="status" 
-            aria-live="polite">Showing 1 to 25 of 57 entries
+            aria-live="polite">Showing 1 to {{$count}} of {{$size}} entries
         </div>
         <table class="table table-striped table-bordered table-hover dataTables-example dataTable"
             id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
@@ -100,27 +86,44 @@
                     ascending" style="width: 197px;">Description</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                     rowspan="1" colspan="1" aria-label="Engine version: activate to sort 
-                    column ascending" style="width: 149px;">Guard Name</th>
+                    column ascending" style="width: 149px;">Permissions</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                     rowspan="1" colspan="2" aria-label="CSS grade: activate to sort column 
                     ascending" style="width: 105px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
+                @if(!empty($roles))
                 @foreach($roles as $role)
                 <tr class="gradeA odd" role="row">
                     <td class="sorting_1">{{$role->id}}</td>
                     <td>{{$role->name}}</td>
                     <td>{{$role->description}}</td>
-                    <td>{{$role->guard_name}}</td>
-                    <td class="center">
-                        <a href="{{route('roles.edit', [$role->id])}}" class="btn btn-success">Edit</a>
+                    <td>
+                        @foreach($role->permissions as $rp)
+                        <ul>
+                            <li>{{$rp->name}}</li>
+                        </ul>
+                        @endforeach
                     </td>
                     <td class="center">
-                        <a href="{{route('roles.destroy', [$role->id])}}" class="btn btn-success">Delete</a>
+                        <!-- @can('role-create')
+                        <a href="{{route('roles.create')}}" class="btn btn-success">Add</a>
+                        @endcan -->
+                        <a href="{{route('roles.show', [$role->id])}}" class="btn btn-success">Show</a>
+                    
+                        @can('role-edit')
+                        <a href="{{route('roles.edit', [$role->id])}}" class="btn btn-success">Edit</a>
+                        @endcan
+                        @can('role-delete')
+                        <form action="{{url('roles', $role->id)}}" method="DELETE" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        @endcan
                     </td>
                 </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
         <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
