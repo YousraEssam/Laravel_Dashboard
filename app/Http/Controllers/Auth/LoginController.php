@@ -49,18 +49,13 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        if(is_numeric($request->get($this->username()))){
-            return [
-                'phone'=>$request->get($this->username()),
-                'password'=>$request->get('password')
-            ];
+        $response = [
+            'password'=>$request->get('password')
+        ];
+        if(is_numeric($request->get('email'))){
+            return array_merge($response, ['phone'=>$request->get('email')]);
         }
-        else{
-            return [
-                'email' => $request->get($this->username()), 
-                'password'=>$request->get('password')
-            ];
-        }
+        return array_merge($response, ['email'=>$request->get('email')]);
     }
 
         /**
@@ -90,18 +85,18 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         $key = $this->cache->get($this->throttleKey($request));
-    
+
+        $response = [
+            $this->username() => [trans('auth.failed')]
+        ];
+
         if($key > $this->max_attempts){
             $this->cache->forget($this->throttleKey($request));
-            
-            throw ValidationException::withMessages([
-                $this->username() => [trans('auth.failed')],
-                'recaptcha' => 'No!!',
-            ]);
-        }else{
-            throw ValidationException::withMessages([
-                $this->username() => [trans('auth.failed')],
-            ]);
+
+            throw ValidationException::withMessages(
+                array_merge($response, ['recaptcha' => 'No!!'])
+            );
         }
+        throw ValidationException::withMessages($response);
     }
 }
