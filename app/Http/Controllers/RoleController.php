@@ -31,7 +31,6 @@ class RoleController extends Controller
             ->get();
             $role->permissions = $rolePermissions;
         }
-        // dd($roles);
         return view('roles.index', [
             'roles' => $roles,
             'size' => sizeof($roles),
@@ -47,8 +46,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::get();
-        $roles = Role::all();
-        return view('roles.create',compact('permissions','roles'));
+        return view('roles.create',compact('permissions'));
     }
 
     /**
@@ -85,12 +83,11 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $role = Role::find($role->id);
-        $roles = Role::all();
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
             "=","permissions.id")
             ->where("role_has_permissions.role_id",$role->id)
             ->get();
-        return view('roles.show',compact('role','rolePermissions','roles'));
+        return view('roles.show',compact('role','rolePermissions'));
     }
 
     /**
@@ -102,14 +99,13 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $role = Role::find($role->id);
-        $roles = Role::all();
         $permission = Permission::get();
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
             "=","permissions.id")
             ->where("role_has_permissions.role_id",$role->id)
             ->pluck('name', 'name')
             ->all();
-        return view('roles.edit',compact('role','permission','rolePermissions','roles'));
+        return view('roles.edit',compact('role','permission','rolePermissions'));
     }
 
     /**
@@ -144,7 +140,6 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        // DB::table('roles')->where('id',$role->id)->delete();
         $role->delete();
         return redirect()->route('roles.index')
                 ->with('success','Role deleted successfully');

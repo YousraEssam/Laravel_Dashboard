@@ -27,16 +27,19 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                
-                        <div class="dropdown profile-element"> <span>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                        <div class="dropdown profile-element"> 
+                            <span>
                                 <img alt="image" class="img-circle" src="{{ asset('theme/img/profile_small.jpg') }}" />
-                                </span>
+                            </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> 
                                     <span class="block m-t-xs"> 
-                                        <strong class="font-bold">David Williams</strong>
+                                        <strong class="font-bold">{{ Auth::user()->first_name . " " . Auth::user()->last_name }}</strong>
                                     </span>
-                                    <span class="text-muted text-xs block">Art Director 
+                                    <span class="text-muted text-xs block">{{ Auth::user()->email }}
                                         <b class="caret"></b>
                                     </span> 
                                 </span> 
@@ -49,24 +52,40 @@
                                 <li><a href="login.html">Logout</a></li>
                             </ul>
                         </div>
-                        <li class="active">
-                        <a href="index.html">
+                        <li class="">
+                            <a href="{{ route('home') }}">
+                                <i class="fa fa-th-large"></i> 
+                                <span class="nav-label">Dashboard</span> 
+                            </a>
+                        </li>
+                    </li>
+                    <li class="">
+                        <a href="">
                             <i class="fa fa-th-large"></i> 
                             <span class="nav-label">Roles</span> 
                             <span class="fa arrow"></span>
                         </a>
-                        <ul class="nav nav-second-level collapse in" style="">
-                            <li><a href="{{route('roles.index')}}">All</a></li>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('roles.index') }}">All</a></li>
                             @can('role-create')
                             <li><a href="{{ route('roles.create') }}">Add</a></li>
                             @endcan
                         </ul>
                     </li>
-                        <div class="logo-element">
-                            IN+
-                        </div>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Cities</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('cities.index') }}">All</a></li>
+                            @can('city-create')
+                            <li><a href="{{ route('cities.create') }}">Add</a></li>
+                            @endcan
+                        </ul>
                     </li>
-
+                        
                 </ul>
 
             </div>
@@ -84,20 +103,6 @@
                         </form>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
-
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                            </a>
-
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                            </a>
-                
-                        </li>
-                        
                         <li><a class="fa fa-sign-out dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
@@ -108,17 +113,12 @@
                                 @csrf
                             </form>
                         </li>
-                        <li>
-                                <a class="right-sidebar-toggle">
-                                    <i class="fa fa-tasks"></i>
-                                </a>
-                        </li>
                     </ul>
 
                 </nav>
             </div>
             <h1>HOME PAGE WELCOME BABY </h1>
-            @yield('rolestable')
+            @yield('content')
             <div class="footer">
                 <div class="pull-right">
                     10GB of <strong>250GB</strong> Free.
@@ -199,9 +199,7 @@
                         }
                     }
                 ]
-
             });
-
         });
     </script>
 </body>

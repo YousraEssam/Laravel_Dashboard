@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
@@ -82,7 +83,8 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'phone' => $data['phone'],
             'email' => $data['email'],
-            'password' => $user_password->setPasswordAttribute($data['password']),
+            // 'password' => $user_password->setPasswordAttribute($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
 
         $user->assignRole($data['roles']);

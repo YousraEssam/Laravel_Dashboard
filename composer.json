@@ -14,7 +14,9 @@
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
-        "spatie/laravel-permission": "^3.0"
+        "laravelcollective/html": "^6.0",
+        "spatie/laravel-permission": "^3.0",
+        "webpatser/laravel-countries": "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

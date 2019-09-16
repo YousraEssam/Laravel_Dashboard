@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('rolestable')
+@section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <ol class="breadcrumb">

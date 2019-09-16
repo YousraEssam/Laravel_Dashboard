@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * ReCaptchaServiceProvider...
+         * ReCaptcha Service Provider...
          */
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
@@ -184,6 +184,16 @@ return [
         * Roles and Permission Spatie Service Provider..
         */
         Spatie\Permission\PermissionServiceProvider::class,
+
+        /*
+        * Collective HTML Service Provider
+        */
+        Collective\Html\HtmlServiceProvider::class,
+
+        /*
+        * Countries Service Provide
+        */
+        'Webpatser\Countries\CountriesServiceProvider',
 
     ],
 
@@ -235,7 +245,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Countries' => 'Webpatser\Countries\CountriesFacade',
     ],
 
 ];

@@ -1,7 +1,7 @@
 <!-- <h1>CREATE BLADE </h1> -->
 @extends('layouts.home')
 
-@section('rolestable')
+@section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">

@@ -44,9 +44,9 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Always hash password using mutator when we save it to the database
      */
-    public function setPasswordAttribute($value) {
-        return $this->attributes['password'] = Hash::make($value);
-    }
+    // public function setPasswordAttribute($value) {
+    //     return $this->attributes['password'] = Hash::make($value);
+    // }
 
 
 }
