@@ -107,16 +107,15 @@
                         @endforeach
                     </td>
                     <td class="center">
-                        <!-- @can('role-create')
-                        <a href="{{route('roles.create')}}" class="btn btn-success">Add</a>
-                        @endcan -->
-                        <a href="{{route('roles.show', [$role->id])}}" class="btn btn-success">Show</a>
+                        <a href="{{route('roles.show', $role->id)}}" class="btn btn-success">Show</a>
                     
                         @can('role-edit')
-                        <a href="{{route('roles.edit', [$role->id])}}" class="btn btn-success">Edit</a>
+                        <a href="{{route('roles.edit', $role->id)}}" class="btn btn-success">Edit</a>
                         @endcan
                         @can('role-delete')
-                        <form action="{{url('roles', $role->id)}}" method="DELETE" style="display:inline;">
+                        <form action={{route('roles.destroy', $role->id)}} method="POST" style="display:inline;">
+                            @csrf
+                            @method("DELETE")
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                         @endcan
