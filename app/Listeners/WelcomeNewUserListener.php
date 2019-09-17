@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class WelcomeNewUserListener
+class WelcomeNewUserListener implements ShouldQueue
 {
     /**
      * Handle the event.
@@ -19,6 +19,8 @@ class WelcomeNewUserListener
      */
     public function handle(Registered $event)
     {
+        
+        sleep(5);
         
         if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
             $event->user->sendEmailVerificationNotification();
