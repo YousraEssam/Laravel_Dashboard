@@ -37,15 +37,17 @@
             </div>
         </div>
         
-        @error('recaptcha')
+        @if(session('loginAttempts') >= 3)
         <div class="form-group">
-            <div class="col-md-6 offset-md-4">
-                <div class="form-check">
-                    {!! htmlFormSnippet() !!}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-check">
+                        {!! htmlFormSnippet() !!}
+                    </div>
                 </div>
             </div>
         </div>
-        @enderror
+        @endif
 
         <button type="submit" class="btn btn-primary block full-width m-b">{{ __('Login') }}</button>
         @if (Route::has('password.request'))

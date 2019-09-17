@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -35,9 +36,8 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct(Cache $cache)
+    public function __construct()
     {
-        $this->cache = $cache;
         $this->middleware('guest')->except('logout');
     }
 
@@ -84,18 +84,15 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        $key = $this->cache->get($this->throttleKey($request));
+        $key = Cache::get($this->throttleKey($request));
+        Session::put('loginAttempts', $key);
 
         $response = [
             $this->username() => [trans('auth.failed')]
         ];
 
         if($key > $this->max_attempts){
-            $this->cache->forget($this->throttleKey($request));
-
-            throw ValidationException::withMessages(
-                array_merge($response, ['recaptcha' => 'No!!'])
-            );
+            array_merge($response, ['recaptcha' => 'No!!']);
         }
         throw ValidationException::withMessages($response);
     }
