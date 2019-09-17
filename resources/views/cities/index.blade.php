@@ -75,7 +75,11 @@
                 @endif
             </tbody>
         </table>
-
+        <div class="row">
+            <div class="col-12 text-center">
+                {{ $cities->links() }}
+            </div>
+        </div>
         </div>
         </div>
         </div>

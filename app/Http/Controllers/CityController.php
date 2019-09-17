@@ -18,8 +18,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        // dd(City::with('country')->get());
-        $cities = City::with('country')->get();
+        $cities = City::with('country')->paginate(5);
         return view('cities.index',compact('cities'));
     }
 
