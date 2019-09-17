@@ -26,13 +26,6 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->paginate(5);
-        // foreach($roles as $role){
-        //     $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
-        //     "=","permissions.id")
-        //     ->where("role_has_permissions.role_id",$role->id)
-        //     ->get();
-        //     $role->permissions = $rolePermissions;
-        // }
         return view('roles.index', compact('roles'));
     }
 
