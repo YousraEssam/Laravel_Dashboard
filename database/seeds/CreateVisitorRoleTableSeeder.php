@@ -18,7 +18,7 @@ class CreateVisitorRoleTableSeeder extends Seeder
             ]);
         
         $permissions = [
-            'role-edit', 'role-list'
+            'role-list', 'city-list'
         ];
 
         $role->syncPermissions($permissions);
