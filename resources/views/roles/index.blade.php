@@ -1,19 +1,16 @@
 @extends('layouts.home')
 
 @section('content')
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Data Tables</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{route('home')}}">Home</a>
-            </li>
-            <li class="active">
-                <strong>Roles</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+
+@section('maintitle')
+<h2>Data Tables</h2>
+@endsection
+
+@section('titlebreadcrumb')
+<li class="active">
+    <strong>Roles</strong>
+</li>
+@endsection
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
@@ -32,45 +29,6 @@
         <div class="ibox-content">
         <div class="table-responsive">
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-        <div class="html5buttons">
-            <div class="dt-buttons btn-group">
-                <a class="btn btn-default buttons-copy buttons-html5" tabindex="0" 
-                aria-controls="DataTables_Table_0" href="#">
-                    <span>Copy</span></a>
-                <a class="btn btn-default buttons-csv buttons-html5" tabindex="0" 
-                aria-controls="DataTables_Table_0" href="#">
-                    <span>CSV</span></a>
-                <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" 
-                aria-controls="DataTables_Table_0" href="#">
-                    <span>Excel</span></a>
-                <a class="btn btn-default buttons-pdf buttons-html5" tabindex="0"
-                    aria-controls="DataTables_Table_0" href="#">
-                    <span>PDF</span></a>
-                <a class="btn btn-default buttons-print" tabindex="0" 
-                aria-controls="DataTables_Table_0" href="#">
-                    <span>Print</span></a>
-            </div>
-        </div>
-        <div class="dataTables_length" id="DataTables_Table_0_length">
-            <label>Show 
-                <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" 
-                class="form-control input-sm">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select> entries
-            </label>
-        </div>
-        <div id="DataTables_Table_0_filter" class="dataTables_filter">
-            <label>Search:
-                <input type="search" class="form-control input-sm" placeholder="" 
-                aria-controls="DataTables_Table_0">
-            </label>
-        </div>
-        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" 
-            aria-live="polite">Showing 1 to {{$count}} of {{$size}} entries
-        </div>
         <table class="table table-striped table-bordered table-hover dataTables-example dataTable"
             id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
             <thead>
@@ -112,8 +70,9 @@
                         @can('role-edit')
                         <a href="{{route('roles.edit', $role->id)}}" class="btn btn-success">Edit</a>
                         @endcan
+
                         @can('role-delete')
-                        <form action={{route('roles.destroy', $role->id)}} method="POST" style="display:inline;">
+                        <form action="{{route('roles.destroy', $role->id)}}" method="POST" style="display:inline;">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="btn btn-danger">Delete</button>

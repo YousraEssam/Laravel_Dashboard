@@ -118,11 +118,21 @@
                 </nav>
             </div>
             <h1>HOME PAGE WELCOME BABY </h1>
-            @yield('content')
-            <div class="footer">
-                <div class="pull-right">
-                    10GB of <strong>250GB</strong> Free.
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    @yield('maintitle')
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{route('home')}}">Home</a>
+                        </li>
+                        @yield('titlebreadcrumb')
+                    </ol>
                 </div>
+            </div>
+            @yield('content')
+
+            <div class="footer">
                 <div>
                     <strong>Copyright</strong> Example Company &copy; 2014-2017
                 </div>

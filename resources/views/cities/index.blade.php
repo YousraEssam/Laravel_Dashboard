@@ -1,19 +1,16 @@
 @extends('layouts.home')
 
 @section('content')
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Data Tables</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{route('home')}}">Home</a>
-            </li>
-            <li class="active">
-                <strong>Cities</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+
+@section('maintitle')
+<h2>Data Tables</h2>
+@endsection
+
+@section('titlebreadcrumb')
+<li class="active">
+    <strong>Cities</strong>
+</li>
+@endsection
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success">

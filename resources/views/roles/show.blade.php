@@ -1,21 +1,19 @@
 @extends('layouts.home')
 
 @section('content')
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{route('home')}}">Home</a>
-            </li>
-            <li>
-                <a href="{{route('roles.index')}}">Roles</a>
-            </li>
-            <li class="active">
-                <strong>Role {{$role->name}} Details</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+
+@section('maintitle')
+<h2>Data Tables</h2>
+@endsection
+
+@section('titlebreadcrumb')
+<li>
+    <a href="{{route('roles.index')}}">Roles</a>
+</li>
+<li class="active">
+    <strong>Role "{{$role->name}}" Details</strong>
+</li>
+@endsection
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-content m-b-sm border-bottom">
