@@ -43,8 +43,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Role Permissions</label>
-                                    @if(!empty($permission)) 
-                                    @foreach($permission as $rp)
+                                    @if(!empty($allPermissions)) 
+                                    @foreach($allPermissions as $rp)
                                         @if(in_array($rp->name, $rolePermissions))
                                         <input type="checkbox" name="permission[]" value="{{$rp->id}}" checked>{{$rp->name}}
                                         @else

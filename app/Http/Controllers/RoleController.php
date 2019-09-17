@@ -25,19 +25,15 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(5);
-        foreach($roles as $role){
-            $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
-            "=","permissions.id")
-            ->where("role_has_permissions.role_id",$role->id)
-            ->get();
-            $role->permissions = $rolePermissions;
-        }
-        return view('roles.index', [
-            'roles' => $roles,
-            'size' => sizeof($roles),
-            'count' => count($roles),
-        ]);
+        $roles = Role::with('permissions')->paginate(5);
+        // foreach($roles as $role){
+        //     $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
+        //     "=","permissions.id")
+        //     ->where("role_has_permissions.role_id",$role->id)
+        //     ->get();
+        //     $role->permissions = $rolePermissions;
+        // }
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -59,19 +55,10 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $validated = $request->validated();
-
-        if($validated){
-            $role = Role::create([
-                'name' => $request->input('name'),
-                'description' => $request->input('description'),
-                ]);
-            $role->syncPermissions($request->input('permission'));
-
-            return redirect()->route('roles.index')
-                            ->with('success','Role created successfully');
-        }
-
+        Role::create($request->only(['name', 'description']))
+                ->syncPermissions($request->permission);
+        return redirect()->route('roles.index')
+                        ->with('success','Role created successfully');
     }
 
     /**
@@ -82,11 +69,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $role = Role::find($role->id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
-            "=","permissions.id")
-            ->where("role_has_permissions.role_id",$role->id)
-            ->get();
+        $rolePermissions = $role->load('permissions')->permissions;
         return view('roles.show',compact('role','rolePermissions'));
     }
 
@@ -98,14 +81,11 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $role = Role::find($role->id);
-        $permission = Permission::get();
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id",
-            "=","permissions.id")
-            ->where("role_has_permissions.role_id",$role->id)
-            ->pluck('name', 'name')
-            ->all();
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        $allPermissions = Permission::get();
+        $rolePermissions = $role->load('permissions')->permissions
+                    ->pluck('name','name')
+                    ->toArray();
+        return view('roles.edit',compact('role','allPermissions','rolePermissions'));
     }
 
     /**
@@ -117,18 +97,10 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $validated = $request->validated();
-
-        if($validated){
-            $role = Role::find($role->id);
-            $role->name = $request->input('name');
-            $role->description = $request->input('description');
-            $role->save();
-            $role->syncPermissions($request->input('permission'));
-
-            return redirect()->route('roles.index')
-                            ->with('success','Role updated successfully');
-        }
+        $role->update($request->only(['name','description']));
+        $role->syncPermissions($request->permission);
+        return redirect()->route('roles.index')
+                        ->with('success','Role updated successfully');
     }
 
     /**

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Country;
 use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
-use ArrayObject;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -29,7 +27,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        $countries = DB::table('countries')->pluck('name','id')->all();
+        $countries = Country::pluck('name','id')->all();
         return view('cities.create',compact('countries'));
     }
 
@@ -41,14 +39,9 @@ class CityController extends Controller
      */
     public function store(StoreCityRequest $request)
     {
-        $validated = $request->validated();
-
-        if($validated){
-            City::create($request->all());
-    
-            return redirect()->route('cities.index')
-                            ->with('success','City created successfully.');
-        }
+        City::create($request->all());
+        return redirect()->route('cities.index')
+                        ->with('success','City created successfully.');
     }
 
     /**
@@ -70,7 +63,7 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
-        $countries = DB::table('countries')->pluck('name','id')->all();
+        $countries = Country::pluck('name','id')->all();
         return view('cities.edit',compact('city','countries'));
     }
 
@@ -83,14 +76,9 @@ class CityController extends Controller
      */
     public function update(UpdateCityRequest $request, City $city)
     {
-        $validated = $request->validated();
-
-        if($validated){
         $city->update($request->all());
-   
         return redirect()->route('cities.index')
                         ->with('success','City updated successfully.');
-        }
     }
 
     /**
@@ -102,7 +90,6 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-  
         return redirect()->route('cities.index')
                         ->with('success','City deleted successfully');
     }

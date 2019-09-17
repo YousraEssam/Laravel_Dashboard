@@ -46,7 +46,7 @@
                             <ul>
                                 <li>{{$rp->name}}</li>
                             </ul>
-                            @endforeach                
+                        @endforeach                
                     </div>
                 </div>
             </div>
