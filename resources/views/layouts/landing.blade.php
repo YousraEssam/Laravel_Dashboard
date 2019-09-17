@@ -43,6 +43,11 @@
                                 <li><a class="page-scroll" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                             @endif
                         @else
+                            <li class="active">
+                                <a class="page-scroll" href="{{ route('home') }}">
+                                    Home
+                                </a>
+                            </li>
                             <li>
                                 <a class="page-scroll" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Http\Requests\StoreCityRequest;
+use App\Http\Requests\UpdateCityRequest;
 use ArrayObject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,17 +40,16 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCityRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:150|string',
-            'country_id' => 'required',
-        ]);
-  
-        City::create($request->all());
-   
-        return redirect()->route('cities.index')
-                        ->with('success','City created successfully.');
+        $validated = $request->validated();
+
+        if($validated){
+            City::create($request->all());
+    
+            return redirect()->route('cities.index')
+                            ->with('success','City created successfully.');
+        }
     }
 
     /**
@@ -81,17 +82,16 @@ class CityController extends Controller
      * @param  \App\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(UpdateCityRequest $request, City $city)
     {
-        $request->validate([
-            'name' => 'required|max:150|string',
-            'country_id' => 'required',
-        ]);
-  
+        $validated = $request->validated();
+
+        if($validated){
         $city->update($request->all());
    
         return redirect()->route('cities.index')
                         ->with('success','City updated successfully.');
+        }
     }
 
     /**

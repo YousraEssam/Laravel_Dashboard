@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -52,26 +54,24 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreBlogPost  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required|string|max:250',
-            'permission' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        $role = Role::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            ]);
-        
-        $role->syncPermissions($request->input('permission'));
+        if($validated){
+            $role = Role::create([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                ]);
+            $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+            return redirect()->route('roles.index')
+                            ->with('success','Role created successfully');
+        }
+
     }
 
     /**
@@ -115,21 +115,20 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name|max:150|string',
-            'description' => 'required|string|max:250',
-            'permission' => 'required',
-        ]);
-        $role = Role::find($role->id);
-        $role->name = $request->input('name');
-        $role->description = $request->input('description');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
+        $validated = $request->validated();
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        if($validated){
+            $role = Role::find($role->id);
+            $role->name = $request->input('name');
+            $role->description = $request->input('description');
+            $role->save();
+            $role->syncPermissions($request->input('permission'));
+
+            return redirect()->route('roles.index')
+                            ->with('success','Role updated successfully');
+        }
     }
 
     /**
