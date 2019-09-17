@@ -23,7 +23,7 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

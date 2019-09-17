@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class WelcomeNewUserMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $user;
     /**
      * Create a new message instance.
      *
