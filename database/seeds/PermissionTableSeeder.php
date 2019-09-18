@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
+namespace Illuminate\Database\Seeder;
+
 use Spatie\Permission\Models\Permission;
 
 class PermissionTableSeeder extends Seeder
@@ -12,7 +13,7 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-       $permissions = [
+        $permissions = [
            'role-list',
            'role-create',
            'role-edit',

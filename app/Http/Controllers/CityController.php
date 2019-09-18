@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateCityRequest;
 
 class CityController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
          $this->middleware('permission:city-list|city-create|city-edit|city-delete', ['only' => ['index','show']]);
          $this->middleware('permission:city-create', ['only' => ['create','store']]);
@@ -24,7 +24,7 @@ class CityController extends Controller
     public function index()
     {
         $cities = City::with('country')->paginate(5);
-        return view('cities.index',compact('cities'));
+        return view('cities.index', compact('cities'));
     }
 
     /**
@@ -34,8 +34,8 @@ class CityController extends Controller
      */
     public function create()
     {
-        $countries = Country::pluck('name','id')->all();
-        return view('cities.create',compact('countries'));
+        $countries = Country::pluck('name', 'id')->all();
+        return view('cities.create', compact('countries'));
     }
 
     /**
@@ -48,7 +48,7 @@ class CityController extends Controller
     {
         City::create($request->all());
         return redirect()->route('cities.index')
-                        ->with('success','City created successfully.');
+                        ->with('success', 'City created successfully.');
     }
 
     /**
@@ -59,7 +59,7 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        return view('cities.show',compact('city'));
+        return view('cities.show', compact('city'));
     }
 
     /**
@@ -70,8 +70,8 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
-        $countries = Country::pluck('name','id')->all();
-        return view('cities.edit',compact('city','countries'));
+        $countries = Country::pluck('name', 'id')->all();
+        return view('cities.edit', compact('city', 'countries'));
     }
 
     /**
@@ -85,7 +85,7 @@ class CityController extends Controller
     {
         $city->update($request->all());
         return redirect()->route('cities.index')
-                        ->with('success','City updated successfully.');
+                        ->with('success', 'City updated successfully.');
     }
 
     /**
@@ -98,6 +98,6 @@ class CityController extends Controller
     {
         $city->delete();
         return redirect()->route('cities.index')
-                        ->with('success','City deleted successfully');
+                        ->with('success', 'City deleted successfully');
     }
 }

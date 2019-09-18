@@ -28,7 +28,7 @@ class WelcomeNewUserMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.new-welcome',[
+        return $this->view('emails.new-welcome', [
             'user' => $this->user,
         ]);
     }

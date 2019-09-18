@@ -1,10 +1,9 @@
 <?php
 
+namespace Illuminate\Database\Migrations\Migration;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
-
 
 class CreatePermissionTables extends Migration
 {
@@ -28,8 +27,8 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',150);
-            $table->string('description',250);
+            $table->string('name', 150);
+            $table->string('description', 250);
             $table->string('guard_name')->default('web');
             $table->softDeletes();
             $table->timestamps();

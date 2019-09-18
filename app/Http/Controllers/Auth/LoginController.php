@@ -52,7 +52,7 @@ class LoginController extends Controller
         $response = [
             'password'=>$request->get('password')
         ];
-        if(is_numeric($request->get('email'))){
+        if (is_numeric($request->get('email'))) {
             return array_merge($response, ['phone'=>$request->get('email')]);
         }
         return array_merge($response, ['email'=>$request->get('email')]);
@@ -91,7 +91,7 @@ class LoginController extends Controller
             $this->username() => [trans('auth.failed')]
         ];
 
-        if($key > $this->max_attempts){
+        if ($key > $this->max_attempts) {
             array_merge($response, ['recaptcha' => 'No!!']);
         }
         throw ValidationException::withMessages($response);

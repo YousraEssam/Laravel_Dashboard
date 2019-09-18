@@ -1,4 +1,3 @@
-
 @extends('layouts.basic')
 
 @section('recaptcha')

@@ -11,23 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.landing');
-})->name('landing');
+Route::get(
+    '/', function () {
+        return view('layouts.landing');
+    }
+)->name('landing');
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get(
+    '/login', function () {
+        return view('auth.login');
+    }
+)->name('login');
     
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get(
+    '/register', function () {
+        return view('auth.register');
+    }
+)->name('register');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','RoleController');
-    Route::resource('cities', 'CityController');
-});
+Route::group(
+    ['middleware' => ['auth']], function () {
+        Route::resource('roles', 'RoleController');
+        Route::resource('cities', 'CityController');
+    }
+);

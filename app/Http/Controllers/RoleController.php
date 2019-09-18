@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
          $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','show']]);
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
@@ -37,7 +37,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::get();
-        return view('roles.create',compact('permissions'));
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -51,7 +51,7 @@ class RoleController extends Controller
         Role::create($request->only(['name', 'description']))
                 ->syncPermissions($request->permission);
         return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+                        ->with('success', 'Role created successfully');
     }
 
     /**
@@ -63,7 +63,7 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $rolePermissions = $role->load('permissions')->permissions;
-        return view('roles.show',compact('role','rolePermissions'));
+        return view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -76,9 +76,9 @@ class RoleController extends Controller
     {
         $allPermissions = Permission::get();
         $rolePermissions = $role->load('permissions')->permissions
-                    ->pluck('name','name')
+                    ->pluck('name', 'name')
                     ->toArray();
-        return view('roles.edit',compact('role','allPermissions','rolePermissions'));
+        return view('roles.edit', compact('role', 'allPermissions', 'rolePermissions'));
     }
 
     /**
@@ -93,7 +93,7 @@ class RoleController extends Controller
         $role->update($request->only(['name','description']));
         $role->syncPermissions($request->permission);
         return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+                        ->with('success', 'Role updated successfully');
     }
 
     /**
@@ -106,6 +106,6 @@ class RoleController extends Controller
     {
         $role->delete();
         return redirect()->route('roles.index')
-                ->with('success','Role deleted successfully');
+                ->with('success', 'Role deleted successfully');
     }
 }

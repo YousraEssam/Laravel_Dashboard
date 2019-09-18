@@ -5,16 +5,17 @@ Licensed under the MIT license.
 
 The symbols are accessed as strings through the standard symbol options:
 
-	series: {
-		points: {
-			symbol: "square" // or "diamond", "triangle", "cross"
-		}
-	}
+    series: {
+        points: {
+            symbol: "square" // or "diamond", "triangle", "cross"
+        }
+    }
 
 */
 
 (function ($) {
-    function processRawData(plot, series, datapoints) {
+    function processRawData(plot, series, datapoints)
+    {
         // we normalize the area of each symbol so it is approximately the
         // same as a circle of the given radius
 
@@ -55,11 +56,13 @@ The symbols are accessed as strings through the standard symbol options:
         };
 
         var s = series.points.symbol;
-        if (handlers[s])
+        if (handlers[s]) {
             series.points.symbol = handlers[s];
+        }
     }
     
-    function init(plot) {
+    function init(plot)
+    {
         plot.hooks.processDatapoints.push(processRawData);
     }
     

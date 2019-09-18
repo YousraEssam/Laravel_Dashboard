@@ -1,6 +1,7 @@
 <?php
   
-use Illuminate\Database\Seeder;
+namespace Illuminate\Database\Seeder;
+
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -19,8 +20,8 @@ class CreateAdminUserSeeder extends Seeder
             'first_name' => 'ADMIN',
             'last_name' => 'ADMIN',
             'phone' => '0123456789',
-        	'email' => 'admin123@gmail.com',
-        	'password' => Hash::make('admin123')
+            'email' => 'admin123@gmail.com',
+            'password' => Hash::make('admin123')
         ]);
   
         $role = Role::create([
@@ -28,7 +29,7 @@ class CreateAdminUserSeeder extends Seeder
             'description' => 'site administrator',
             ]);
    
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::pluck('id', 'id')->all();
 
         $role->syncPermissions($permissions);
    

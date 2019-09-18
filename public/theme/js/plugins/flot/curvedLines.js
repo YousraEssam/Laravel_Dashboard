@@ -84,7 +84,7 @@
  *  v0.6   flot 0.8 compatibility and some bug fixes
  */
 
-(function($) {
+(function ($) {
 
     var options = {
         series : {
@@ -98,25 +98,27 @@
         }
     };
 
-    function init(plot) {
+    function init(plot)
+    {
 
         plot.hooks.processOptions.push(processOptions);
 
         //if the plugin is active register processDatapoints method
-        function processOptions(plot, options) {
+        function processOptions(plot, options)
+        {
             if (options.series.curvedLines.active) {
                 plot.hooks.processDatapoints.unshift(processDatapoints);
             }
         }
 
         //only if the plugin is active
-        function processDatapoints(plot, series, datapoints) {
+        function processDatapoints(plot, series, datapoints)
+        {
             var nrPoints = datapoints.points.length / datapoints.pointsize;
             var EPSILON = 0.5; //pretty large epsilon but save
 
             if (series.curvedLines.apply == true && series.originSeries === undefined && nrPoints > (1 + EPSILON)) {
                 if (series.lines.fill) {
-
                     var pointsTop = calculateCurvePoints(datapoints, series.curvedLines, 1)
                         ,pointsBottom = calculateCurvePoints(datapoints, series.curvedLines, 2); //flot makes sure for us that we've got a second y point if fill is true !
 
@@ -134,7 +136,6 @@
                             datapoints.points[k + 2] = pointsBottom[j + 1];
                             j += ps;
                             i += ps;
-
                         } else if (pointsTop[i] < pointsBottom[j]) {
                             datapoints.points[k] = pointsTop[i];
                             datapoints.points[k + 1] = pointsTop[i + 1];
@@ -157,7 +158,8 @@
 
         //no real idea whats going on here code mainly from https://code.google.com/p/flot/issues/detail?id=226
         //if fit option is selected additional datapoints get inserted before the curve calculations in nergal.dev s code.
-        function calculateCurvePoints(datapoints, curvedLinesOptions, yPos) {
+        function calculateCurvePoints(datapoints, curvedLinesOptions, yPos)
+        {
 
             var points = datapoints.points, ps = datapoints.pointsize;
             var num = curvedLinesOptions.curvePointFactor * (points.length / ps);
@@ -174,7 +176,7 @@
                 //to have a max,min at the data point.
 
                 var fpDist;
-                if(typeof curvedLinesOptions.fitPointDist == 'undefined') {
+                if (typeof curvedLinesOptions.fitPointDist == 'undefined') {
                     //estimate it
                     var minX = points[0];
                     var maxX = points[points.length-ps];
@@ -185,7 +187,6 @@
                 }
 
                 for (var i = 0; i < points.length; i += ps) {
-
                     var frontX;
                     var backX;
                     curX = i;

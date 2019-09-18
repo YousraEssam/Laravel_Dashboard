@@ -1,17 +1,18 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../lib/codemirror"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../lib/codemirror"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
-  "use strict";
+(function (mod) {
+    if (typeof exports == "object" && typeof module == "object") { // CommonJS
+        mod(require("../lib/codemirror"));
+    } else if (typeof define == "function" && define.amd) { // AMD
+        define(["../lib/codemirror"], mod);
+    } else { // Plain browser env
+        mod(CodeMirror);
+    }
+})(function (CodeMirror) {
+    "use strict";
 
-  CodeMirror.modeInfo = [
+    CodeMirror.modeInfo = [
     {name: "APL", mime: "text/apl", mode: "apl", ext: ["dyalog", "apl"]},
     {name: "Asterisk", mime: "text/x-asterisk", mode: "asterisk"},
     {name: "C", mime: "text/x-csrc", mode: "clike", ext: ["c", "h"]},
@@ -51,7 +52,7 @@
     {name: "Java", mime: "text/x-java", mode: "clike", ext: ["java"]},
     {name: "Java Server Pages", mime: "application/x-jsp", mode: "htmlembedded", ext: ["jsp"]},
     {name: "JavaScript", mimes: ["text/javascript", "text/ecmascript", "application/javascript", "application/x-javascript", "application/ecmascript"],
-     mode: "javascript", ext: ["js"]},
+        mode: "javascript", ext: ["js"]},
     {name: "JSON", mimes: ["application/json", "application/x-json"], mode: "javascript", ext: ["json", "map"]},
     {name: "JSON-LD", mime: "application/ld+json", mode: "javascript"},
     {name: "Jinja2", mime: "null", mode: "jinja2"},
@@ -118,27 +119,41 @@
     {name: "XQuery", mime: "application/xquery", mode: "xquery", ext: ["xy", "xquery"]},
     {name: "YAML", mime: "text/x-yaml", mode: "yaml", ext: ["yaml"]},
     {name: "Z80", mime: "text/x-z80", mode: "z80", ext: ["z80"]}
-  ];
+    ];
   // Ensure all modes have a mime property for backwards compatibility
-  for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
-    var info = CodeMirror.modeInfo[i];
-    if (info.mimes) info.mime = info.mimes[0];
-  }
-
-  CodeMirror.findModeByMIME = function(mime) {
     for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
-      var info = CodeMirror.modeInfo[i];
-      if (info.mime == mime) return info;
-      if (info.mimes) for (var j = 0; j < info.mimes.length; j++)
-        if (info.mimes[j] == mime) return info;
+        var info = CodeMirror.modeInfo[i];
+        if (info.mimes) {
+            info.mime = info.mimes[0];
+        }
     }
-  };
 
-  CodeMirror.findModeByExtension = function(ext) {
-    for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
-      var info = CodeMirror.modeInfo[i];
-      if (info.ext) for (var j = 0; j < info.ext.length; j++)
-        if (info.ext[j] == ext) return info;
-    }
-  };
+    CodeMirror.findModeByMIME = function (mime) {
+        for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
+            var info = CodeMirror.modeInfo[i];
+            if (info.mime == mime) {
+                return info;
+            }
+            if (info.mimes) {
+                for (var j = 0; j < info.mimes.length; j++) {
+                    if (info.mimes[j] == mime) {
+                        return info;
+                    }
+                }
+            }
+        }
+    };
+
+    CodeMirror.findModeByExtension = function (ext) {
+        for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
+            var info = CodeMirror.modeInfo[i];
+            if (info.ext) {
+                for (var j = 0; j < info.ext.length; j++) {
+                    if (info.ext[j] == ext) {
+                        return info;
+                    }
+                }
+            }
+        }
+    };
 });

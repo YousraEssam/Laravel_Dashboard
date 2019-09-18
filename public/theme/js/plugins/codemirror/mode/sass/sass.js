@@ -1,327 +1,355 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
-"use strict";
-
-CodeMirror.defineMode("sass", function(config) {
-  function tokenRegexp(words) {
-    return new RegExp("^" + words.join("|"));
-  }
-
-  var keywords = ["true", "false", "null", "auto"];
-  var keywordsRegexp = new RegExp("^" + keywords.join("|"));
-
-  var operators = ["\\(", "\\)", "=", ">", "<", "==", ">=", "<=", "\\+", "-", "\\!=", "/", "\\*", "%", "and", "or", "not"];
-  var opRegexp = tokenRegexp(operators);
-
-  var pseudoElementsRegexp = /^::?[\w\-]+/;
-
-  function urlTokens(stream, state) {
-    var ch = stream.peek();
-
-    if (ch === ")") {
-      stream.next();
-      state.tokenizer = tokenBase;
-      return "operator";
-    } else if (ch === "(") {
-      stream.next();
-      stream.eatSpace();
-
-      return "operator";
-    } else if (ch === "'" || ch === '"') {
-      state.tokenizer = buildStringTokenizer(stream.next());
-      return "string";
-    } else {
-      state.tokenizer = buildStringTokenizer(")", false);
-      return "string";
+(function (mod) {
+    if (typeof exports == "object" && typeof module == "object") { // CommonJS
+        mod(require("../../lib/codemirror"));
+    } else if (typeof define == "function" && define.amd) { // AMD
+        define(["../../lib/codemirror"], mod);
+    } else { // Plain browser env
+        mod(CodeMirror);
     }
-  }
-  function comment(indentation, multiLine) {
-    return function(stream, state) {
-      if (stream.sol() && stream.indentation() <= indentation) {
-        state.tokenizer = tokenBase;
-        return tokenBase(stream, state);
-      }
+})(function (CodeMirror) {
+    "use strict";
 
-      if (multiLine && stream.skipTo("*/")) {
-        stream.next();
-        stream.next();
-        state.tokenizer = tokenBase;
-      } else {
-        stream.next();
-      }
+    CodeMirror.defineMode("sass", function (config) {
+        function tokenRegexp(words)
+        {
+            return new RegExp("^" + words.join("|"));
+        }
 
-      return "comment";
-    };
-  }
+        var keywords = ["true", "false", "null", "auto"];
+        var keywordsRegexp = new RegExp("^" + keywords.join("|"));
 
-  function buildStringTokenizer(quote, greedy) {
-    if(greedy == null) { greedy = true; }
+        var operators = ["\\(", "\\)", "=", ">", "<", "==", ">=", "<=", "\\+", "-", "\\!=", "/", "\\*", "%", "and", "or", "not"];
+        var opRegexp = tokenRegexp(operators);
 
-    function stringTokenizer(stream, state) {
-      var nextChar = stream.next();
-      var peekChar = stream.peek();
-      var previousChar = stream.string.charAt(stream.pos-2);
+        var pseudoElementsRegexp = /^::?[\w\-]+/;
 
-      var endingString = ((nextChar !== "\\" && peekChar === quote) || (nextChar === quote && previousChar !== "\\"));
+        function urlTokens(stream, state)
+        {
+            var ch = stream.peek();
 
-      if (endingString) {
-        if (nextChar !== quote && greedy) { stream.next(); }
-        state.tokenizer = tokenBase;
-        return "string";
-      } else if (nextChar === "#" && peekChar === "{") {
-        state.tokenizer = buildInterpolationTokenizer(stringTokenizer);
-        stream.next();
-        return "operator";
-      } else {
-        return "string";
-      }
-    }
+            if (ch === ")") {
+                stream.next();
+                state.tokenizer = tokenBase;
+                return "operator";
+            } else if (ch === "(") {
+                stream.next();
+                stream.eatSpace();
 
-    return stringTokenizer;
-  }
+                return "operator";
+            } else if (ch === "'" || ch === '"') {
+                state.tokenizer = buildStringTokenizer(stream.next());
+                return "string";
+            } else {
+                state.tokenizer = buildStringTokenizer(")", false);
+                return "string";
+            }
+        }
+        function comment(indentation, multiLine)
+        {
+            return function (stream, state) {
+                if (stream.sol() && stream.indentation() <= indentation) {
+                    state.tokenizer = tokenBase;
+                    return tokenBase(stream, state);
+                }
 
-  function buildInterpolationTokenizer(currentTokenizer) {
-    return function(stream, state) {
-      if (stream.peek() === "}") {
-        stream.next();
-        state.tokenizer = currentTokenizer;
-        return "operator";
-      } else {
-        return tokenBase(stream, state);
-      }
-    };
-  }
+                if (multiLine && stream.skipTo("*/")) {
+                    stream.next();
+                    stream.next();
+                    state.tokenizer = tokenBase;
+                } else {
+                    stream.next();
+                }
 
-  function indent(state) {
-    if (state.indentCount == 0) {
-      state.indentCount++;
-      var lastScopeOffset = state.scopes[0].offset;
-      var currentOffset = lastScopeOffset + config.indentUnit;
-      state.scopes.unshift({ offset:currentOffset });
-    }
-  }
+                return "comment";
+            };
+        }
 
-  function dedent(state) {
-    if (state.scopes.length == 1) return;
+        function buildStringTokenizer(quote, greedy)
+        {
+            if (greedy == null) {
+                greedy = true; }
 
-    state.scopes.shift();
-  }
+            function stringTokenizer(stream, state)
+            {
+                var nextChar = stream.next();
+                var peekChar = stream.peek();
+                var previousChar = stream.string.charAt(stream.pos-2);
 
-  function tokenBase(stream, state) {
-    var ch = stream.peek();
+                var endingString = ((nextChar !== "\\" && peekChar === quote) || (nextChar === quote && previousChar !== "\\"));
 
-    // Comment
-    if (stream.match("/*")) {
-      state.tokenizer = comment(stream.indentation(), true);
-      return state.tokenizer(stream, state);
-    }
-    if (stream.match("//")) {
-      state.tokenizer = comment(stream.indentation(), false);
-      return state.tokenizer(stream, state);
-    }
+                if (endingString) {
+                    if (nextChar !== quote && greedy) {
+                        stream.next(); }
+                    state.tokenizer = tokenBase;
+                    return "string";
+                } else if (nextChar === "#" && peekChar === "{") {
+                    state.tokenizer = buildInterpolationTokenizer(stringTokenizer);
+                    stream.next();
+                    return "operator";
+                } else {
+                    return "string";
+                }
+            }
 
-    // Interpolation
-    if (stream.match("#{")) {
-      state.tokenizer = buildInterpolationTokenizer(tokenBase);
-      return "operator";
-    }
+            return stringTokenizer;
+        }
 
-    if (ch === ".") {
-      stream.next();
+        function buildInterpolationTokenizer(currentTokenizer)
+        {
+            return function (stream, state) {
+                if (stream.peek() === "}") {
+                    stream.next();
+                    state.tokenizer = currentTokenizer;
+                    return "operator";
+                } else {
+                    return tokenBase(stream, state);
+                }
+            };
+        }
 
-      // Match class selectors
-      if (stream.match(/^[\w-]+/)) {
-        indent(state);
-        return "atom";
-      } else if (stream.peek() === "#") {
-        indent(state);
-        return "atom";
-      } else {
-        return "operator";
-      }
-    }
+        function indent(state)
+        {
+            if (state.indentCount == 0) {
+                state.indentCount++;
+                var lastScopeOffset = state.scopes[0].offset;
+                var currentOffset = lastScopeOffset + config.indentUnit;
+                state.scopes.unshift({ offset:currentOffset });
+            }
+        }
 
-    if (ch === "#") {
-      stream.next();
+        function dedent(state)
+        {
+            if (state.scopes.length == 1) {
+                return;
+            }
 
-      // Hex numbers
-      if (stream.match(/[0-9a-fA-F]{6}|[0-9a-fA-F]{3}/))
-        return "number";
+            state.scopes.shift();
+        }
 
-      // ID selectors
-      if (stream.match(/^[\w-]+/)) {
-        indent(state);
-        return "atom";
-      }
+        function tokenBase(stream, state)
+        {
+            var ch = stream.peek();
 
-      if (stream.peek() === "#") {
-        indent(state);
-        return "atom";
-      }
-    }
+            // Comment
+            if (stream.match("/*")) {
+                state.tokenizer = comment(stream.indentation(), true);
+                return state.tokenizer(stream, state);
+            }
+            if (stream.match("//")) {
+                state.tokenizer = comment(stream.indentation(), false);
+                return state.tokenizer(stream, state);
+            }
 
-    // Numbers
-    if (stream.match(/^-?[0-9\.]+/))
-      return "number";
+            // Interpolation
+            if (stream.match("#{")) {
+                state.tokenizer = buildInterpolationTokenizer(tokenBase);
+                return "operator";
+            }
 
-    // Units
-    if (stream.match(/^(px|em|in)\b/))
-      return "unit";
+            if (ch === ".") {
+                stream.next();
 
-    if (stream.match(keywordsRegexp))
-      return "keyword";
+              // Match class selectors
+                if (stream.match(/^[\w-]+/)) {
+                    indent(state);
+                    return "atom";
+                } else if (stream.peek() === "#") {
+                    indent(state);
+                    return "atom";
+                } else {
+                    return "operator";
+                }
+            }
 
-    if (stream.match(/^url/) && stream.peek() === "(") {
-      state.tokenizer = urlTokens;
-      return "atom";
-    }
+            if (ch === "#") {
+                stream.next();
 
-    // Variables
-    if (ch === "$") {
-      stream.next();
-      stream.eatWhile(/[\w-]/);
+              // Hex numbers
+                if (stream.match(/[0-9a-fA-F]{6}|[0-9a-fA-F]{3}/)) {
+                    return "number";
+                }
 
-      if (stream.peek() === ":") {
-        stream.next();
-        return "variable-2";
-      } else {
-        return "variable-3";
-      }
-    }
+              // ID selectors
+                if (stream.match(/^[\w-]+/)) {
+                    indent(state);
+                    return "atom";
+                }
 
-    if (ch === "!") {
-      stream.next();
-      return stream.match(/^[\w]+/) ? "keyword": "operator";
-    }
+                if (stream.peek() === "#") {
+                    indent(state);
+                    return "atom";
+                }
+            }
 
-    if (ch === "=") {
-      stream.next();
+            // Numbers
+            if (stream.match(/^-?[0-9\.]+/)) {
+                return "number";
+            }
 
-      // Match shortcut mixin definition
-      if (stream.match(/^[\w-]+/)) {
-        indent(state);
-        return "meta";
-      } else {
-        return "operator";
-      }
-    }
+            // Units
+            if (stream.match(/^(px|em|in)\b/)) {
+                return "unit";
+            }
 
-    if (ch === "+") {
-      stream.next();
+            if (stream.match(keywordsRegexp)) {
+                return "keyword";
+            }
 
-      // Match shortcut mixin definition
-      if (stream.match(/^[\w-]+/))
-        return "variable-3";
-      else
-        return "operator";
-    }
+            if (stream.match(/^url/) && stream.peek() === "(") {
+                state.tokenizer = urlTokens;
+                return "atom";
+            }
 
-    // Indent Directives
-    if (stream.match(/^@(else if|if|media|else|for|each|while|mixin|function)/)) {
-      indent(state);
-      return "meta";
-    }
+            // Variables
+            if (ch === "$") {
+                stream.next();
+                stream.eatWhile(/[\w-]/);
 
-    // Other Directives
-    if (ch === "@") {
-      stream.next();
-      stream.eatWhile(/[\w-]/);
-      return "meta";
-    }
+                if (stream.peek() === ":") {
+                    stream.next();
+                    return "variable-2";
+                } else {
+                    return "variable-3";
+                }
+            }
 
-    // Strings
-    if (ch === '"' || ch === "'") {
-      stream.next();
-      state.tokenizer = buildStringTokenizer(ch);
-      return "string";
-    }
+            if (ch === "!") {
+                stream.next();
+                return stream.match(/^[\w]+/) ? "keyword": "operator";
+            }
 
-    // Pseudo element selectors
-    if (ch == ":" && stream.match(pseudoElementsRegexp))
-      return "keyword";
+            if (ch === "=") {
+                stream.next();
 
-    // atoms
-    if (stream.eatWhile(/[\w-&]/)) {
-      // matches a property definition
-      if (stream.peek() === ":" && !stream.match(pseudoElementsRegexp, false))
-        return "property";
-      else
-        return "atom";
-    }
+              // Match shortcut mixin definition
+                if (stream.match(/^[\w-]+/)) {
+                    indent(state);
+                    return "meta";
+                } else {
+                    return "operator";
+                }
+            }
 
-    if (stream.match(opRegexp))
-      return "operator";
+            if (ch === "+") {
+                stream.next();
 
-    // If we haven't returned by now, we move 1 character
-    // and return an error
-    stream.next();
-    return null;
-  }
+              // Match shortcut mixin definition
+                if (stream.match(/^[\w-]+/)) {
+                    return "variable-3";
+                } else {
+                    return "operator";
+                }
+            }
 
-  function tokenLexer(stream, state) {
-    if (stream.sol()) state.indentCount = 0;
-    var style = state.tokenizer(stream, state);
-    var current = stream.current();
+            // Indent Directives
+            if (stream.match(/^@(else if|if|media|else|for|each|while|mixin|function)/)) {
+                indent(state);
+                return "meta";
+            }
 
-    if (current === "@return")
-      dedent(state);
+            // Other Directives
+            if (ch === "@") {
+                stream.next();
+                stream.eatWhile(/[\w-]/);
+                return "meta";
+            }
 
-    if (style === "atom")
-      indent(state);
+            // Strings
+            if (ch === '"' || ch === "'") {
+                stream.next();
+                state.tokenizer = buildStringTokenizer(ch);
+                return "string";
+            }
 
-    if (style !== null) {
-      var startOfToken = stream.pos - current.length;
-      var withCurrentIndent = startOfToken + (config.indentUnit * state.indentCount);
+            // Pseudo element selectors
+            if (ch == ":" && stream.match(pseudoElementsRegexp)) {
+                return "keyword";
+            }
 
-      var newScopes = [];
+            // atoms
+            if (stream.eatWhile(/[\w-&]/)) {
+              // matches a property definition
+                if (stream.peek() === ":" && !stream.match(pseudoElementsRegexp, false)) {
+                    return "property";
+                } else {
+                    return "atom";
+                }
+            }
 
-      for (var i = 0; i < state.scopes.length; i++) {
-        var scope = state.scopes[i];
+            if (stream.match(opRegexp)) {
+                return "operator";
+            }
 
-        if (scope.offset <= withCurrentIndent)
-          newScopes.push(scope);
-      }
+            // If we haven't returned by now, we move 1 character
+            // and return an error
+            stream.next();
+            return null;
+        }
 
-      state.scopes = newScopes;
-    }
+        function tokenLexer(stream, state)
+        {
+            if (stream.sol()) {
+                state.indentCount = 0;
+            }
+            var style = state.tokenizer(stream, state);
+            var current = stream.current();
+
+            if (current === "@return") {
+                dedent(state);
+            }
+
+            if (style === "atom") {
+                indent(state);
+            }
+
+            if (style !== null) {
+                var startOfToken = stream.pos - current.length;
+                var withCurrentIndent = startOfToken + (config.indentUnit * state.indentCount);
+
+                var newScopes = [];
+
+                for (var i = 0; i < state.scopes.length; i++) {
+                    var scope = state.scopes[i];
+
+                    if (scope.offset <= withCurrentIndent) {
+                        newScopes.push(scope);
+                    }
+                }
+
+                state.scopes = newScopes;
+            }
 
 
-    return style;
-  }
+            return style;
+        }
 
-  return {
-    startState: function() {
-      return {
-        tokenizer: tokenBase,
-        scopes: [{offset: 0, type: "sass"}],
-        indentCount: 0,
-        definedVars: [],
-        definedMixins: []
-      };
-    },
-    token: function(stream, state) {
-      var style = tokenLexer(stream, state);
+        return {
+            startState: function () {
+                return {
+                    tokenizer: tokenBase,
+                    scopes: [{offset: 0, type: "sass"}],
+                    indentCount: 0,
+                    definedVars: [],
+                    definedMixins: []
+                };
+            },
+            token: function (stream, state) {
+                var style = tokenLexer(stream, state);
 
-      state.lastToken = { style: style, content: stream.current() };
+                state.lastToken = { style: style, content: stream.current() };
 
-      return style;
-    },
+                return style;
+            },
 
-    indent: function(state) {
-      return state.scopes[0].offset;
-    }
-  };
-});
+            indent: function (state) {
+                return state.scopes[0].offset;
+            }
+        };
+    });
 
-CodeMirror.defineMIME("text/x-sass", "sass");
+    CodeMirror.defineMIME("text/x-sass", "sass");
 
 });

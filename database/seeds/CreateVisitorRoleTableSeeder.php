@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
+namespace Illuminate\Database\Seeder;
+
 use Spatie\Permission\Models\Role;
 
 class CreateVisitorRoleTableSeeder extends Seeder
@@ -22,6 +23,5 @@ class CreateVisitorRoleTableSeeder extends Seeder
         ];
 
         $role->syncPermissions($permissions);
-        
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
+namespace Illuminate\Database\Migrations\Migration;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class CreateCitiesTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',150);
+            $table->string('name', 150);
             $table->unsignedInteger('country_id');
             $table->softDeletes();
             $table->timestamps();

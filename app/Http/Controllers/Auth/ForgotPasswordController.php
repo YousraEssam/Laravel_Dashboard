@@ -55,7 +55,7 @@ class ForgotPasswordController extends Controller
         
         $this->validateEmail($request);
 
-        if(is_numeric($request->email)){
+        if (is_numeric($request->email)) {
             $email = User::wherePhone($request->email)->first();
             $request->merge(['email' => $email->email]);
         }

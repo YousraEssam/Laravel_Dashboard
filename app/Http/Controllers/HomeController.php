@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Role;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -25,8 +24,6 @@ class HomeController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('layouts.home',[
-            'roles' => $roles,
-        ]);
+        return view('layouts.home', compact('roles'));
     }
 }
