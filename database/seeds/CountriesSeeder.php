@@ -1,7 +1,6 @@
 <?php
 
-namespace Illuminate\Database\Seeder;
-
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Webpatser\Countries\Countries;
 

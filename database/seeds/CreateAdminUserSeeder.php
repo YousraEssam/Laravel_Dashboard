@@ -1,7 +1,6 @@
 <?php
   
-namespace Illuminate\Database\Seeder;
-
+use Illuminate\Database\Seeder;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;

@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -50,8 +50,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $roles = Role::pluck('name', 'name')->all();
-        return view('auth.register', compact('roles'));
+        // $roles = Role::pluck('name', 'name')->all();
+        return view('auth.register');
     }
 
     /**
@@ -88,8 +88,6 @@ class RegisterController extends Controller
             // 'password' => $user_password->setPasswordAttribute($data['password']),
             'password' => Hash::make($data['password']),
         ]);
-
-        $user->assignRole($data['roles']);
         return $user;
     }
 }

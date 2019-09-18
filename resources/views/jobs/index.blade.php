@@ -8,7 +8,7 @@
 
 @section('titlebreadcrumb')
 <li class="active">
-    <strong>Cities</strong>
+    <strong>Jobs</strong>
 </li>
 @endsection
 
@@ -23,7 +23,7 @@
     <div class="col-lg-12">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Cities Table</h5>
+            <h5>Jobs Table</h5>
         </div>
 
         <div class="ibox-content">
@@ -41,31 +41,33 @@
                     ascending" style="width: 219px;">Name</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                     rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
-                    ascending" style="width: 197px;">Country</th>
+                    ascending" style="width: 197px;">Description</th>
                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                     rowspan="1" colspan="2" aria-label="CSS grade: activate to sort column 
                     ascending" style="width: 105px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if(!empty($cities))
-                @foreach($cities as $city)
+                @if(!empty($jobs))
+                @foreach($jobs as $job)
                 <tr class="gradeA odd" role="row">
-                    <td class="sorting_1">{{$city->id}}</td>
-                    <td>{{$city->name}}</td>
-                    <td>{{$city->country['name']}}</td>
+                    <td class="sorting_1">{{$job->id}}</td>
+                    <td>{{$job->name}}</td>
+                    <td>{{$job->description}}</td>
                     <td class="center">
 
-                        <a href="{{route('cities.show', $city->id)}}" class="btn btn-success">Show</a>
-                    
-                        @can('city-edit')
-                        <a href="{{route('cities.edit', $city->id)}}" class="btn btn-success">Edit</a>
+                        <a href="{{route('jobs.show', $job->id)}}" class="btn btn-success">Show</a>
+
+                    @if(! ($job->name == 'Writer' || $job->name == 'Reporter' ) )
+                        @can('job-edit')
+                        <a href="{{route('jobs.edit', $job->id)}}" class="btn btn-success">Edit</a>
                         @endcan
-                        @can('city-delete')
-                        {!! Form::open(['method' => 'DELETE','route' => ['cities.destroy', $city->id],'style'=>'display:inline']) !!}
+                        @can('job-delete')
+                        {!! Form::open(['method' => 'DELETE','route' => ['jobs.destroy', $job->id],'style'=>'display:inline']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
                         @endcan
+                    @endif
                     </td>
                 </tr>
                 @endforeach
@@ -74,7 +76,7 @@
         </table>
         <div class="row">
             <div class="col-12 text-center">
-                {{ $cities->links() }}
+                {{ $jobs->links() }}
             </div>
         </div>
         </div>

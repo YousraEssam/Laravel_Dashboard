@@ -1,7 +1,6 @@
 <?php
 
-namespace Illuminate\Database\Seeder;
-
+use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
 class PermissionTableSeeder extends Seeder
@@ -21,7 +20,11 @@ class PermissionTableSeeder extends Seeder
            'city-list',
            'city-create',
            'city-edit',
-           'city-delete'
+           'city-delete',
+           'job-list',
+           'job-create',
+           'job-edit',
+           'job-delete',
         ];
 
         foreach ($permissions as $permission) {

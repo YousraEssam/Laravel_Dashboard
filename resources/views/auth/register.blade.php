@@ -1,4 +1,3 @@
-
 @extends('layouts.basic')
 @section('content')
 
@@ -54,15 +53,6 @@
     <div class="form-group">
         <input type="password" name="password_confirmation" class="form-control"
         placeholder="Confirm Password" required="" autocomplete="new-password" autofocus>
-    </div>
-
-    <div class="form-group">
-        <label>Role:</label>
-        <select name="roles[]" id="" class="form-control">
-            @foreach($roles as $role)
-            <option value="{{$role}}">{{$role}}</option>
-            @endforeach
-        </select>
     </div>
     
     <div class="form-group">

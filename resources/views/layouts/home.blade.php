@@ -85,7 +85,19 @@
                             @endcan
                         </ul>
                     </li>
-                        
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Jobs</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('jobs.index') }}">All</a></li>
+                            @can('job-create')
+                            <li><a href="{{ route('jobs.create') }}">Add</a></li>
+                            @endcan
+                        </ul>
+                    </li>
                 </ul>
 
             </div>
