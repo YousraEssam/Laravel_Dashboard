@@ -20,7 +20,7 @@ class CreateAdminUserSeeder extends Seeder
             'last_name' => 'ADMIN',
             'phone' => '0123456789',
             'email' => 'admin123@gmail.com',
-            'password' => Hash::make('admin123')
+            'password' => Hash::make('admin123'),
         ]);
   
         $role = Role::create([
@@ -28,9 +28,9 @@ class CreateAdminUserSeeder extends Seeder
             'description' => 'site administrator',
             ]);
    
-        $permissions = Permission::pluck('id', 'id')->all();
+        // $permissions = Permission::pluck('id', 'id')->all();
 
-        $role->syncPermissions($permissions);
+        // $role->syncPermissions($permissions);
    
         $user->assignRole([$role->id]);
     }
