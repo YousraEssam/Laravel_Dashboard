@@ -98,6 +98,20 @@
                             @endcan
                         </ul>
                     </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Staff Members</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('staff_members.index') }}">All</a></li>
+                            <!-- @can('staffmember-create') -->
+                            <li><a href="{{ route('staff_members.create') }}">Add</a></li>
+                            <!-- @endcan -->
+                        </ul>
+                    </li>
+                
                 </ul>
 
             </div>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class City extends Model
 {
     use SoftDeletes;
+    protected $primaryKey = 'id';
 
 
     /**
@@ -24,6 +25,11 @@ class City extends Model
      */
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo('App\Country');
+    }
+
+    public function staffMembers()
+    {
+        return $this->hasMany('App\StaffMember');
     }
 }

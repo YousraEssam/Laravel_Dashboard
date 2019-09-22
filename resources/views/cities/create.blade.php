@@ -2,19 +2,15 @@
 
 @section('content')
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Create Form</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{url('/home')}}">Home</a>
-            </li>
-            <li class="active">
-                <strong>Create Form</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+@section('maintitle')
+<h2>Create Form</h2>
+@endsection
+
+@section('titlebreadcrumb')
+<li class="active">
+    <strong>Create New City Form</strong>
+</li>
+@endsection
 
 @if ($errors->any())
     <div class="alert alert-danger">

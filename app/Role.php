@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model
 {
     use SoftDeletes;
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -15,6 +16,14 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'permission',
+        'name', 'description'
     ];
+
+    /**
+     * Get the staff members for the role.
+     */
+    public function staffMembers()
+    {
+        return $this->hasMany('App\StaffMember');
+    }
 }

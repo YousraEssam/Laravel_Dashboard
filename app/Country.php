@@ -6,11 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
+    protected $primaryKey = 'id';
+
     /**
      * Get the cities for the country
      */
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->hasMany('App\City');
+    }
+
+    /**
+     * Get the staff members for the country.
+     */
+    public function staffMembers()
+    {
+        return $this->hasMany('App\StaffMember');
     }
 }

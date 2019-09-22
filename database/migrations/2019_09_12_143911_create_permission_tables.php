@@ -31,6 +31,8 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name')->default('web');
             $table->softDeletes();
             $table->timestamps();
+            $table->primary('id');
+
         });
 
 
