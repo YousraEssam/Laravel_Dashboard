@@ -15,7 +15,8 @@ class StaffMember extends Model
      * @var array
      */
     protected $fillable = [
-        'image', 'first_name', 'last_name', 'email', 'phone', 'role_id', 'job_id', 'country_id', 'city_id', 'gender', 'isActive'
+        'image', 'role_id', 'job_id', 'country_id', 'city_id', 'gender', 'user_id'
+        //  'isActive'
     ];
 
     /**
@@ -23,7 +24,7 @@ class StaffMember extends Model
      */
     public function job()
     {
-        return $this->belongsTo('App\Job');
+        return $this->belongsTo(Job::class);
     }
 
     /**
@@ -31,7 +32,7 @@ class StaffMember extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -39,7 +40,7 @@ class StaffMember extends Model
      */
     public function city()
     {
-        return $this->belongsTo('App\City');
+        return $this->belongsTo(City::class);
     }
 
     /**
@@ -47,6 +48,15 @@ class StaffMember extends Model
      */
     public function role()
     {
-        return $this->belongsTo('App\Role');
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the user that owns the staff member
+     */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

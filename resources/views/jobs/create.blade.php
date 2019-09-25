@@ -32,12 +32,12 @@
                     <div class="row">
                         <div class="col-sm-12 b-r">
                             <div class="form-group">
-                                <strong>City Name</strong>
-                                {!! Form::text('name', null, array('placeholder' => 'City Name','class' => 'form-control')) !!}
+                                <strong>Job Name</strong>
+                                {!! Form::text('name', null, array('placeholder' => 'Job Name','class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
-                                <strong>City Description</strong>
+                                <strong>Job Description</strong>
                                 {!! Form::text('description', null, array('placeholder' => 'Job Description','class' => 'form-control')) !!}
                             </div>
                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>

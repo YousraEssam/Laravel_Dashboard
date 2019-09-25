@@ -85,23 +85,23 @@
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member City', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('city_id', $cities, null, array('placeholder' => 'Member City', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
                                 {!! Form::label('Member Country', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('country_id', $countries, null, array('placeholder' => 'Member Country', 'class' => 'form-control')) !!}
+                                
+                                    {!! Form::select('country_id', $countries, false, array('placeholder' => 'Member Country', 'class' => 'form-control', 'id' => 'country')) !!}
+                            </div>
+                            
+                            <div class="form-group">
+                                {!! Form::label('Member City', null, ['class' => 'control-label']) !!}
+                                
+                                {!! Form::select('city_id', [], null, array('placeholder' => 'Member City', 'class' => 'form-control', 'id' => 'city')) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member Activity', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::select('isActive', [1 => 'Active', 0 => 'Not Active'], array('placeholder' => 'Member Gender', 'class' => 'form-control')) !!}
+                                {!! Form::select('isActive', [1 => 'Active', 0 => 'Not Active'], array('placeholder' => 'Member Activity', 'class' => 'form-control')) !!}
                             </div>
-                            
+
                             {!! Form::submit('Submit', ['class' => 'btn btn-sm btn-primary pull-right m-t-n-xs']) !!}
 
                         </div>
@@ -113,4 +113,31 @@
     </div>
 </div>
 
-@endsection 
+@endsection
+
+@section('cityscript')
+<script>
+    $('#country').change(function(){
+        var countryID = $(this).val();
+        if(countryID){
+            $.ajax({
+                type:"GET",
+                url:"{{url('get-city-list')}}?country_id="+countryID,
+                success:function(res){
+                    if(res){
+                        $("#city").empty();
+                        $("#city").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    }else{
+                        $("#city").empty();
+                    }
+                }
+            });
+        }else{
+            $("#city").empty();
+        }
+    });
+</script>
+@endsection

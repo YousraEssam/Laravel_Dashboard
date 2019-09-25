@@ -37,31 +37,31 @@
                             <div class="form-group">
                                 {!! Form::label('Member Image', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::file('image', null, array('placeholder' => $staffMember->image, 'class' => 'form-control')) !!}
+                                {!! Form::file('image',$staffMember->user->image, array('class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member First Name', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::text('first_name', null, array('placeholder' => $staffMember->first_name, 'class' => 'form-control')) !!}
+                                {!! Form::text('first_name', $staffMember->user->first_name, array('class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member Last Name', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::text('last_name', null, array('placeholder' => $staffMember->last_name, 'class' => 'form-control')) !!}
+                                {!! Form::text('last_name', $staffMember->user->last_name, array('class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member Email Address', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::email('email', null, array('placeholder' => $staffMember->email, 'class' => 'form-control')) !!}
+                                {!! Form::email('email', $staffMember->user->email, array('class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member Phone Number', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::tel('phone', null, array('placeholder' => $staffMember->phone, 'class' => 'form-control')) !!}
+                                {!! Form::tel('phone',$staffMember->user->phone, array('class' => 'form-control')) !!}
                             </div>
 
                             <div class="form-group">
@@ -81,17 +81,17 @@
 
                                 {!! Form::select('role_id', $roles,null, array('placeholder' => $staffMember->role->name, 'class' => 'form-control')) !!}
                             </div>
+                            
+                            <div class="form-group">
+                                {!! Form::label('Member Country', null, ['class' => 'control-label']) !!}
+
+                                {!! Form::select('country_id', $countries,null, array('placeholder' => $staffMember->country->name, 'class' => 'form-control', 'id' => 'country')) !!}
+                            </div>
 
                             <div class="form-group">
                                 {!! Form::label('Member City', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::select('city_id', $cities,null, array('placeholder' => $staffMember->city->name, 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Country', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('country_id', $countries,null, array('placeholder' => $staffMember->country->name, 'class' => 'form-control')) !!}
+                                {!! Form::select('city_id', [ $staffMember->city->id => $staffMember->city->name ], $staffMember->city->id, array( 'class' => 'form-control', 'id' => 'city')) !!}
                             </div>
 
                             <div class="form-group">
@@ -111,3 +111,34 @@
 </div>
 
 @endsection 
+
+@section('cityscript')
+<script>
+    $('#country').change(function(){
+        // alert('dASd')
+        var countryID = $(this).val();
+        if(countryID){
+            $.ajax({
+                type:"GET",
+                url:"{{url('get-city-list')}}?country_id="+countryID,
+                success:function(res){
+                    if(res){
+                        $("#city").empty();
+                        $("#city").append('<option>Select</option>');
+                        $.each(res,function(key,value){
+                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                        });
+                    }else{
+                        $("#city").empty();
+                    }
+                },
+                error: function(err){
+                    alert('Errro');
+                }
+            });
+        }else{
+            $("#city").empty();
+        }
+    });
+</script>
+@endsection

@@ -27,13 +27,25 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Member Image:</label>
-                    <img src="{{ asset('images/'. $staffMember->image)}}" style="height:50px; width:50px;">
+                    <img src="{{Storage::url($staffMember->image)}}" style="height:50px; width:50px;">
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Member Name:</label>
-                    <h4> {{$staffMember->first_name}} {{$staffMember->last_name}} </h4>
+                    <h4> {{$staffMember->user->first_name}} {{$staffMember->user->last_name}} </h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="status">Member Email:</label>
+                    <h4> {{$staffMember->user->email}} </h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="status">Member Phone Number:</label>
+                    <h4> {{$staffMember->user->phone}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -60,12 +72,12 @@
                     <h4> {{$staffMember->city->country->name}} </h4>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Member Active?</label>
                     <h4> {{$staffMember->isActive}} </h4>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

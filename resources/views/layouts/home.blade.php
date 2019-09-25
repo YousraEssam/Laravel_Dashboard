@@ -238,5 +238,7 @@
             });
         });
     </script>
+
+    @yield('cityscript')
 </body>
 </html>

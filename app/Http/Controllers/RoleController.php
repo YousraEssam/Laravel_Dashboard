@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\RoleRequest;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -46,7 +43,7 @@ class RoleController extends Controller
      * @param  StoreBlogPost  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRoleRequest $request)
+    public function store(RoleRequest $request)
     {
         Role::create($request->only(['name', 'description']))
                 ->syncPermissions($request->permission);
@@ -88,7 +85,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
         $role->update($request->only(['name','description']));
         $role->syncPermissions($request->permission);

@@ -16,15 +16,11 @@ class CreateStaffMembersTable extends Migration
         Schema::create('staff_members', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('first_name',150);
-            $table->string('last_name',150);
-            $table->string('email');
-            $table->string('phone');
+            $table->unsignedInteger('user_id');
             $table->string('gender');
 
             $table->string('image');
-            $table->boolean('isActive')->default(TRUE);
-
+            // $table->boolean('isActive')->default(TRUE);
             $table->unsignedInteger('job_id');
             $table->unsignedInteger('city_id');
             $table->unsignedInteger('country_id');

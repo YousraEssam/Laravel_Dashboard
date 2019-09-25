@@ -60,9 +60,9 @@
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
                         ascending" style="width: 197px;">Role</th>
-                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
+                        <!-- <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
-                        ascending" style="width: 197px;">Is Active?</th>
+                        ascending" style="width: 197px;">Is Active?</th> -->
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="2" aria-label="CSS grade: activate to sort column 
                         ascending" style="width: 105px;">Actions</th>
@@ -73,14 +73,13 @@
                         @foreach($staff_members as $staff)
                         <tr class="gradeA odd" role="row">
                             <td class="sorting_1">{{$staff->id}}</td>
-
                             <td>
-                                <img src="storage/app/{{$staff->image}}" style="height:50px; width:50px;">
+                                <img src="{{Storage::url($staff->image)}}" style="height:50px; width:50px;">
                             </td>
 
-                            <td>{{$staff->first_name}} {{$staff->last_name}}</td>
-                            <td>{{$staff->email}}</td>
-                            <td>{{$staff->phone}}</td>
+                            <td>{{$staff->user->first_name}} {{$staff->user->last_name}}</td>
+                            <td>{{$staff->user->email}}</td>
+                            <td>{{$staff->user->phone}}</td>
 
                             <td>{{$staff->job->name}}</td>
 
@@ -89,7 +88,7 @@
 
                             <td>{{$staff->role->name}}</td>
                             
-                            <td>{{$staff->isActive}}</td>
+                            <!-- <td>{{$staff->isActive}}</td> -->
 
                             <td class="center">
 

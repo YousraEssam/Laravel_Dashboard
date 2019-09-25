@@ -45,3 +45,5 @@ Route::group(
         Route::resource('staff_members', 'StaffMemberController');
     }
 );
+
+Route::get('get-city-list', 'StaffMemberController@getCityList');

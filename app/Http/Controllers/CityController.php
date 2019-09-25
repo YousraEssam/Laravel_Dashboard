@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Country;
-use App\Http\Requests\StoreCityRequest;
-use App\Http\Requests\UpdateCityRequest;
+use App\Http\Requests\CityRequest;
 
 class CityController extends Controller
 {
@@ -44,7 +43,7 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCityRequest $request)
+    public function store(CityRequest $request)
     {
         City::create($request->all());
         return redirect()->route('cities.index')
@@ -81,7 +80,7 @@ class CityController extends Controller
      * @param  \App\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCityRequest $request, City $city)
+    public function update(CityRequest $request, City $city)
     {
         $city->update($request->all());
         return redirect()->route('cities.index')
