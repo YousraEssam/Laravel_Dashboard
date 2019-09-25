@@ -20,7 +20,7 @@ class CreateStaffMembersTable extends Migration
             $table->string('gender');
 
             $table->string('image');
-            // $table->boolean('isActive')->default(TRUE);
+            $table->boolean('isActive')->default(TRUE);
             $table->unsignedInteger('job_id');
             $table->unsignedInteger('city_id');
             $table->unsignedInteger('country_id');
