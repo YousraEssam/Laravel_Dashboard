@@ -18,8 +18,6 @@ class SetupCountriesTable extends Migration
             $table->string('name', 255)->default('');
             $table->string('capital', 255)->nullable();
             $table->string('full_name', 255)->nullable();
-
-            $table->primary('id');
         });
     }
 

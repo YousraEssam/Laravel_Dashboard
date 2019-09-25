@@ -32,7 +32,7 @@ Route::get(
 Auth::routes();
 
 Route::group(
-    ['middlware' => ['role:Admin']], function () {
+    ['middleware' => ['role:Admin']], function () {
         Route::get('/home', 'HomeController@index')
             ->name('home');
     });

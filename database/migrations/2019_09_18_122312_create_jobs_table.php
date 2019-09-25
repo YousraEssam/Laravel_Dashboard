@@ -20,9 +20,6 @@ class CreateJobsTable extends Migration
             
             $table->softDeletes();
             $table->timestamps();
-
-            $table->primary('id');
-
         });
     }
 
