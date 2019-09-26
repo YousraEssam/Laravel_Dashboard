@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\NewStaffMemberHasBeenAddedEvent;
+use App\Listeners\SendNewStaffMemberResetPasswordLinkListener;
 use App\Listeners\WelcomeNewUserListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             // SendEmailVerificationNotification::class,
             WelcomeNewUserListener::class,
+        ],
+        NewStaffMemberHasBeenAddedEvent::class => [
+            SendNewStaffMemberResetPasswordLinkListener::class,
         ],
 
     ];

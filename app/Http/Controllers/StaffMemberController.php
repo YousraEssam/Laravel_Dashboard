@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Country;
+use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
 use App\Job;
 use App\Role;
@@ -12,10 +13,11 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class StaffMemberController extends Controller
 {
+    
+    
     public function __construct()
     {
          $this->middleware('permission:staffmember-list|staffmember-create|staffmember-edit|staffmember-delete', ['only' => ['index','show']]);
@@ -56,22 +58,23 @@ class StaffMemberController extends Controller
      */
     public function store(StaffMemberRequest $request)
     {
-        $user = User::create($request->all()+['password' => Hash::make('Staff123')]);
         
         $attributes= $request->all();
-        $attributes['user_id'] = $user->id;
         
         if($request->file('image')){
-            // $originalName = $request->file('image')->getClientOriginalName();
-            
-            // $path = $request->image->storeAs('uploads', time().$originalName);
-            // $path = $request->image->store('uploads');
             $path = Storage::putFile('public/uploads', $request->file('image'));
             $attributes['image'] = $path;
         }
-        StaffMember::create($attributes);
+
+        $user = User::create($request->all()+['password' => Hash::make('Staff123')]);
         
-        return redirect()->route('staff_members.index')->with('success', 'New Staff Member Added Successfully');
+        $attributes['user_id'] = $user->id;
+        
+        $staffMember = StaffMember::create($attributes);
+
+        event(new NewStaffMemberHasBeenAddedEvent($staffMember));
+
+        return redirect()->route('staff_members.index')->with('success', 'New Staff Member Added Successfully and Reset Password Link Has Been Sent');
     }
     
     /**
@@ -110,21 +113,18 @@ class StaffMemberController extends Controller
      */
     public function update(StaffMemberRequest $request, StaffMember $staffMember)
     {
-        $user = $staffMember::with('user')->first()->user;
-        $user->update($request->all());
-        
         $attributes= $request->all();
-        $attributes['user_id'] = $user->id;
         
         if($request->hasFile('image')){
-            
-            // $originalName = $imageName->getClientOriginalName();
-            
-            // $path = $request->image->storeAs('', time().$originalName);
             $path = Storage::putFile('public/uploads', $request->file('image'));
             $attributes['image'] = $path;
-            
         }
+
+        $user = $staffMember::with('user')->first()->user;
+        $user->update($request->all());
+
+        $attributes['user_id'] = $user->id;
+
         $staffMember->update($attributes);
         
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Updated Successfully');
