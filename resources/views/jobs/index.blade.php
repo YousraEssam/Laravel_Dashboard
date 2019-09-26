@@ -63,9 +63,11 @@
                         <a href="{{route('jobs.edit', $job->id)}}" class="btn btn-success">Edit</a>
                         @endcan
                         @can('job-delete')
-                        {!! Form::open(['method' => 'DELETE','route' => ['jobs.destroy', $job->id],'style'=>'display:inline']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
+                        <form action="{{route('jobs.destroy', $job->id)}}" method="POST" style="display:inline;">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                         @endcan
                     @endif
                     </td>

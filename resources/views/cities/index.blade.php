@@ -62,9 +62,11 @@
                             <a href="{{route('cities.edit', $city->id)}}" class="btn btn-success">Edit</a>
                             @endcan
                             @can('city-delete')
-                            {!! Form::open(['method' => 'DELETE','route' => ['cities.destroy', $city->id],'style'=>'display:inline']) !!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
+                            <form action="{{route('cities.destroy', $city->id)}}" method="POST" style="display:inline;">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                             @endcan
                         </td>
                     </tr>

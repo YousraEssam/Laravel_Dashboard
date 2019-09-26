@@ -31,23 +31,32 @@
                     <h5>Edit form</h5>
                 </div>
                 <div class="ibox-content">
-                    {!! Form::model($city, ['method' => 'PATCH','route' => ['cities.update', $city->id]]) !!}
+
                     <div class="row">
+                        <form role="form" method="POST" action="{{ route('cities.update',$city->id) }}">
+                                @csrf
+                                @method('PUT')
                         <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Edit Role</h3>
                             <div class="form-group">
                                 <strong>City Name</strong>
-                                {!! Form::text('name', null, array('placeholder' => 'City Name','class' => 'form-control')) !!}
+
+                                <input type="text" class="form-control" value="{{$city->name}}" name="name">
+
                             </div>
 
                             <div class="form-group">
                                 <strong>Country Name</strong>
-                                {!! Form::select('country_id', $countries,null, array('class' => 'form-control')) !!}
+                            <select id="country" name="country_id" placeholder="Member Country" class="form-control">
+                                    <option value="" disabled selected>{{$city->country->name}}</option>
+                                    @foreach ($countries as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                         </div>
                     </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

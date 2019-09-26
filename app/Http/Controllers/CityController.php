@@ -28,7 +28,7 @@ class CityController extends Controller
     public function create()
     {
         $this->authorize('create', City::class);
-        $countries = Country::pluck('name', 'id')->all();
+        $countries = Country::pluck('name', 'id');
         return view('cities.create', compact('countries'));
     }
 
@@ -66,7 +66,7 @@ class CityController extends Controller
     public function edit(City $city)
     {
         $this->authorize('update', City::class);
-        $countries = Country::pluck('name', 'id')->all();
+        $countries = Country::pluck('name', 'id');
         return view('cities.edit', compact('city', 'countries'));
     }
 

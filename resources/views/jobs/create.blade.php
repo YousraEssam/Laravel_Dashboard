@@ -28,22 +28,22 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    {!! Form::open(array('route' => 'jobs.store','method'=>'POST')) !!}
                     <div class="row">
+                        <form role="form" method="POST" action="{{ route('jobs.store') }}">
+                            @csrf
                         <div class="col-sm-12 b-r">
                             <div class="form-group">
                                 <strong>Job Name</strong>
-                                {!! Form::text('name', null, array('placeholder' => 'Job Name','class' => 'form-control')) !!}
+                                <input type="text" placeholder="Job Name" class="form-control" name="name">
                             </div>
 
                             <div class="form-group">
                                 <strong>Job Description</strong>
-                                {!! Form::text('description', null, array('placeholder' => 'Job Description','class' => 'form-control')) !!}
+                                <input type="text" placeholder="Job Description" class="form-control" name="description">
                             </div>
                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                         </div>
                     </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
