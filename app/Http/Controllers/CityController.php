@@ -8,13 +8,6 @@ use App\Http\Requests\CityRequest;
 
 class CityController extends Controller
 {
-    public function __construct()
-    {
-         $this->middleware('permission:city-list|city-create|city-edit|city-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:city-create', ['only' => ['create','store']]);
-         $this->middleware('permission:city-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:city-delete', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +15,7 @@ class CityController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', City::class);
         $cities = City::with('country')->paginate(5);
         return view('cities.index', compact('cities'));
     }
@@ -33,6 +27,7 @@ class CityController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', City::class);
         $countries = Country::pluck('name', 'id')->all();
         return view('cities.create', compact('countries'));
     }
@@ -58,6 +53,7 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
+        $this->authorize('view', City::class);
         return view('cities.show', compact('city'));
     }
 
@@ -69,6 +65,7 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
+        $this->authorize('update', City::class);
         $countries = Country::pluck('name', 'id')->all();
         return view('cities.edit', compact('city', 'countries'));
     }
@@ -95,6 +92,7 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
+        $this->authorize('delete', City::class);
         $city->delete();
         return redirect()->route('cities.index')
                         ->with('success', 'City deleted successfully');

@@ -14,6 +14,7 @@ class JobController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Job::class);
         $jobs = Job::paginate(5);
         return view('jobs.index', compact('jobs'));
     }
@@ -25,6 +26,7 @@ class JobController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Job::class);
         return view('jobs.create');
     }
 
@@ -49,6 +51,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
+        $this->authorize('view', Job::class);
         return view('jobs.show', compact('job'));
     }
 
@@ -60,6 +63,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        $this->authorize('update', Job::class);
         return view('jobs.edit', compact('job'));
     }
 
@@ -85,6 +89,7 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
+        $this->authorize('delete', Job::class);
         $job->delete();
         return redirect()->route('jobs.index')
             ->with('success', 'Job Deleted Successfully');

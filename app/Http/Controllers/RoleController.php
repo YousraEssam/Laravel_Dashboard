@@ -8,13 +8,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', \App\Role::class);
         $roles = Role::with('permissions')->paginate(5);
         return view('roles.index', compact('roles'));
     }
@@ -33,6 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', \App\Role::class);
         $permissions = Permission::get();
         return view('roles.create', compact('permissions'));
     }
@@ -59,6 +54,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        $this->authorize('view', \App\Role::class);
         $rolePermissions = $role->load('permissions')->permissions;
         return view('roles.show', compact('role', 'rolePermissions'));
     }
@@ -71,6 +67,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', \App\Role::class);
         $allPermissions = Permission::get();
         $rolePermissions = $role->load('permissions')->permissions
                     ->pluck('name', 'name')
@@ -101,6 +98,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        $this->authorize('delete', \App\Role::class);
         $role->delete();
         return redirect()->route('roles.index')
                 ->with('success', 'Role deleted successfully');

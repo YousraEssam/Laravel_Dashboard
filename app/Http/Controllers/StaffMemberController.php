@@ -7,6 +7,7 @@ use App\Country;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
 use App\Job;
+use App\Policies\StaffMemberPolicy;
 use App\Role;
 use App\StaffMember;
 use App\User;
@@ -16,15 +17,6 @@ use Illuminate\Support\Facades\Storage;
 
 class StaffMemberController extends Controller
 {
-    
-    
-    public function __construct()
-    {
-         $this->middleware('permission:staffmember-list|staffmember-create|staffmember-edit|staffmember-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:staffmember-create', ['only' => ['create','store']]);
-         $this->middleware('permission:staffmember-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:staffmember-delete', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +24,7 @@ class StaffMemberController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', StaffMember::class);
         $staff_members = StaffMember::with('user','job', 'city', 'role')->get();
         return view('staff_members.index', compact('staff_members'));
     }
@@ -43,8 +36,9 @@ class StaffMemberController extends Controller
      */
     public function create()
     {
-        $jobs = Job::pluck('name','id')->all();
-        $roles = Role::pluck('name','id')->all();
+        $this->authorize('create', StaffMember::class);
+        $jobs = Job::pluck('name','id');
+        $roles = Role::pluck('name');
         $countries = Country::pluck('name','id');
         return view('staff_members.create', compact('jobs', 'roles', 'countries'));
 
@@ -58,7 +52,6 @@ class StaffMemberController extends Controller
      */
     public function store(StaffMemberRequest $request)
     {
-        
         $attributes= $request->all();
         
         if($request->file('image')){
@@ -71,6 +64,8 @@ class StaffMemberController extends Controller
         $attributes['user_id'] = $user->id;
         
         $staffMember = StaffMember::create($attributes);
+
+        $user->assignRole($attributes['roles']);
 
         event(new NewStaffMemberHasBeenAddedEvent($staffMember));
 
@@ -85,7 +80,9 @@ class StaffMemberController extends Controller
      */
     public function show(StaffMember $staffMember)
     {
-        return view('staff_members.show', compact('staffMember'));
+        $this->authorize('view', StaffMember::class);
+        $role = $staffMember->user->getRoleNames()->first();
+        return view('staff_members.show', compact('staffMember', 'role'));
     }
     
     /**
@@ -96,12 +93,12 @@ class StaffMemberController extends Controller
      */
     public function edit(StaffMember $staffMember)
     {
-        $jobs = Job::pluck('name','id')->all();
-        $roles = Role::pluck('name','id')->all();
-        // $cities = City::pluck('name','id')->all();
-        // $countries = Country::pluck('name','id')->all();
+        $this->authorize('update', StaffMember::class);
+        $jobs = Job::pluck('name','id');
+        $roles = Role::pluck('name');
         $countries = Country::pluck('name','id');
-        return view('staff_members.edit', compact('staffMember','jobs', 'roles', 'countries'));
+        $role = $staffMember->user->getRoleNames()->first();
+        return view('staff_members.edit', compact('staffMember','jobs', 'roles', 'countries', 'role'));
     }
     
     /**
@@ -126,6 +123,8 @@ class StaffMemberController extends Controller
         $attributes['user_id'] = $user->id;
 
         $staffMember->update($attributes);
+
+        $user->syncRoles($attributes['roles']);
         
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Updated Successfully');
     }
@@ -138,6 +137,7 @@ class StaffMemberController extends Controller
      */
     public function destroy(StaffMember $staffMember)
     {
+        $this->authorize('delete', StaffMember::class);
         $staffMember->user->delete();
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Deleted Successfully');
     }

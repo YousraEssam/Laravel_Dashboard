@@ -30,11 +30,11 @@ class StaffMemberRequest extends FormRequest
             'phone' => 'required|string|numeric',
             'gender' => 'required|string',
             'image' => 'image|mimes:png,jpg|max:2048',
-            // 'isActive' => 'required',
+            'isActive' => 'required',
             'job_id' => 'required',
             'city_id' => 'required',
             'country_id' => 'required',
-            'role_id' => 'required',
+            'roles' => 'required',
         ];
     }
 }

@@ -31,79 +31,100 @@
                     <h5>Edit form</h5>
                 </div>
                 <div class="ibox-content">
-                    {!! Form::model($staffMember, ['method' => 'PATCH','route' => ['staff_members.update', $staffMember->id], 'files' => true]) !!}
+
                     <div class="row">
                         <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Edit Role</h3>
-                            <div class="form-group">
-                                {!! Form::label('Member Image', null, ['class' => 'control-label']) !!}
+                            <form role="form" method="POST" action="{{ route('staff_members.update',$staffMember->id) }}" enctype='multipart/form-data'>
+                                @csrf
+                                @method('PUT')
 
-                                {!! Form::file('image',$staffMember->user->image, array('class' => 'form-control')) !!}
+                            <div class="form-group">
+                                <label>Member Image</label>
+                                <input type="file" value={{$staffMember->user->image}} class="form-control" name="image">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member First Name', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::text('first_name', $staffMember->user->first_name, array('class' => 'form-control')) !!}
+                                <label>Member First Name</label>
+                                <input type="text" value="{{$staffMember->user->first_name}}" class="form-control" name="first_name">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Last Name', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::text('last_name', $staffMember->user->last_name, array('class' => 'form-control')) !!}
+                                <label>Member Last Name</label>
+                                <input type="text" value={{$staffMember->user->last_name}} class="form-control" name="last_name">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Email Address', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::email('email', $staffMember->user->email, array('class' => 'form-control')) !!}
+                                <label>Member Email Address</label>
+                                <input type="email" value={{$staffMember->user->email}} class="form-control" name="email">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Phone Number', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::tel('phone',$staffMember->user->phone, array('class' => 'form-control')) !!}
+                                <label>Member Phone Number</label>
+                                <input type="tel" value={{$staffMember->user->phone}} class="form-control" name="phone">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Gender', null, ['class' => 'control-label']) !!}
+                                <label>Member Gender</label> <br>
+                                <select name="gender" class="form-control" value="{{$staffMember->gender}}">
+                                    <option value="" disabled selected>{{$staffMember->gender}}</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select>
+                            </div>
 
-                                {!! Form::select('gender', ['Female' => 'Female', 'Male' => 'Male'], array('placeholder' => 'Member Gender', 'class' => 'form-control')) !!}
+                            <div class="form-group">
+                                <label>Member Job</label> <br>
+                                <select name="job_id" value="Member Job" class="form-control">
+                                    <option value="" disabled selected>{{$staffMember->job->name}}</option>
+                                    @foreach($jobs as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Member Role</label> <br>
+                                <select name="roles" value="Member Role" class="form-control">
+                                    <option value="" disabled selected>{{$role}}</option>
+                                    @foreach($roles as $key => $value)
+                                    <option value="{{ $value }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             
                             <div class="form-group">
-                                {!! Form::label('Member Job', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('job_id', $jobs,null, array('placeholder' => $staffMember->job->name,'class' => 'form-control')) !!}
+                                <label>Member Country</label> <br>
+                                <select id="country" name="country_id" value="Member Country" class="form-control">
+                                    <option value="" disabled selected>{{$staffMember->country->name}}</option>
+                                    @foreach($countries as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Role', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('role_id', $roles,null, array('placeholder' => $staffMember->role->name, 'class' => 'form-control')) !!}
+                                <label>Member City</label> <br>
+                                <select id="city" name="city_id" value="Member City" class="form-control">
+                                    <option value="{{$staffMember->city->id}}">{{$staffMember->city->name}}</option>
+                                </select>
                             </div>
-                            
-                            <div class="form-group">
-                                {!! Form::label('Member Country', null, ['class' => 'control-label']) !!}
 
-                                {!! Form::select('country_id', $countries,null, array('placeholder' => $staffMember->country->name, 'class' => 'form-control', 'id' => 'country')) !!}
-                            </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member City', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('city_id', [ $staffMember->city->id => $staffMember->city->name ], $staffMember->city->id, array( 'class' => 'form-control', 'id' => 'city')) !!}
+                                <label>Member Activity</label> <br>
+                                <select name="isActive" value="Member Activity" class="form-control">
+                                    <option value="" disabled selected>{{$staffMember->isActive}}</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Not Active</option>
+                                </select>
                             </div>
 
-                            <div class="form-group">
-                                {!! Form::label('Member Activity', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('isActive', [1 => 'Active', 0 => 'Not Active'], array('placeholder' => $staffMember->isActive, 'class' => 'form-control')) !!}
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                             </div>
-
-                            {!! Form::submit('Submit', ['class' => 'btn btn-sm btn-primary pull-right m-t-n-xs']) !!}
                         </div>
                     </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

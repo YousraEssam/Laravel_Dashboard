@@ -57,12 +57,10 @@
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
                         ascending" style="width: 197px;">Country</th>
+             
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
-                        ascending" style="width: 197px;">Role</th>
-                        <!-- <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
-                        rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
-                        ascending" style="width: 197px;">Is Active?</th> -->
+                        ascending" style="width: 197px;">Is Active?</th>
                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
                         rowspan="1" colspan="2" aria-label="CSS grade: activate to sort column 
                         ascending" style="width: 105px;">Actions</th>
@@ -86,9 +84,8 @@
                             <td>{{$staff->city->name}}</td>
                             <td>{{$staff->city->country->name}}</td>
 
-                            <td>{{$staff->role->name}}</td>
                             
-                            <!-- <td>{{$staff->isActive}}</td> -->
+                            <td>{{$staff->isActive}}</td>
 
                             <td class="center">
 
@@ -97,11 +94,15 @@
                                 @can('staffmember-edit')
                                 <a href="{{route('staff_members.edit', $staff->id)}}" class="btn btn-success">Edit</a>
                                 @endcan
+
                                 @can('staffmember-delete')
-                                {!! Form::open(['method' => 'DELETE','route' => ['staff_members.destroy', $staff->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
+                                <form action="{{route('staff_members.destroy', $staff->id)}}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                                 @endcan
+                                
                             </td>
                         </tr>
                         @endforeach

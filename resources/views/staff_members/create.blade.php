@@ -31,82 +31,96 @@
                     <h5>Create form</h5>
                 </div>
                 <div class="ibox-content">
-                    {!! Form::open(array('route' => 'staff_members.store','method'=>'POST', 'files' => true)) !!}
                     <div class="row">
                         <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Create New Staff Member</h3>
-                        <div class="form-group">
-                                {!! Form::label('Member Image', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::file('image', array('id' => 'image', 'class' => 'form-control')) !!}
+                            <form role="form" method="POST" action="{{ route('staff_members.store') }}" enctype='multipart/form-data'>
+                                @csrf
+                            <div class="form-group">
+                                <label>Member Image</label>
+                                <input type="file" placeholder="Member Image" class="form-control" name="image">
                             </div>
 
                             <div class="form-group">
-
-                                {!! Form::label('Member First Name', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::text('first_name', null, array('placeholder' => 'Member First Name', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Last Name', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::text('last_name', null, array('placeholder' => 'Member Last Name', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Email Address', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::email('email', null, array('placeholder' => 'Member Email Address', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Phone Number', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::tel('phone', null, array('placeholder' => 'Member Phone Number', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Gender', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('gender', ['Female' => 'Female', 'Male' => 'Male'], array('placeholder' => 'Member Gender', 'class' => 'form-control')) !!}
-
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Job', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('job_id', $jobs, null, array('placeholder' => 'Member Job','class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Role', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('role_id', $roles, null, array('placeholder' => 'Member Role', 'class' => 'form-control')) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('Member Country', null, ['class' => 'control-label']) !!}
-                                
-                                    {!! Form::select('country_id', $countries, false, array('placeholder' => 'Member Country', 'class' => 'form-control', 'id' => 'country')) !!}
-                            </div>
+                                <label>Member First Name</label>
+                                <input type="text" placeholder="Member First Name" class="form-control" name="first_name">
+                            </div> 
                             
                             <div class="form-group">
-                                {!! Form::label('Member City', null, ['class' => 'control-label']) !!}
-                                
-                                {!! Form::select('city_id', [], null, array('placeholder' => 'Member City', 'class' => 'form-control', 'id' => 'city')) !!}
+                                <label>Member Last Name</label>
+                                <input type="text" placeholder="Member Last Name" class="form-control" name="last_name">
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('Member Activity', null, ['class' => 'control-label']) !!}
-
-                                {!! Form::select('isActive', [1 => 'Active', 0 => 'Not Active'], array('placeholder' => 'Member Activity', 'class' => 'form-control')) !!}
+                                <label>Member Email Address</label>
+                                <input type="email" placeholder="Member Email Address" class="form-control" name="email">
                             </div>
 
-                            {!! Form::submit('Submit', ['class' => 'btn btn-sm btn-primary pull-right m-t-n-xs']) !!}
+                            <div class="form-group">
+                                <label>Member Phone Number</label>
+                                <input type="tel" placeholder="Member Phone Number" class="form-control" name="phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Gender</label> <br>
+                                <select name="gender" class="form-control">
+                                    <option value="" disabled selected>Member Gender</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Job</label> <br>
+                                <select name="job_id" placeholder="Member Job" class="form-control">
+                                    <option value="" disabled selected>Member Job</option>
+                                    @foreach($jobs as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Role</label> <br>
+                                <select name="roles" placeholder="Member Role" class="form-control">
+                                    <option value="" disabled selected>Member Role</option>
+                                    @foreach($roles as $key => $value)
+                                    <option value="{{ $value }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Country</label> <br>
+                                <select id="country" name="country_id" placeholder="Member Country" class="form-control">
+                                    <option value="" disabled selected>Member Country</option>
+                                    @foreach($countries as $key => $value)
+                                    <option value="{{ $key }}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member City</label> <br>
+                                <select id="city" name="city_id" placeholder="Member City" class="form-control">
+                                    <option value="" disabled selected>Member City</option>  
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Activity</label> <br>
+                                <select name="isActive" placeholder="Member Activity" class="form-control">
+                                    <option value="" disabled selected>Member Activity</option>  
+                                    <option value="1">Active</option>
+                                    <option value="0">Not Active</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
+                            </div>
 
                         </div>
                     </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -119,6 +133,7 @@
 <script>
     $('#country').change(function(){
         var countryID = $(this).val();
+        console.log(countryID);
         if(countryID){
             $.ajax({
                 type:"GET",

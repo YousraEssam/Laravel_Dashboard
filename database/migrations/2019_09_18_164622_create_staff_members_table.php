@@ -24,7 +24,7 @@ class CreateStaffMembersTable extends Migration
             $table->unsignedInteger('job_id');
             $table->unsignedInteger('city_id');
             $table->unsignedInteger('country_id');
-            $table->unsignedInteger('role_id');            
+            // $table->unsignedInteger('role_id');            
 
             $table->softDeletes();
             $table->timestamps();
