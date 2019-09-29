@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class StaffMemberController extends Controller
 {
@@ -23,10 +24,26 @@ class StaffMemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         $this->authorize('viewAny', StaffMember::class);
-        $staff_members = StaffMember::with('user','job', 'city', 'role')->get();
-        return view('staff_members.index', compact('staff_members'));
+        if(request()->ajax()){
+            $staff_members = StaffMember::with('user','job', 'city', 'city.country')->get();
+
+            return DataTables::of($staff_members)
+                ->addIndexColumn()
+                ->editColumn('image', function($row){
+                    $img = "<td><img src=".Storage::url($row->image)." style='height:50px; width:50px;'></td>";
+                    return $img;
+                })
+                ->editColumn('name', function($row){
+                    $name = "<td>".$row->user->first_name." ".$row->user->last_name."</td>";
+                    return $name;
+                })
+                ->addColumn('actions', 'staff_members.buttons')
+                ->rawColumns(['name', 'image', 'actions'])
+                ->make(true);
+        }
+        return view('staff_members.index');
     }
 
     /**

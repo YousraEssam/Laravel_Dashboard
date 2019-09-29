@@ -186,14 +186,15 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         /*
-        * Collective HTML Service Provider
-        */
-        Collective\Html\HtmlServiceProvider::class,
-
-        /*
-        * Countries Service Provide
+        * Countries Service Provider..
         */
         'Webpatser\Countries\CountriesServiceProvider',
+
+        /*
+        * Yajra Datatables Service Provider..
+        */
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
 
     ],
 
@@ -248,8 +249,8 @@ return [
         
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
         'Countries' => 'Webpatser\Countries\CountriesFacade',
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
     ],
 
 ];

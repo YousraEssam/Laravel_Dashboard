@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
+use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
 {
@@ -16,10 +17,18 @@ class CityController extends Controller
     public function index()
     {
         $this->authorize('viewAny', City::class);
-        $cities = City::with('country')->paginate(5);
-        return view('cities.index', compact('cities'));
-    }
 
+        if(request()->ajax()){
+            $cities = City::with('country')->get();
+
+            return DataTables::of($cities)
+                ->addIndexColumn()
+                ->addColumn('actions', 'cities.buttons')
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('cities.index');
+    }
     /**
      * Show the form for creating a new resource.
      *

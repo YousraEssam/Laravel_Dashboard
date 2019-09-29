@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleRequest;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
@@ -16,8 +17,20 @@ class RoleController extends Controller
     public function index()
     {
         $this->authorize('viewAny', \App\Role::class);
-        $roles = Role::with('permissions')->paginate(5);
-        return view('roles.index', compact('roles'));
+        
+        if(request()->ajax()){
+            $roles = Role::with('permissions')->get();
+            
+            return DataTables::of($roles)
+                ->addIndexColumn()
+                ->addColumn('permissions', function($row){
+                    return view('roles.permissions', compact('row'));
+                })
+                ->addColumn('actions', 'roles.buttons')
+                ->rawColumns(['permissions', 'actions'])
+                ->make(true);
+        }
+        return view('roles.index');
     }
 
     /**

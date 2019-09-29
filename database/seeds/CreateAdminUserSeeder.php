@@ -28,9 +28,9 @@ class CreateAdminUserSeeder extends Seeder
             'description' => 'site administrator',
             ]);
    
-        // $permissions = Permission::pluck('id', 'id')->all();
+        $permissions = Permission::pluck('id', 'id')->all();
 
-        // $role->syncPermissions($permissions);
+        $role->syncPermissions($permissions);
    
         $user->assignRole([$role->id]);
     }

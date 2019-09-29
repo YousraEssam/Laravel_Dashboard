@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JobRequest;
 use App\Job;
+use Yajra\DataTables\DataTables;
 
 class JobController extends Controller
 {
@@ -15,8 +16,18 @@ class JobController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Job::class);
-        $jobs = Job::paginate(5);
-        return view('jobs.index', compact('jobs'));
+        // $jobs = Job::paginate(5);
+        // return view('jobs.index', compact('jobs'));
+
+        if(request()->ajax()){
+            $jobs = Job::all();
+            return DataTables::of($jobs)
+            ->addIndexColumn()
+            ->addColumn('actions', 'jobs.buttons')
+            ->rawColumns(['actions'])
+            ->make(true);
+        }
+        return view('jobs.index');
     }
 
     /**

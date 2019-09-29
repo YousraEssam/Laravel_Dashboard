@@ -30,7 +30,7 @@
         <div class="table-responsive">
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
         <table class="table table-striped table-bordered table-hover dataTables-example dataTable"
-            id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
+            id="roles-table" aria-describedby="DataTables_Table_0_info" role="grid">
             <thead>
                 <tr role="row">
                     <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" 
@@ -51,44 +51,8 @@
                 </tr>
             </thead>
             <tbody>
-                @if(!empty($roles))
-                @foreach($roles as $role)
-                <tr class="gradeA odd" role="row">
-                    <td class="sorting_1">{{$role->id}}</td>
-                    <td>{{$role->name}}</td>
-                    <td>{{$role->description}}</td>
-                    <td>
-                        @foreach($role->permissions as $rp)
-                        <ul>
-                            <li>{{$rp->name}}</li>
-                        </ul>
-                        @endforeach
-                    </td>
-                    <td class="center">
-                        <a href="{{route('roles.show', $role->id)}}" class="btn btn-success">Show</a>
-                    
-                        @can('role-edit')
-                        <a href="{{route('roles.edit', $role->id)}}" class="btn btn-success">Edit</a>
-                        @endcan
-
-                        @can('role-delete')
-                        <form action="{{route('roles.destroy', $role->id)}}" method="POST" style="display:inline;">
-                            @csrf
-                            @method("DELETE")
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                        @endcan
-                    </td>
-                </tr>
-                @endforeach
-                @endif
             </tbody>
         </table>
-        <div class="row">
-            <div class="col-12 text-center">
-                {{ $roles->links() }}
-            </div>
-        </div>
 
         </div>
         </div>
@@ -99,3 +63,22 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+    $('#roles-table').DataTable({
+        processing: true,
+        // serverSide: true,
+        ajax: '{!! route('roles.index') !!}',
+        columns: [
+            { data: 'id', name: 'id'},
+            { data: 'name', name: 'name'},
+            { data: 'description', name: 'description'},
+            { data: 'permissions', name: 'permissions'},
+            { data: 'actions', name: 'actions', orderable: false, searchable: false},
+        ]
+    });
+});
+</script>
+@endpush

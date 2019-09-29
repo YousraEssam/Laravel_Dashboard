@@ -30,7 +30,7 @@
         <div class="table-responsive">
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
             <table class="table table-striped table-bordered table-hover dataTables-example dataTable"
-                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" role="grid">
+                id="staff-table" aria-describedby="DataTables_Table_0_info" role="grid">
                 <thead>
                     <tr role="row">
                         <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" 
@@ -67,46 +67,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(!empty($staff_members))
-                        @foreach($staff_members as $staff)
-                        <tr class="gradeA odd" role="row">
-                            <td class="sorting_1">{{$staff->id}}</td>
-                            <td>
-                                <img src="{{Storage::url($staff->image)}}" style="height:50px; width:50px;">
-                            </td>
-
-                            <td>{{$staff->user->first_name}} {{$staff->user->last_name}}</td>
-                            <td>{{$staff->user->email}}</td>
-                            <td>{{$staff->user->phone}}</td>
-
-                            <td>{{$staff->job->name}}</td>
-
-                            <td>{{$staff->city->name}}</td>
-                            <td>{{$staff->city->country->name}}</td>
-
-                            
-                            <td>{{$staff->isActive}}</td>
-
-                            <td class="center">
-
-                                <a href="{{route('staff_members.show', $staff->id)}}" class="btn btn-success">Show</a>
-
-                                @can('staffmember-edit')
-                                <a href="{{route('staff_members.edit', $staff->id)}}" class="btn btn-success">Edit</a>
-                                @endcan
-
-                                @can('staffmember-delete')
-                                <form action="{{route('staff_members.destroy', $staff->id)}}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                                @endcan
-                                
-                            </td>
-                        </tr>
-                        @endforeach
-                    @endif
+                    
                 </tbody>
             </table>
             
@@ -119,3 +80,27 @@
 </div>
 
 @endsection 
+
+@push('scripts')
+<script>
+$(function(){
+    $('#staff-table').DataTable({
+        processing: true,
+        // serverSide: true,
+        ajax: '{!! route('staff_members.index') !!}',
+        columns: [
+            {data: 'id', name:'id'},
+            {data: 'image', name: 'image'},
+            {data: 'name', name: 'name'},
+            {data: 'user.email', name: 'email'},
+            {data: 'user.phone', name: 'phone'},
+            {data: 'job.name', name: 'job'},
+            {data: 'city.name', name: 'city'},
+            {data: 'city.country.name', name: 'country'},
+            {data: 'isActive', name: 'isActive'},
+            {data: 'actions', name: 'actions'}
+        ]
+    });
+});
+</script>
+@endpush
