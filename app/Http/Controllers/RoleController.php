@@ -9,6 +9,11 @@ use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(\App\Role::class, 'roles');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +21,6 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', \App\Role::class);
-        
         if(request()->ajax()){
             $roles = Role::latest()->with('permissions')->get();
             
@@ -40,7 +43,6 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', \App\Role::class);
         $permissions = Permission::get();
         return view('roles.create', compact('permissions'));
     }
@@ -67,7 +69,6 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $this->authorize('view', \App\Role::class);
         $rolePermissions = $role->load('permissions')->permissions;
         return view('roles.show', compact('role', 'rolePermissions'));
     }
@@ -80,7 +81,6 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('update', \App\Role::class);
         $allPermissions = Permission::get();
         $rolePermissions = $role->load('permissions')->permissions
                     ->pluck('name', 'name')
@@ -111,7 +111,6 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $this->authorize('delete', \App\Role::class);
         $role->delete();
         return redirect()->route('roles.index')
                 ->with('success', 'Role deleted successfully');

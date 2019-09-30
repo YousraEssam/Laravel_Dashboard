@@ -9,6 +9,11 @@ use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(City::class, 'citiess');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +21,6 @@ class CityController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', City::class);
-
         if(request()->ajax()){
             $cities = City::latest()->with('country')->get();
             
@@ -36,7 +39,6 @@ class CityController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', City::class);
         $countries = Country::pluck('name', 'id');
         return view('cities.create', compact('countries'));
     }
@@ -62,7 +64,6 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        $this->authorize('view', City::class);
         return view('cities.show', compact('city'));
     }
 
@@ -74,7 +75,6 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
-        $this->authorize('update', City::class);
         $countries = Country::pluck('name', 'id');
         return view('cities.edit', compact('city', 'countries'));
     }
@@ -101,7 +101,6 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        $this->authorize('delete', City::class);
         $city->delete();
         return redirect()->route('cities.index')
                         ->with('success', 'City deleted successfully');
