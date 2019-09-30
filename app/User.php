@@ -55,4 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(StaffMember::class);
     }
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }

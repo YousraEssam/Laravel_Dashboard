@@ -26,15 +26,24 @@ class StaffMemberRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:150',
             'last_name' => 'required|string|max:150',
-            'email' => 'required|string|email',
-            'phone' => 'required|string|numeric',
+            'email' => 'required|string|email|unique:users,id,'.$this->checkIdExists(),
+            'phone' => 'required|regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]+$/|unique:users,id,'.$this->checkIdExists(),
             'gender' => 'required|string',
             'image' => 'image|mimes:png,jpg|max:2048',
             'isActive' => 'required',
-            'job_id' => 'required',
-            'city_id' => 'required',
-            'country_id' => 'required',
-            'roles' => 'required',
+            'job_id' => 'required|exists:jobs,id',
+            'city_id' => 'required|exists:cities,id',
+            'country_id' => 'required|exists:countries,id',
+            'roles' => 'required|exists:roles,id',
         ];
     }
+
+    public function checkIdExists(){
+        if($this->id)
+            return $this->id;
+        else
+            return false;
+    }
+
+
 }

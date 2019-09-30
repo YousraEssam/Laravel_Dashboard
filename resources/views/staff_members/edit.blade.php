@@ -66,7 +66,6 @@
                             <div class="form-group">
                                 <label>Member Gender</label> <br>
                                 <select name="gender" class="form-control" value="{{$staffMember->gender}}">
-                                    <option value="" disabled selected>{{$staffMember->gender}}</option>
                                     <option value="Female">Female</option>
                                     <option value="Male">Male</option>
                                 </select>
@@ -75,9 +74,12 @@
                             <div class="form-group">
                                 <label>Member Job</label> <br>
                                 <select name="job_id" value="Member Job" class="form-control">
-                                    <option value="" disabled selected>{{$staffMember->job->name}}</option>
                                     @foreach($jobs as $key => $value)
-                                    <option value="{{ $key }}">{{$value}}</option>
+                                        @if($key === $staffMember->job->id)
+                                        <option selected value="{{ $key }}">{{$value}}</option>
+                                        @else
+                                        <option value="{{ $key }}">{{$value}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -86,9 +88,12 @@
                             <div class="form-group">
                                 <label>Member Role</label> <br>
                                 <select name="roles" value="Member Role" class="form-control">
-                                    <option value="" disabled selected>{{$role}}</option>
                                     @foreach($roles as $key => $value)
-                                    <option value="{{ $value }}">{{$value}}</option>
+                                        @if($key === $staffMember->user->role)
+                                            <option selected value="{{ $value }}">{{$value}}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{$value}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -98,7 +103,11 @@
                                 <select id="country" name="country_id" value="Member Country" class="form-control">
                                     <option value="" disabled selected>{{$staffMember->country->name}}</option>
                                     @foreach($countries as $key => $value)
-                                    <option value="{{ $key }}">{{$value}}</option>
+                                        @if($key === $staffMember->country->id)
+                                            <option selected value="{{ $key }}">{{$value}}</option>
+                                        @else
+                                            <option value="{{ $key }}">{{$value}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -114,7 +123,6 @@
                             <div class="form-group">
                                 <label>Member Activity</label> <br>
                                 <select name="isActive" value="Member Activity" class="form-control">
-                                    <option value="" disabled selected>{{$staffMember->isActive}}</option>
                                     <option value="1">Active</option>
                                     <option value="0">Not Active</option>
                                 </select>
@@ -136,7 +144,6 @@
 @section('cityscript')
 <script>
     $('#country').change(function(){
-        // alert('dASd')
         var countryID = $(this).val();
         if(countryID){
             $.ajax({
