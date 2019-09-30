@@ -87,12 +87,12 @@
 
                             <div class="form-group">
                                 <label>Member Role</label> <br>
-                                <select name="roles" value="Member Role" class="form-control">
+                                <select name="role_id" value="Member Role" class="form-control">
                                     @foreach($roles as $key => $value)
-                                        @if($key === $staffMember->user->role)
-                                            <option selected value="{{ $value }}">{{$value}}</option>
+                                        @if($key === $staffMember->role)
+                                            <option selected value="{{ $key }}">{{$value}}</option>
                                         @else
-                                            <option value="{{ $value }}">{{$value}}</option>
+                                            <option value="{{ $key }}">{{$value}}</option>
                                         @endif
                                     @endforeach
                                 </select>

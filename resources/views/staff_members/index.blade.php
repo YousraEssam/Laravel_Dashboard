@@ -37,6 +37,7 @@
                         <th>Job</th>
                         <th>City</th>
                         <th>Country</th>
+                        <th>Role</th>
                         <th>Is Active?</th>
                         <th>Actions</th>
                     </tr>
@@ -68,6 +69,7 @@ $(function(){
             {data: 'job.name', name: 'job'},
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},
+            {data: 'role.name', name:'role'},
             {data: 'isActive', name: 'isActive'},
             {data: 'actions', name: 'actions'}
         ]

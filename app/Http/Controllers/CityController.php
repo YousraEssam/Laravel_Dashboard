@@ -25,7 +25,7 @@ class CityController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $cities = City::latest()->first()->with('country');
+            $cities = City::latest()->with('country');
             
             return DataTables::of($cities)
                 ->addIndexColumn()

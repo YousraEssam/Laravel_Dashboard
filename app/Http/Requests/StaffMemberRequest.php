@@ -34,7 +34,7 @@ class StaffMemberRequest extends FormRequest
             'job_id' => 'required|exists:jobs,id',
             'city_id' => 'required|exists:cities,id',
             'country_id' => 'required|exists:countries,id',
-            'roles' => 'required|exists:roles,id',
+            'role_id' => 'required|exists:roles,id',
         ];
     }
 

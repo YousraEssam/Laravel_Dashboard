@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label>Member Gender</label> <br>
                                 <select name="gender" class="form-control">
-                                    <option value="" disabled selected>Member Gender</option>
+                                    <option value="">Member Gender</option>
                                     <option value="Female">Female</option>
                                     <option value="Male">Male</option>
                                 </select>
@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label>Member Job</label> <br>
                                 <select name="job_id" placeholder="Member Job" class="form-control">
-                                    <option value="" disabled selected>Member Job</option>
+                                    <option value="">Member Job</option>
                                     @foreach($jobs as $key => $value)
                                     <option value="{{ $key }}">{{$value}}</option>
                                     @endforeach
@@ -81,10 +81,10 @@
 
                             <div class="form-group">
                                 <label>Member Role</label> <br>
-                                <select name="roles" placeholder="Member Role" class="form-control">
-                                    <option value="" disabled selected>Member Role</option>
+                                <select name="role_id" placeholder="Member Role" class="form-control">
+                                    <option value="">Member Role</option>
                                     @foreach($roles as $key => $value)
-                                    <option value="{{ $value }}">{{$value}}</option>
+                                        <option value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -92,7 +92,7 @@
                             <div class="form-group">
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" placeholder="Member Country" class="form-control">
-                                    <option value="" disabled selected>Member Country</option>
+                                    <option value="">Member Country</option>
                                     @foreach($countries as $key => $value)
                                     <option value="{{ $key }}">{{$value}}</option>
                                     @endforeach
@@ -102,14 +102,14 @@
                             <div class="form-group">
                                 <label>Member City</label> <br>
                                 <select id="city" name="city_id" placeholder="Member City" class="form-control">
-                                    <option value="" disabled selected>Member City</option>  
+                                    <option value="">Member City</option>  
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Member Activity</label> <br>
                                 <select name="isActive" placeholder="Member Activity" class="form-control">
-                                    <option value="" disabled selected>Member Activity</option>  
+                                    <option value="">Member Activity</option>  
                                     <option value="1">Active</option>
                                     <option value="0">Not Active</option>
                                 </select>
