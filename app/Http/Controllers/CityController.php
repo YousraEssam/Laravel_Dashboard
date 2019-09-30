@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
 {
+    use SoftDeletes;
+    
     public function __construct()
     {
         $this->authorizeResource(City::class, 'citiess');
