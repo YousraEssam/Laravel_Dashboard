@@ -25,7 +25,7 @@ class RoleController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $roles = Role::latest()->with('permissions')->get();
+            $roles = Role::latest()->first()->with('permissions');
             
             return DataTables::of($roles)
                 ->addIndexColumn()
