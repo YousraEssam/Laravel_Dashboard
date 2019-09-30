@@ -27,7 +27,7 @@ class StaffMemberController extends Controller
     { 
         $this->authorize('viewAny', StaffMember::class);
         if(request()->ajax()){
-            $staff_members = StaffMember::with('user','job', 'city', 'city.country')->get();
+            $staff_members = StaffMember::latest()->with('user','job', 'city', 'city.country')->get();
 
             return DataTables::of($staff_members)
                 ->addIndexColumn()

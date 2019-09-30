@@ -19,7 +19,7 @@ class RoleController extends Controller
         $this->authorize('viewAny', \App\Role::class);
         
         if(request()->ajax()){
-            $roles = Role::with('permissions')->get();
+            $roles = Role::latest()->with('permissions')->get();
             
             return DataTables::of($roles)
                 ->addIndexColumn()

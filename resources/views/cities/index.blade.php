@@ -19,41 +19,30 @@
 @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Cities Table</h5>
-                </div>
 
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example dataTable"
-                            id="cities-table" aria-describedby="DataTables_Table_0_info" role="grid">
-                            <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" 
-                                    rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine:
-                                    activate to sort column descending" style="width: 175px;">Id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
-                                    rowspan="1" colspan="1" aria-label="Browser: activate to sort column 
-                                    ascending" style="width: 219px;">Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
-                                    rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column
-                                    ascending" style="width: 197px;">Country</th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" 
-                                    rowspan="1" colspan="2" aria-label="CSS grade: activate to sort column 
-                                    ascending" style="width: 105px;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Cities Table</h5>
+        </div>
+
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table id="cities-table" class="table table-striped table-bordered table-hover" role="grid">
+                    <thead>
+                        <tr role="row">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Country</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
 </div>
 
 @endsection 
@@ -63,7 +52,7 @@
 $(function() {
     $('#cities-table').DataTable({
         processing: true,
-        // serverSide: true,
+        serverSide: true,
         ajax: '{!! route('cities.index') !!}',
         columns: [
             { data: 'id', name: 'id'},

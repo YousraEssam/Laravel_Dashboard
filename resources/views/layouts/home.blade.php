@@ -64,6 +64,7 @@
                             </a>
                         </li>
                     </li>
+                    @can('role-list')
                     <li class="">
                         <a href="">
                             <i class="fa fa-th-large"></i> 
@@ -77,6 +78,8 @@
                             @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('city-list')
                     <li>
                         <a href="">
                             <i class="fa fa-th-large"></i> 
@@ -90,6 +93,8 @@
                             @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('job-list')
                     <li>
                         <a href="">
                             <i class="fa fa-th-large"></i> 
@@ -103,6 +108,8 @@
                             @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('staffmember-list')
                     <li>
                         <a href="">
                             <i class="fa fa-th-large"></i> 
@@ -111,11 +118,12 @@
                         </a>
                         <ul class="nav nav-second-level" style="">
                             <li><a href="{{ route('staff_members.index') }}">All</a></li>
-                            <!-- @can('staffmember-create') -->
+                            @can('staffmember-create')
                             <li><a href="{{ route('staff_members.create') }}">Add</a></li>
-                            <!-- @endcan -->
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
                 
                 </ul>
 

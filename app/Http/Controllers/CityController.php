@@ -19,8 +19,8 @@ class CityController extends Controller
         $this->authorize('viewAny', City::class);
 
         if(request()->ajax()){
-            $cities = City::with('country')->get();
-
+            $cities = City::latest()->with('country')->get();
+            
             return DataTables::of($cities)
                 ->addIndexColumn()
                 ->addColumn('actions', 'cities.buttons')

@@ -38,16 +38,35 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         @guest
-                            <li><a class="page-scroll" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            @if (Route::has('register'))
-                                <li><a class="page-scroll" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                            @endif
-                        @else
-                            <li class="active">
-                                <a class="page-scroll" href="">
-                                    Hello,
+                            <li>
+                                <a class="page-scroll" href="{{ route('login') }}">{{ __('Login') }}
                                 </a>
                             </li>
+                            @if (Route::has('register'))
+                                <li>
+                                    <a class="page-scroll" href="{{ route('register') }}">{{ __('Register') }}
+                                    </a>
+                                </li>
+                            @endif
+                        @else
+                        @hasanyrole('Admin|StaffMember|Visitor')
+                            <li class="active">
+                                <a class="page-scroll" href="">
+                                    Hello, {{ auth()->user()->first_name }}
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a class="page-scroll" href="{{route('home')}}">
+                                    Go To Dashboard
+                                </a>
+                            </li>
+                        @else
+                            <li class="active">
+                            <a class="page-scroll" href="#">
+                                Hello,
+                            </a>
+                            </li>
+                        @endhasanyrole
 
                             <li>
                                 <a class="page-scroll" href="{{ route('logout') }}"
