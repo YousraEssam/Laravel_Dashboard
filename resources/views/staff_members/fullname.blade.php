@@ -1,3 +1,3 @@
 <td>
-    {{$row->user->getFullName()}}
+    {{$row->user->getFullNameAttribute()}}
 </td>

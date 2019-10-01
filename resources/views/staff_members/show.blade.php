@@ -57,7 +57,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Member Role:</label>
-                    <h4> {{$role}} </h4>
+                    <h4> {{$staffMember->role->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -75,7 +75,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Member Active?</label>
-                    <h4> {{$staffMember->isActive}} </h4>
+                    <h4> {{$staffMember->is_active}} </h4>
                 </div>
             </div>
         </div>

@@ -108,7 +108,7 @@
 
                             <div class="form-group">
                                 <label>Member Activity</label> <br>
-                                <select name="isActive" placeholder="Member Activity" class="form-control">
+                                <select name="is_active" placeholder="Member Activity" class="form-control">
                                     <option value="">Member Activity</option>  
                                     <option value="1">Active</option>
                                     <option value="0">Not Active</option>

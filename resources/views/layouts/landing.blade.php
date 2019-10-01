@@ -49,7 +49,6 @@
                                 </li>
                             @endif
                         @else
-                        @hasanyrole('Admin|StaffMember|Visitor')
                             <li class="active">
                                 <a class="page-scroll" href="">
                                     Hello, {{ auth()->user()->first_name }}
@@ -60,13 +59,6 @@
                                     Go To Dashboard
                                 </a>
                             </li>
-                        @else
-                            <li class="active">
-                            <a class="page-scroll" href="#">
-                                Hello,
-                            </a>
-                            </li>
-                        @endhasanyrole
 
                             <li>
                                 <a class="page-scroll" href="{{ route('logout') }}"

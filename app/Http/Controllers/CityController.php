@@ -108,4 +108,5 @@ class CityController extends Controller
         return redirect()->route('cities.index')
                         ->with('success', 'City deleted successfully');
     }
+
 }

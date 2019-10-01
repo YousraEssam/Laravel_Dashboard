@@ -70,7 +70,7 @@ $(function(){
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},
             {data: 'role.name', name:'role'},
-            {data: 'isActive', name: 'isActive'},
+            {data: 'is_active', name: 'is_active'},
             {data: 'actions', name: 'actions'}
         ]
     });

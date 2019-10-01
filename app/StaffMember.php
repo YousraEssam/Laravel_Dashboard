@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StaffMember extends Model
 {
     use SoftDeletes;
-
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'image', 'job_id', 'country_id', 'city_id', 'gender', 'user_id', 'isActive'
+        'job_id', 'role_id', 'country_id', 'city_id', 'gender', 'user_id', 'is_active'
+        // ,'image'
     ];
 
     /**
@@ -58,4 +59,13 @@ class StaffMember extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the staff member's image.
+     */
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    
 }

@@ -89,7 +89,7 @@
                                 <label>Member Role</label> <br>
                                 <select name="role_id" value="Member Role" class="form-control">
                                     @foreach($roles as $key => $value)
-                                        @if($key === $staffMember->role)
+                                        @if($key === $staffMember->role->id)
                                             <option selected value="{{ $key }}">{{$value}}</option>
                                         @else
                                             <option value="{{ $key }}">{{$value}}</option>
@@ -122,7 +122,7 @@
 
                             <div class="form-group">
                                 <label>Member Activity</label> <br>
-                                <select name="isActive" value="Member Activity" class="form-control">
+                                <select name="is_active" value="Member Activity" class="form-control">
                                     <option value="1">Active</option>
                                     <option value="0">Not Active</option>
                                 </select>

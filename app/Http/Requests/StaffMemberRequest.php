@@ -30,7 +30,7 @@ class StaffMemberRequest extends FormRequest
             'phone' => 'required|regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]+$/|unique:users,id,'.$this->checkIdExists(),
             'gender' => 'required|string',
             'image' => 'image|mimes:png,jpg|max:2048',
-            'isActive' => 'required',
+            'is_active' => 'required',
             'job_id' => 'required|exists:jobs,id',
             'city_id' => 'required|exists:cities,id',
             'country_id' => 'required|exists:countries,id',

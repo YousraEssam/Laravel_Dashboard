@@ -6,18 +6,30 @@ use App\City;
 use App\Country;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
+use App\Image;
 use App\Job;
 use App\Policies\StaffMemberPolicy;
 use App\Role;
 use App\StaffMember;
+use App\Traits\ImageUpload;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class StaffMemberController extends Controller
 {
+    use SoftDeletes;
+    use ImageUpload;
+
+    public function __construct()
+    {
+        $this->authorizeResource(StaffMember::class, 'staff_members');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,19 +37,14 @@ class StaffMemberController extends Controller
      */
     public function index()
     { 
-        $this->authorize('viewAny', StaffMember::class);
+        $staff_members = StaffMember::latest()->with('user','job', 'city', 'role', 'city.country', 'image');
         if(request()->ajax()){
-            $staff_members = StaffMember::latest()->with('user','job', 'city', 'city.country')->get();
 
             return DataTables::of($staff_members)
                 ->addIndexColumn()
-                ->editColumn('image', function($row){
-                    $img = "<td><img src=".Storage::url($row->image)." style='height:50px; width:50px;'></td>";
-                    return $img;
-                })
+                ->editColumn('image', 'staff_members.image')
                 ->editColumn('name', function($row){
-                    $name = "<td>".$row->user->first_name." ".$row->user->last_name."</td>";
-                    return $name;
+                    return view('staff_members.fullname', compact('row'));
                 })
                 ->addColumn('actions', 'staff_members.buttons')
                 ->rawColumns(['name', 'image', 'actions'])
@@ -53,12 +60,10 @@ class StaffMemberController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', StaffMember::class);
         $jobs = Job::pluck('name','id');
-        $roles = Role::pluck('name');
+        $roles = Role::pluck('name','id');
         $countries = Country::pluck('name','id');
         return view('staff_members.create', compact('jobs', 'roles', 'countries'));
-
     }
 
     /**
@@ -68,25 +73,21 @@ class StaffMemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StaffMemberRequest $request)
-    {
-        $attributes= $request->all();
+    {        
+        $user = User::create($request->all() + ['password' => Hash::make(Str::random(8))]);
+ 
+        $staffMember = $user->staff()->create($request->all());
         
-        if($request->file('image')){
-            $path = Storage::putFile('public/uploads', $request->file('image'));
-            $attributes['image'] = $path;
+        if ($request->hasFile('image')) {
+            $path = $this->uploadImage($request, $staffMember);
+            $staffMember->image()->create(['url' => $path]);
         }
-
-        $user = User::create($request->all()+['password' => Hash::make('Staff123')]);
         
-        $attributes['user_id'] = $user->id;
-        
-        $staffMember = StaffMember::create($attributes);
-
-        $user->assignRole($attributes['roles']);
-
         event(new NewStaffMemberHasBeenAddedEvent($staffMember));
 
-        return redirect()->route('staff_members.index')->with('success', 'New Staff Member Added Successfully and Reset Password Link Has Been Sent');
+        return redirect()
+            ->route('staff_members.index')
+            ->with('success', 'New Staff Member Added Successfully and Reset Password Link Has Been Sent');
     }
     
     /**
@@ -97,8 +98,7 @@ class StaffMemberController extends Controller
      */
     public function show(StaffMember $staffMember)
     {
-        $this->authorize('view', StaffMember::class);
-        $role = $staffMember->user->getRoleNames()->first();
+        $role = $staffMember->role();
         return view('staff_members.show', compact('staffMember', 'role'));
     }
     
@@ -110,12 +110,10 @@ class StaffMemberController extends Controller
      */
     public function edit(StaffMember $staffMember)
     {
-        $this->authorize('update', StaffMember::class);
         $jobs = Job::pluck('name','id');
-        $roles = Role::pluck('name');
+        $roles = Role::pluck('name','id');
         $countries = Country::pluck('name','id');
-        $role = $staffMember->user->getRoleNames()->first();
-        return view('staff_members.edit', compact('staffMember','jobs', 'roles', 'countries', 'role'));
+        return view('staff_members.edit', compact('staffMember','jobs', 'roles', 'countries'));
     }
     
     /**
@@ -127,23 +125,17 @@ class StaffMemberController extends Controller
      */
     public function update(StaffMemberRequest $request, StaffMember $staffMember)
     {
-        $attributes= $request->all();
+        $staffMember->user->update($request->all());
+        $staffMember->update($request->all());
         
-        if($request->hasFile('image')){
-            $path = Storage::putFile('public/uploads', $request->file('image'));
-            $attributes['image'] = $path;
+        if ($request->hasFile('image')) {
+            $path = $this->uploadImage($request, $staffMember);
+            $staffMember->image()->update(['url' => $path]);
         }
 
-        $user = $staffMember::with('user')->first()->user;
-        $user->update($request->all());
-
-        $attributes['user_id'] = $user->id;
-
-        $staffMember->update($attributes);
-
-        $user->syncRoles($attributes['roles']);
-        
-        return redirect()->route('staff_members.index')->with('success', 'Staff Member Updated Successfully');
+        return redirect()
+            ->route('staff_members.index')
+            ->with('success', 'Staff Member Updated Successfully');
     }
     
     /**
@@ -154,8 +146,10 @@ class StaffMemberController extends Controller
      */
     public function destroy(StaffMember $staffMember)
     {
-        $this->authorize('delete', StaffMember::class);
-        $staffMember->user->delete();
+        $staffMember->user()->delete();
+        Storage::delete($staffMember->image->url);
+        $staffMember->image()->delete();
+
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Deleted Successfully');
     }
     
@@ -164,7 +158,6 @@ class StaffMemberController extends Controller
      */
     public function getCityList(Request $request)
     {
-       
         $cities = City::where("country_id",$request->country_id)->pluck("name","id");
         return response()->json($cities);
     }
