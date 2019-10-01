@@ -25,11 +25,16 @@ class City extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo(Country::class);
     }
 
     public function staffMembers()
     {
-        return $this->hasMany('App\StaffMember');
+        return $this->hasMany(StaffMember::class);
+    }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
     }
 }

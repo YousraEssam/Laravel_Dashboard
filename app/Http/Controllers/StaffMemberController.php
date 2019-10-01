@@ -6,10 +6,7 @@ use App\City;
 use App\Country;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
-use App\Image;
 use App\Job;
-use App\Policies\StaffMemberPolicy;
-use App\Role;
 use App\StaffMember;
 use App\Traits\ImageUpload;
 use App\User;
@@ -18,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class StaffMemberController extends Controller
@@ -74,20 +72,21 @@ class StaffMemberController extends Controller
      */
     public function store(StaffMemberRequest $request)
     {        
-        $user = User::create($request->all() + ['password' => Hash::make(Str::random(8))]);
- 
+        $user = User::create($request->all() + ['password' => Hash::make('Staff123')]);
+        $user->assignRole($request->role_id);
+
         $staffMember = $user->staff()->create($request->all());
         
         if ($request->hasFile('image')) {
             $path = $this->uploadImage($request, $staffMember);
             $staffMember->image()->create(['url' => $path]);
         }
-        
+
         event(new NewStaffMemberHasBeenAddedEvent($staffMember));
 
         return redirect()
             ->route('staff_members.index')
-            ->with('success', 'New Staff Member Added Successfully and Reset Password Link Has Been Sent');
+            ->with('success', 'New Staff Member Has Been Added Successfully and Reset Password Link Has Been Sent');
     }
     
     /**
@@ -135,7 +134,7 @@ class StaffMemberController extends Controller
 
         return redirect()
             ->route('staff_members.index')
-            ->with('success', 'Staff Member Updated Successfully');
+            ->with('success', 'Staff Member Has Been Updated Successfully');
     }
     
     /**
@@ -146,8 +145,15 @@ class StaffMemberController extends Controller
      */
     public function destroy(StaffMember $staffMember)
     {
-        $staffMember->user()->delete();
-        Storage::delete($staffMember->image->url);
+        //to delete both user and staff or use boot() method in the model
+        // to override delete behaviour 
+        // $staffMember->user()->delete();
+        $staffMember->delete();
+
+        //to delete image from storage
+        // Storage::delete($staffMember->image->url);
+
+        //to delete image record from image table
         $staffMember->image()->delete();
 
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Deleted Successfully');

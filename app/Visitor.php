@@ -5,33 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StaffMember extends Model
+class Visitor extends Model
 {
     use SoftDeletes;
     
-    public static function boot(){
-        parent::boot();
-
-        static::deleting(function($staffMember){
-            $staffMember->user()->delete();
-        });
-    }
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'job_id', 'role_id', 'country_id', 'city_id', 'gender', 'user_id', 'is_active'
+        'country_id', 'city_id', 'gender', 'user_id', 'is_active'
     ];
-
-    /**
-     * Get the job that owns the staff member.
-     */
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
 
     /**
      * Get the country that owns the staff member.
@@ -47,14 +32,6 @@ class StaffMember extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
-    }
-
-    /**
-     * Get the role that owns the staff member.
-     */
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
     }
 
     /**

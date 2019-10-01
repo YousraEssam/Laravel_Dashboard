@@ -1,3 +1,7 @@
 <td>
-    {{$row->user->getFullNameAttribute()}}
+    @if($row)
+        {{$row->user->getFullNameAttribute()}}
+    @else
+        <p>---</p>
+    @endif
 </td>

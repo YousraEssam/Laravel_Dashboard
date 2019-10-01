@@ -4,14 +4,15 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +57,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(StaffMember::class);
     }
 
+    /**
+     * Get the visitor record associated with the user.
+     */
+    public function visitor()
+    {
+        return $this->hasOne(Visitor::class);
+    }
     /**
      * Get the user's full name.
      *

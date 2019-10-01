@@ -19,7 +19,6 @@ class CreateStaffMembersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('gender');
 
-            // $table->string('image');
             $table->unsignedInteger('job_id');
             $table->unsignedInteger('city_id');
             $table->unsignedInteger('country_id');

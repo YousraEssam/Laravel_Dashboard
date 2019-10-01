@@ -30,13 +30,9 @@ Route::get(
 )->name('register');
 
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')
             ->name('home');
-// Route::group(
-//     ['middleware' => ['role:Admin']], function () {
-//         Route::get('/home', 'HomeController@index')
-//             ->name('home');
-//     });
 
 Route::group(
     ['middleware' => ['auth']], function () {
@@ -44,6 +40,7 @@ Route::group(
         Route::resource('cities', 'CityController');
         Route::resource('jobs', 'JobController');
         Route::resource('staff_members', 'StaffMemberController');
+        Route::resource('visitors', 'VisitorController');
     }
 );
 

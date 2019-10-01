@@ -124,7 +124,21 @@
                         </ul>
                     </li>
                     @endcan
-                
+                    @can('visitor-list')
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Visitors</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('visitors.index') }}">All</a></li>
+                            @can('visitor-create')
+                            <li><a href="{{ route('visitors.create') }}">Add</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
                 </ul>
 
             </div>

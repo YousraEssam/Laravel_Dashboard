@@ -24,7 +24,7 @@ class JobController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $jobs = Job::latest()->first();
+            $jobs = Job::latest();
             return DataTables::of($jobs)
             ->addIndexColumn()
             ->addColumn('actions', 'jobs.buttons')

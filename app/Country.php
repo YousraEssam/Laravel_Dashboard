@@ -13,7 +13,7 @@ class Country extends Model
      */
     public function cities()
     {
-        return $this->hasMany('App\City');
+        return $this->hasMany(City::class);
     }
 
     /**
@@ -21,6 +21,14 @@ class Country extends Model
      */
     public function staffMembers()
     {
-        return $this->hasMany('App\StaffMember');
+        return $this->hasMany(StaffMember::class);
+    }
+
+    /**
+     * Get the staff members for the country.
+     */
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
     }
 }

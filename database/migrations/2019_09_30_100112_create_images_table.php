@@ -18,6 +18,8 @@ class CreateImagesTable extends Migration
             $table->string('url');
             $table->integer('imageable_id');
             $table->string('imageable_type');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
