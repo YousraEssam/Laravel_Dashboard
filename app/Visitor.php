@@ -10,6 +10,17 @@ class Visitor extends Model
     use SoftDeletes;
     
     /**
+     * to override delete behaviour
+     */
+    public static function boot(){
+        parent::boot();
+
+        static::deleting(function($visitor){
+            $visitor->user()->delete();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

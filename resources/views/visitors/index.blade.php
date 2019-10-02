@@ -34,6 +34,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
+                        <th>Gender</th>
                         <th>City</th>
                         <th>Country</th>
                         <th>Is Active?</th>
@@ -64,6 +65,7 @@ $(function(){
             {data: 'name', name: 'name'},
             {data: 'user.email', name: 'email'},
             {data: 'user.phone', name: 'phone'},
+            {data: 'gender', name: 'gender'},
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},
             {data: 'is_active', name: 'is_active'},

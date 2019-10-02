@@ -130,8 +130,9 @@ class VisitorController extends Controller
      */
     public function destroy(Visitor $visitor)
     {
-        $visitor->user()->delete();
-        Storage::delete($visitor->image->url);
+        // $visitor->user()->delete();
+        // Storage::delete($visitor->image->url);
+        $visitor->delete();
         $visitor->image()->delete();
 
         return redirect()->route('visitors.index')->with('success', 'Visitor Deleted Successfully');

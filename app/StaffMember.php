@@ -9,6 +9,9 @@ class StaffMember extends Model
 {
     use SoftDeletes;
     
+    /**
+     * to override delete behaviour
+     */
     public static function boot(){
         parent::boot();
 

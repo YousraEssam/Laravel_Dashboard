@@ -24,12 +24,14 @@
                     <h4> {{$visitor->id}} </h4>
                 </div>
             </div>
+            @if($visitor->image)
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Member Image:</label>
-                    <img src="{{Storage::url($visitor->image)}}" style="height:50px; width:50px;">
+                    <img src="{{Storage::url($visitor->image->url)}}" style="height:50px; width:50px;">
                 </div>
             </div>
+            @endif
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Member Name:</label>
