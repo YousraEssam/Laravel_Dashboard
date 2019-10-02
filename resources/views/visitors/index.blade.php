@@ -26,7 +26,7 @@
 
         <div class="ibox-content">
         <div class="table-responsive">
-            <table id="staff-table" class="table table-striped table-bordered table-hover" role="grid">
+            <table id="visitor-table" class="table table-striped table-bordered table-hover" role="grid">
                 <thead>
                     <tr role="row">
                         <th>#</th>
@@ -55,7 +55,7 @@
 @push('scripts')
 <script>
 $(function(){
-    $('#staff-table').DataTable({
+    $('#visitor-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: '{!! route('visitors.index') !!}',
@@ -70,7 +70,11 @@ $(function(){
             {data: 'city.country.name', name: 'country'},
             {data: 'is_active', name: 'is_active'},
             {data: 'actions', name: 'actions'}
-        ]
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
     });
 });
 </script>

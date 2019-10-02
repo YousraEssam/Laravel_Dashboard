@@ -76,8 +76,12 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Member Active?</label>
-                    <h4> {{$staffMember->is_active}} </h4>
+                    <label class="control-label" for="customer">Member Status</label>
+                    @if($staffMember->is_active == 1)
+                    <h4> Active </h4>
+                    @elseif($staffMember->is_active == 0)
+                    <h4> InActive </h4>
+                    @endif
                 </div>
             </div>
         </div>

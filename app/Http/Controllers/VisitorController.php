@@ -34,8 +34,11 @@ class VisitorController extends Controller
                 ->editColumn('name', function($row){
                     return view('visitors.fullname', compact('row'));
                 })
+                ->editColumn('is_active', function($row){
+                    return view('visitors.activity', compact('row'));
+                })
                 ->addColumn('actions', 'visitors.buttons')
-                ->rawColumns(['name', 'image', 'actions'])
+                ->rawColumns(['name', 'image', 'actions', 'is_active'])
                 ->make(true);
         }
         return view('visitors.index');
@@ -136,5 +139,14 @@ class VisitorController extends Controller
         $visitor->image()->delete();
 
         return redirect()->route('visitors.index')->with('success', 'Visitor Deleted Successfully');
+    }
+
+    /**
+     * Toggle Visitor Status from Active to InActive and vise versa
+     */
+    public function toggleActivity(Visitor $visitor){
+        $status = $visitor->is_active ? 0 : 1;
+        $visitor->update(['is_active' => $status]);
+        return "success";
     }
 }

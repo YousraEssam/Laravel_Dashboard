@@ -42,8 +42,11 @@ class StaffMemberController extends Controller
                 ->editColumn('name', function($row){
                     return view('staff_members.fullname', compact('row'));
                 })
+                ->editColumn('is_active', function($row){
+                    return view('staff_members.activity', compact('row'));
+                })
                 ->addColumn('actions', 'staff_members.buttons')
-                ->rawColumns(['name', 'image', 'actions'])
+                ->rawColumns(['name', 'image', 'actions', 'is_active'])
                 ->make(true);
         }
         return view('staff_members.index');
@@ -164,5 +167,14 @@ class StaffMemberController extends Controller
     {
         $cities = City::where("country_id",$request->country_id)->pluck("name","id");
         return response()->json($cities);
+    }
+
+    /**
+     * Toggle Member Status from Active to InActive and vise versa
+     */
+    public function toggleActivity(StaffMember $staffMember){
+        $status = $staffMember->is_active ? 0 : 1;
+        $staffMember->update(['is_active' => $status]);
+        return "success";
     }
 }

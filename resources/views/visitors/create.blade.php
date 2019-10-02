@@ -86,15 +86,6 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label>Member Activity</label> <br>
-                                <select name="is_active" placeholder="Member Activity" class="form-control">
-                                    <option value="">Member Activity</option>  
-                                    <option value="1">Active</option>
-                                    <option value="0">Not Active</option>
-                                </select>
-                            </div>
-
                             <div>
                                 <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                             </div>

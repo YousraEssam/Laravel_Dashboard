@@ -41,7 +41,11 @@ Route::group(
         Route::resource('jobs', 'JobController');
         Route::resource('staff_members', 'StaffMemberController');
         Route::resource('visitors', 'VisitorController');
+        
+        Route::get('get-city-list', 'StaffMemberController@getCityList');
+        
+        Route::put('toggle_staff_activity/{staffMember}', 'StaffMemberController@toggleActivity')->name('toggleStaff');
+        
+        Route::put('toggle_visitor_activity/{visitor}', 'VisitorController@toggleActivity')->name('toggleVisitor');
     }
 );
-
-Route::get('get-city-list', 'StaffMemberController@getCityList');

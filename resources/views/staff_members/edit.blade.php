@@ -119,15 +119,6 @@
                                 </select>
                             </div>
 
-
-                            <div class="form-group">
-                                <label>Member Activity</label> <br>
-                                <select name="is_active" value="Member Activity" class="form-control">
-                                    <option value="1">Active</option>
-                                    <option value="0">Not Active</option>
-                                </select>
-                            </div>
-
                             <div>
                                 <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                             </div>
@@ -160,9 +151,6 @@
                         $("#city").empty();
                     }
                 },
-                error: function(err){
-                    alert('Errro');
-                }
             });
         }else{
             $("#city").empty();

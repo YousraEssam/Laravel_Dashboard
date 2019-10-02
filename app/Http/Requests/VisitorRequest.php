@@ -30,7 +30,6 @@ class VisitorRequest extends FormRequest
             'phone' => 'required|regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]+$/|unique:users,id,'.$this->checkIdExists(),
             'gender' => 'required|string',
             'image' => 'image|mimes:png,jpg|max:2048',
-            'is_active' => 'required',
             'city_id' => 'required|exists:cities,id',
             'country_id' => 'required|exists:countries,id',
         ];

@@ -34,6 +34,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
+                        <th>Gender</th>
                         <th>Job</th>
                         <th>City</th>
                         <th>Country</th>
@@ -51,6 +52,7 @@
     </div>
 </div>
 
+
 @endsection 
 
 @push('scripts')
@@ -66,6 +68,7 @@ $(function(){
             {data: 'name', name: 'name'},
             {data: 'user.email', name: 'email'},
             {data: 'user.phone', name: 'phone'},
+            {data: 'gender', name: 'gender'},
             {data: 'job.name', name: 'job'},
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},

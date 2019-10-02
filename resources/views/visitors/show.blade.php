@@ -20,52 +20,56 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="order_id">Member ID:</label>
+                    <label class="control-label" for="order_id">Visitor ID:</label>
                     <h4> {{$visitor->id}} </h4>
                 </div>
             </div>
             @if($visitor->image)
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="status">Member Image:</label>
+                    <label class="control-label" for="status">Visitor Image:</label>
                     <img src="{{Storage::url($visitor->image->url)}}" style="height:50px; width:50px;">
                 </div>
             </div>
             @endif
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="status">Member Name:</label>
+                    <label class="control-label" for="status">Visitor Name:</label>
                     <h4> {{$visitor->user->first_name}} {{$visitor->user->last_name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="status">Member Email:</label>
+                    <label class="control-label" for="status">Visitor Email:</label>
                     <h4> {{$visitor->user->email}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="status">Member Phone Number:</label>
+                    <label class="control-label" for="status">Visitor Phone Number:</label>
                     <h4> {{$visitor->user->phone}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Member City:</label>
+                    <label class="control-label" for="customer">Visitor City:</label>
                     <h4> {{$visitor->city->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Member Country:</label>
+                    <label class="control-label" for="customer">Visitor Country:</label>
                     <h4> {{$visitor->city->country->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Member Active?</label>
-                    <h4> {{$visitor->is_active}} </h4>
+                    <label class="control-label" for="customer">Visitor Status</label>
+                    @if($visitor->is_active == 1)
+                    <h4> Active </h4>
+                    @elseif($visitor->is_active == 0)
+                    <h4> InActive </h4>
+                    @endif
                 </div>
             </div>
         </div>
