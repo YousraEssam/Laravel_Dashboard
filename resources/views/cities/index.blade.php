@@ -59,6 +59,10 @@ $(function() {
             { data: 'name', name: 'name'},
             { data: 'country.name', name: 'country'},
             { data: 'actions', name: 'actions', orderable: false, searchable: false}
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
 });

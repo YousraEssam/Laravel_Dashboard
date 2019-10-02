@@ -59,6 +59,10 @@ $(function() {
             { data: 'description', name: 'description'},
             { data: 'permissions', name: 'permissions'},
             { data: 'actions', name: 'actions', orderable: false, searchable: false},
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
 });

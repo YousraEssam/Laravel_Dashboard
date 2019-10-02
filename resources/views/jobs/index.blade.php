@@ -58,6 +58,10 @@ $(function() {
             { data: 'name', name: 'name'},
             { data: 'description', name: 'description'},
             { data: 'actions', name: 'actions'}
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
 });

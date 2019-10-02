@@ -71,8 +71,12 @@ $(function(){
             {data: 'city.country.name', name: 'country'},
             {data: 'role.name', name:'role'},
             {data: 'is_active', name: 'is_active'},
-            {data: 'actions', name: 'actions'}
-        ]
+            {data: 'actions', name: 'actions'},
+            ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
     });
 });
 </script>
