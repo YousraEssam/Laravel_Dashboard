@@ -44,7 +44,7 @@ class LoginController extends Controller
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
@@ -59,25 +59,27 @@ class LoginController extends Controller
     }
 
         /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+         * Validate the user login request.
+         *
+         * @param  \Illuminate\Http\Request $request
+         * @return void
+         *
+         * @throws \Illuminate\Validation\ValidationException
+         */
     protected function validateLogin(Request $request)
     {
-        $request->validate([
+        $request->validate(
+            [
             'email' => 'required|string',
             'password' => 'required|string',
-        ]);
+            ]
+        );
     }
 
     /**
      * Get the failed login response instance.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Illuminate\Validation\ValidationException

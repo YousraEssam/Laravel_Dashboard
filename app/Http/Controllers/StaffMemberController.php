@@ -33,18 +33,22 @@ class StaffMemberController extends Controller
      */
     public function index()
     { 
-        $staff_members = StaffMember::latest()->with('user','job', 'city', 'role', 'city.country', 'image');
-        if(request()->ajax()){
+        $staff_members = StaffMember::latest()->with('user', 'job', 'city', 'role', 'city.country', 'image');
+        if(request()->ajax()) {
 
             return DataTables::of($staff_members)
                 ->addIndexColumn()
                 ->editColumn('image', 'staff_members.image')
-                ->editColumn('name', function($row){
-                    return view('staff_members.fullname', compact('row'));
-                })
-                ->editColumn('is_active', function($row){
-                    return view('staff_members.activity', compact('row'));
-                })
+                ->editColumn(
+                    'name', function ($row) {
+                        return view('staff_members.fullname', compact('row'));
+                    }
+                )
+                ->editColumn(
+                    'is_active', function ($row) {
+                        return view('staff_members.activity', compact('row'));
+                    }
+                )
                 ->addColumn('actions', 'staff_members.buttons')
                 ->rawColumns(['name', 'image', 'actions', 'is_active'])
                 ->make(true);
@@ -59,16 +63,16 @@ class StaffMemberController extends Controller
      */
     public function create()
     {
-        $jobs = Job::pluck('name','id');
-        $roles = Role::pluck('name','id');
-        $countries = Country::pluck('name','id');
+        $jobs = Job::pluck('name', 'id');
+        $roles = Role::pluck('name', 'id');
+        $countries = Country::pluck('name', 'id');
         return view('staff_members.create', compact('jobs', 'roles', 'countries'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StaffMemberRequest $request)
@@ -93,7 +97,7 @@ class StaffMemberController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\StaffMember  $staffMember
+     * @param  \App\StaffMember $staffMember
      * @return \Illuminate\Http\Response
      */
     public function show(StaffMember $staffMember)
@@ -105,22 +109,22 @@ class StaffMemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\StaffMember  $staffMember
+     * @param  \App\StaffMember $staffMember
      * @return \Illuminate\Http\Response
      */
     public function edit(StaffMember $staffMember)
     {
-        $jobs = Job::pluck('name','id');
-        $roles = Role::pluck('name','id');
-        $countries = Country::pluck('name','id');
-        return view('staff_members.edit', compact('staffMember','jobs', 'roles', 'countries'));
+        $jobs = Job::pluck('name', 'id');
+        $roles = Role::pluck('name', 'id');
+        $countries = Country::pluck('name', 'id');
+        return view('staff_members.edit', compact('staffMember', 'jobs', 'roles', 'countries'));
     }
     
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StaffMember  $staffMember
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\StaffMember         $staffMember
      * @return \Illuminate\Http\Response
      */
     public function update(StaffMemberRequest $request, StaffMember $staffMember)
@@ -141,7 +145,7 @@ class StaffMemberController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\StaffMember  $staffMember
+     * @param  \App\StaffMember $staffMember
      * @return \Illuminate\Http\Response
      */
     public function destroy(StaffMember $staffMember)
@@ -165,14 +169,15 @@ class StaffMemberController extends Controller
      */
     public function getCityList(Request $request)
     {
-        $cities = City::where("country_id",$request->country_id)->pluck("name","id");
+        $cities = City::where("country_id", $request->country_id)->pluck("name", "id");
         return response()->json($cities);
     }
 
     /**
      * Toggle Member Status from Active to InActive and vise versa
      */
-    public function toggleActivity(StaffMember $staffMember){
+    public function toggleActivity(StaffMember $staffMember)
+    {
         $status = $staffMember->is_active ? 0 : 1;
         $staffMember->update(['is_active' => $status]);
         return "success";

@@ -24,6 +24,6 @@ class Job extends Model
      */
     public function staffMembers()
     {
-        return $this->hasMany('App\StaffMember');
+        return $this->hasMany(StaffMember::class);
     }
 }

@@ -11,7 +11,7 @@ class SendNewVisitorResetPasswordLinkListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param  object $event
      * @return void
      */
     public function handle(NewVisitorHasBeenAddedEvent $event)

@@ -11,7 +11,8 @@ class JobsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('jobs')->insert([
+        DB::table('jobs')->insert(
+            [
             [
                 'name' => 'Writer',
                 'description' => 'cannot be editted or deleted',
@@ -22,6 +23,7 @@ class JobsSeeder extends Seeder
                 'description' => 'cannot be editted or deleted',
                 'created_at' => now(),
             ]
-        ]);
+            ]
+        );
     }
 }

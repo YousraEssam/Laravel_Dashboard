@@ -13,34 +13,36 @@ class CreateVisitorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('visitors', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create(
+            'visitors', function (Blueprint $table) {
+                $table->bigIncrements('id');
             
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                $table->unsignedInteger('user_id');
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
 
-            $table->string('gender');
+                $table->string('gender');
             
-            $table->unsignedInteger('city_id');
-            $table->foreign('city_id')
-                ->references('id')
-                ->on('cities')
-                ->onDelete('cascade');
+                $table->unsignedInteger('city_id');
+                $table->foreign('city_id')
+                    ->references('id')
+                    ->on('cities')
+                    ->onDelete('cascade');
 
-            $table->unsignedInteger('country_id');
-            $table->foreign('country_id')
-                ->references('id')
-                ->on(\Config::get('countries.table_name'))
-                ->onDelete('cascade');
+                $table->unsignedInteger('country_id');
+                $table->foreign('country_id')
+                    ->references('id')
+                    ->on(\Config::get('countries.table_name'))
+                    ->onDelete('cascade');
 
-            $table->boolean('is_active')->default(TRUE);
+                $table->boolean('is_active')->default(true);
 
-            $table->softDeletes();
-            $table->timestamps();
-        });
+                $table->softDeletes();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

@@ -13,21 +13,25 @@ class AddForeignKeyToCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('staff_members', function (Blueprint $table) {
+        Schema::table(
+            'staff_members', function (Blueprint $table) {
             
-            $table->foreign('country_id')
-                ->references('id')
-                ->on(\Config::get('countries.table_name'))
-                ->onDelete('cascade');
-        });
+                $table->foreign('country_id')
+                    ->references('id')
+                    ->on(\Config::get('countries.table_name'))
+                    ->onDelete('cascade');
+            }
+        );
 
-        Schema::table('cities', function (Blueprint $table) {
+        Schema::table(
+            'cities', function (Blueprint $table) {
 
-            $table->foreign('country_id')
-                ->references('id')
-                ->on(\Config::get('countries.table_name'))
-                ->onDelete('cascade');
-        });
+                $table->foreign('country_id')
+                    ->references('id')
+                    ->on(\Config::get('countries.table_name'))
+                    ->onDelete('cascade');
+            }
+        );
     }
 
     /**
@@ -37,8 +41,10 @@ class AddForeignKeyToCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('countries', function (Blueprint $table) {
-            //
-        });
+        Schema::table(
+            'countries', function (Blueprint $table) {
+                //
+            }
+        );
     }
 }

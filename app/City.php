@@ -21,8 +21,8 @@ class City extends Model
     ];
 
      /**
-     * Get the post that owns the comment.
-     */
+      * Get the post that owns the comment.
+      */
     public function country()
     {
         return $this->belongsTo(Country::class);

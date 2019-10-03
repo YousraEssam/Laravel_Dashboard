@@ -38,10 +38,10 @@ class ResetPasswordController extends Controller
     }
 
         /**
-     * Get the password reset validation rules.
-     *
-     * @return array
-     */
+         * Get the password reset validation rules.
+         *
+         * @return array
+         */
     protected function rules()
     {
         return [

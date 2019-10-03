@@ -50,8 +50,8 @@ class User extends Authenticatable implements MustVerifyEmail
     // }
 
      /**
-     * Get the staff member record associated with the user.
-     */
+      * Get the staff member record associated with the user.
+      */
     public function staff()
     {
         return $this->hasOne(StaffMember::class);

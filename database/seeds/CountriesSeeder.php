@@ -9,7 +9,7 @@ class CountriesSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return  void
+     * @return void
      */
     public function run()
     {
@@ -19,12 +19,14 @@ class CountriesSeeder extends Seeder
         //Get all of the countries
         $countries = (new Countries())->getList();
         foreach ($countries as $countryId => $country) {
-            DB::table(\Config::get('countries.table_name'))->insert(array(
+            DB::table(\Config::get('countries.table_name'))->insert(
+                array(
                 'id' => $countryId,
                 'capital' => ((isset($country['capital'])) ? $country['capital'] : null),
                 'full_name' => ((isset($country['full_name'])) ? $country['full_name'] : null),
                 'name' => $country['name']
-            ));
+                )
+            );
         }
     }
 }

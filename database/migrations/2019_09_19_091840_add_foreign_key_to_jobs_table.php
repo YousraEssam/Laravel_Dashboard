@@ -13,13 +13,15 @@ class AddForeignKeyToJobsTable extends Migration
      */
     public function up()
     {
-        Schema::table('staff_members', function (Blueprint $table) {
+        Schema::table(
+            'staff_members', function (Blueprint $table) {
 
-            $table->foreign('job_id')
-                ->references('id')
-                ->on('jobs')
-                ->onDelete('cascade');
-        });
+                $table->foreign('job_id')
+                    ->references('id')
+                    ->on('jobs')
+                    ->onDelete('cascade');
+            }
+        );
     }
 
     /**
@@ -29,8 +31,10 @@ class AddForeignKeyToJobsTable extends Migration
      */
     public function down()
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            //
-        });
+        Schema::table(
+            'jobs', function (Blueprint $table) {
+                //
+            }
+        );
     }
 }

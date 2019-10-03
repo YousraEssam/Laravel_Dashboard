@@ -24,7 +24,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()){
+        if(request()->ajax()) {
             $cities = City::latest()->with('country');
             
             return DataTables::of($cities)
@@ -49,20 +49,20 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CityRequest $request)
     {
         City::create($request->all());
         return redirect()->route('cities.index')
-                        ->with('success', 'City created successfully.');
+            ->with('success', 'City created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\City  $city
+     * @param  \App\City $city
      * @return \Illuminate\Http\Response
      */
     public function show(City $city)
@@ -73,7 +73,7 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\City  $city
+     * @param  \App\City $city
      * @return \Illuminate\Http\Response
      */
     public function edit(City $city)
@@ -85,28 +85,28 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\City  $city
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\City                $city
      * @return \Illuminate\Http\Response
      */
     public function update(CityRequest $request, City $city)
     {
         $city->update($request->all());
         return redirect()->route('cities.index')
-                        ->with('success', 'City updated successfully.');
+            ->with('success', 'City updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\City  $city
+     * @param  \App\City $city
      * @return \Illuminate\Http\Response
      */
     public function destroy(City $city)
     {
         $city->delete();
         return redirect()->route('cities.index')
-                        ->with('success', 'City deleted successfully');
+            ->with('success', 'City deleted successfully');
     }
 
 }

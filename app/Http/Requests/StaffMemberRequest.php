@@ -37,10 +37,12 @@ class StaffMemberRequest extends FormRequest
         ];
     }
 
-    public function checkIdExists(){
-        if($this->id)
+    public function checkIdExists()
+    {
+        if($this->id) {
             return $this->id;
-        else
+        } else {
             return false;
+        }
     }
 }

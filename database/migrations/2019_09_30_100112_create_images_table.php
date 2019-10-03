@@ -13,15 +13,17 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('url');
-            $table->integer('imageable_id');
-            $table->string('imageable_type');
+        Schema::create(
+            'images', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('url');
+                $table->integer('imageable_id');
+                $table->string('imageable_type');
 
-            $table->softDeletes();
-            $table->timestamps();
-        });
+                $table->softDeletes();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

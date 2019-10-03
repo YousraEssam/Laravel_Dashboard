@@ -24,14 +24,16 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()){
+        if(request()->ajax()) {
             $roles = Role::latest()->first()->with('permissions');
             
             return DataTables::of($roles)
                 ->addIndexColumn()
-                ->addColumn('permissions', function($row){
-                    return view('roles.permissions', compact('row'));
-                })
+                ->addColumn(
+                    'permissions', function ($row) {
+                        return view('roles.permissions', compact('row'));
+                    }
+                )
                 ->addColumn('actions', 'roles.buttons')
                 ->rawColumns(['permissions', 'actions'])
                 ->make(true);
@@ -53,7 +55,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreBlogPost  $request
+     * @param  StoreBlogPost $request
      * @return \Illuminate\Http\Response
      */
     public function store(RoleRequest $request)
@@ -61,13 +63,13 @@ class RoleController extends Controller
         Role::create($request->only(['name', 'description']))
                 ->syncPermissions($request->permission);
         return redirect()->route('roles.index')
-                        ->with('success', 'Role created successfully');
+            ->with('success', 'Role created successfully');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function show(Role $role)
@@ -79,23 +81,23 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
     {
         $allPermissions = Permission::get();
         $rolePermissions = $role->load('permissions')->permissions
-                    ->pluck('name', 'name')
-                    ->toArray();
+            ->pluck('name', 'name')
+            ->toArray();
         return view('roles.edit', compact('role', 'allPermissions', 'rolePermissions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Role  $role
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Role                $role
      * @return \Illuminate\Http\Response
      */
     public function update(RoleRequest $request, Role $role)
@@ -103,19 +105,19 @@ class RoleController extends Controller
         $role->update($request->only(['name','description']));
         $role->syncPermissions($request->permission);
         return redirect()->route('roles.index')
-                        ->with('success', 'Role updated successfully');
+            ->with('success', 'Role updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Role  $role
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
     {
         $role->delete();
         return redirect()->route('roles.index')
-                ->with('success', 'Role deleted successfully');
+            ->with('success', 'Role deleted successfully');
     }
 }

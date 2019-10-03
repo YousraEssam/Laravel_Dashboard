@@ -13,21 +13,23 @@ class CreateStaffMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('staff_members', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create(
+            'staff_members', function (Blueprint $table) {
+                $table->bigIncrements('id');
 
-            $table->unsignedInteger('user_id');
-            $table->string('gender');
+                $table->unsignedInteger('user_id');
+                $table->string('gender');
 
-            $table->unsignedInteger('job_id');
-            $table->unsignedInteger('city_id');
-            $table->unsignedInteger('country_id');
-            $table->unsignedInteger('role_id');            
-            $table->boolean('is_active')->default(TRUE);
+                $table->unsignedInteger('job_id');
+                $table->unsignedInteger('city_id');
+                $table->unsignedInteger('country_id');
+                $table->unsignedInteger('role_id');            
+                $table->boolean('is_active')->default(true);
 
-            $table->softDeletes();
-            $table->timestamps();
-        });
+                $table->softDeletes();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

@@ -13,12 +13,14 @@ class AddForeignKeyToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('staff_members', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-        });
+        Schema::table(
+            'staff_members', function (Blueprint $table) {
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+            }
+        );
     }
 
     /**
@@ -28,8 +30,10 @@ class AddForeignKeyToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::table(
+            'users', function (Blueprint $table) {
+                //
+            }
+        );
     }
 }

@@ -11,7 +11,8 @@ class CitiesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cities')->insert([
+        DB::table('cities')->insert(
+            [
             [
                 'name' => 'Alexandria',
                 'country_id' => '818',
@@ -35,6 +36,7 @@ class CitiesSeeder extends Seeder
                 'created_at' => now(),
 
             ],
-        ]);
+            ]
+        );
     }
 }

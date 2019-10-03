@@ -12,12 +12,15 @@ class StaffMember extends Model
     /**
      * to override delete behaviour
      */
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
 
-        static::deleting(function($staffMember){
-            $staffMember->user()->delete();
-        });
+        static::deleting(
+            function ($staffMember) {
+                $staffMember->user()->delete();
+            }
+        );
     }
     /**
      * The attributes that are mass assignable.

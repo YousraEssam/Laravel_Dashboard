@@ -25,18 +25,22 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        $visitors = Visitor::latest()->with('user','city','city.country', 'image');
-        if(request()->ajax()){
+        $visitors = Visitor::latest()->with('user', 'city', 'city.country', 'image');
+        if(request()->ajax()) {
 
             return DataTables::of($visitors)
                 ->addIndexColumn()
                 ->editColumn('image', 'visitors.image')
-                ->editColumn('name', function($row){
-                    return view('visitors.fullname', compact('row'));
-                })
-                ->editColumn('is_active', function($row){
-                    return view('visitors.activity', compact('row'));
-                })
+                ->editColumn(
+                    'name', function ($row) {
+                        return view('visitors.fullname', compact('row'));
+                    }
+                )
+                ->editColumn(
+                    'is_active', function ($row) {
+                        return view('visitors.activity', compact('row'));
+                    }
+                )
                 ->addColumn('actions', 'visitors.buttons')
                 ->rawColumns(['name', 'image', 'actions', 'is_active'])
                 ->make(true);
@@ -51,14 +55,14 @@ class VisitorController extends Controller
      */
     public function create()
     {
-        $countries = Country::pluck('name','id');
+        $countries = Country::pluck('name', 'id');
         return view('visitors.create', compact('countries'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(VisitorRequest $request)
@@ -83,7 +87,7 @@ class VisitorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\Visitor $visitor
      * @return \Illuminate\Http\Response
      */
     public function show(Visitor $visitor)
@@ -94,20 +98,20 @@ class VisitorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\Visitor $visitor
      * @return \Illuminate\Http\Response
      */
     public function edit(Visitor $visitor)
     {
-        $countries = Country::pluck('name','id');
-        return view('visitors.edit', compact('visitor','countries'));
+        $countries = Country::pluck('name', 'id');
+        return view('visitors.edit', compact('visitor', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Visitor  $visitor
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Visitor             $visitor
      * @return \Illuminate\Http\Response
      */
     public function update(VisitorRequest $request, Visitor $visitor)
@@ -128,7 +132,7 @@ class VisitorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\Visitor $visitor
      * @return \Illuminate\Http\Response
      */
     public function destroy(Visitor $visitor)
@@ -144,7 +148,8 @@ class VisitorController extends Controller
     /**
      * Toggle Visitor Status from Active to InActive and vise versa
      */
-    public function toggleActivity(Visitor $visitor){
+    public function toggleActivity(Visitor $visitor)
+    {
         $status = $visitor->is_active ? 0 : 1;
         $visitor->update(['is_active' => $status]);
         return "success";
