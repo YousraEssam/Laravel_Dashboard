@@ -1,6 +1,6 @@
 <td>
     <div class="toggle-btn @if($row->is_active) active @endif">
-        <input type="checkbox" @if($row->is_active) checked @endif 
+        <input id="{{$row->id}}" type="checkbox" @if($row->is_active) checked @endif 
             class="cb-value" onclick="return confirm('Are You Sure?')" />
         <span class="round-btn"></span>
     </div>
@@ -8,7 +8,7 @@
 
 <script>
 
-$('.cb-value').click(function() {
+$('#{{$row->id}}').click(function() {
     var mainParent = $(this).parent('.toggle-btn');
     if($(mainParent).find('input.cb-value').is(':checked')) {
         $(mainParent).addClass('active');
