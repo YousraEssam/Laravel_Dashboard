@@ -10,7 +10,6 @@ use App\Job;
 use App\StaffMember;
 use App\Traits\ImageUpload;
 use App\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -18,7 +17,6 @@ use Yajra\DataTables\DataTables;
 
 class StaffMemberController extends Controller
 {
-    use SoftDeletes;
     use ImageUpload;
 
     public function __construct()

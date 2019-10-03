@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
-    use SoftDeletes;
-    
     public function __construct()
     {
         $this->authorizeResource(\App\Role::class, 'roles');

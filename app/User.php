@@ -43,6 +43,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+    
+    /**
      * Always hash password using mutator when we save it to the database
      */
     // public function setPasswordAttribute($value) {

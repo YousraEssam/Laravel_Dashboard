@@ -8,14 +8,11 @@ use App\Http\Requests\VisitorRequest;
 use App\Traits\ImageUpload;
 use App\User;
 use App\Visitor;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class VisitorController extends Controller
 {
-    use SoftDeletes;
     use ImageUpload;
 
     /**

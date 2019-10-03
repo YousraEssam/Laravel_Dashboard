@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JobRequest;
 use App\Job;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Yajra\DataTables\DataTables;
 
 class JobController extends Controller
 {
-    use SoftDeletes;
-    
     public function __construct()
     {
         $this->authorizeResource(Job::class, 'jobs');
