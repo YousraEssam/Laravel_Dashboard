@@ -7,7 +7,7 @@
 
 @section('titlebreadcrumb')
 <li>
-    <a href="{{route('cities.index')}}">Jobs</a>
+    <a href="{{route('cities.index')}}">Cities</a>
 </li>
 <li class="active">
     <strong>City "{{$city->name}}" Details</strong>

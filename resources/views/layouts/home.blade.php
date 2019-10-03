@@ -234,10 +234,12 @@
     <script src="{{ asset('theme/js/plugins/iCheck/icheck.min.js') }}"></script>
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+    
+    <!-- Page-Level Scripts -->
+    @yield('cityscript')
+    @stack('JSValidatorScript')
+    
     @stack('scripts')
-
-  <!-- Page-Level Scripts -->
-@yield('cityscript')
+    
 </body>
 </html>

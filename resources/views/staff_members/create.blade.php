@@ -92,9 +92,9 @@
                             <div class="form-group">
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" placeholder="Member Country" class="form-control">
-                                    <option value="">Member Country</option>
+                                <option value="">Member Country</option>
                                     @foreach($countries as $key => $value)
-                                    <option value="{{ $key }}">{{$value}}</option>
+                                    <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -122,28 +122,34 @@
 
 @section('cityscript')
 <script>
-    $('#country').change(function(){
-        var countryID = $(this).val();
-        console.log(countryID);
-        if(countryID){
-            $.ajax({
-                type:"GET",
-                url:"{{url('get-city-list')}}?country_id="+countryID,
-                success:function(res){
-                    if(res){
-                        $("#city").empty();
-                        $("#city").append('<option>Select</option>');
-                        $.each(res,function(key,value){
-                            $("#city").append('<option value="'+key+'">'+value+'</option>');
-                        });
-                    }else{
-                        $("#city").empty();
-                    }
+$('#country').change(function(){
+    var countryID = $(this).val();
+    console.log(countryID);
+    if(countryID){
+        $.ajax({
+            type:"GET",
+            url:"{{url('get-city-list')}}?country_id="+countryID,
+            success:function(res){
+                if(res){
+                    $("#city").empty();
+                    $("#city").append('<option>Select</option>');
+                    $.each(res,function(key,value){
+                        $("#city").append('<option {{ old("city_id") =="'+key+'" ? "selected": ""}} value="'+key+'">'+value+'</option>');
+                    });
+                }else{
+                    $("#city").empty();
                 }
-            });
-        }else{
-            $("#city").empty();
-        }
-    });
+            }
+        });
+    }else{
+        $("#city").empty();
+    }
+});
 </script>
+
 @endsection
+
+@push('JSValidatorScript')
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\StaffMemberRequest') !!}
+@endpush

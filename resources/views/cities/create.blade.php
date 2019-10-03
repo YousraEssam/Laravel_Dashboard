@@ -46,8 +46,7 @@
                                 <select id="country" name="country_id" placeholder="Member Country" class="form-control">
                                     <option value="" disabled selected>Country Name</option>
                                     @foreach ($countries as $key => $value)
-                                    <option value="{{ $key }}">{{$value}}</option>
-                                    @endforeach
+                                    <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>                                    @endforeach
                                 </select>
                             </div>
                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
@@ -60,3 +59,8 @@
 </div>
 
 @endsection 
+
+@push('JSValidatorScript')
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\CityRequest') !!}
+@endpush

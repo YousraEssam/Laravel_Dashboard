@@ -74,7 +74,7 @@
                                 <select id="country" name="country_id" placeholder="Member Country" class="form-control">
                                     <option value="">Member Country</option>
                                     @foreach($countries as $key => $value)
-                                    <option value="{{ $key }}">{{$value}}</option>
+                                    <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -114,7 +114,7 @@
                         $("#city").empty();
                         $("#city").append('<option>Select</option>');
                         $.each(res,function(key,value){
-                            $("#city").append('<option value="'+key+'">'+value+'</option>');
+                            $("#city").append('<option {{ old("city_id") =="'+key+'" ? "selected": ""}} value="'+key+'">'+value+'</option>');
                         });
                     }else{
                         $("#city").empty();
@@ -127,3 +127,8 @@
     });
 </script>
 @endsection
+
+@push('JsValidatorScript')
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\VisitorRequest') !!}
+@endpush
