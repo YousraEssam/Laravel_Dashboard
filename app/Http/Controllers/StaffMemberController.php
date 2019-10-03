@@ -161,15 +161,6 @@ class StaffMemberController extends Controller
 
         return redirect()->route('staff_members.index')->with('success', 'Staff Member Deleted Successfully');
     }
-    
-    /**
-     * Get List of All Cities related to specific Country
-     */
-    public function getCityList(Request $request)
-    {
-        $cities = City::where("country_id", $request->country_id)->pluck("name", "id");
-        return response()->json($cities);
-    }
 
     /**
      * Toggle Member Status from Active to InActive and vise versa

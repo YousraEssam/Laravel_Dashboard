@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
+use Illuminate\Support\Facades\Request;
 use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
@@ -106,4 +107,12 @@ class CityController extends Controller
             ->with('success', 'City deleted successfully');
     }
 
+    /**
+     * Get List of All Cities related to specific Country
+     */
+    public function getCityList($id)
+    {
+        $cities = City::where("country_id", $id)->pluck("name", "id");
+        return response()->json($cities);
+    }
 }

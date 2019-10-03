@@ -135,7 +135,7 @@
         if(countryID){
             $.ajax({
                 type:"GET",
-                url:"{{url('get-city-list')}}?country_id="+countryID,
+                url:"{{url('get-city-list')}}/"+countryID,
                 success:function(res){
                     if(res){
                         $("#city").empty();
