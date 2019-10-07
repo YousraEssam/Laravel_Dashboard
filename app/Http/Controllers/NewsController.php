@@ -21,15 +21,18 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::latest()->with('staffMember');
+        $news = News::latest()->with('staffMember','staffMember.user');
         if(request()->ajax()) {
             return DataTables::of($news)
                 ->addIndexColumn()
                 ->editColumn('author', function($row){
                     return view('news.fullname', compact('row'));
                 })
+                ->editColumn('is_published', function($row){
+                    return view('news.publish', compact('row'));
+                })
                 ->addColumn('actions', 'news.buttons')
-                ->rawColumns(['author', 'actions'])
+                ->rawColumns(['author', 'is_published', 'actions'])
                 ->make(true);
         }
         return view('news.index');
@@ -129,5 +132,15 @@ class NewsController extends Controller
 
             return response()->json($writers);
         }
+    }
+
+    /**
+     * Toggle News Publish 
+     */
+    public function togglePublish(News $news)
+    {
+        $status = $news->is_published ? 0 : 1;
+        $news->update(['is_published' => $status]);
+        return "success";
     }
 }

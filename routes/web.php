@@ -49,5 +49,8 @@ Route::group(
         Route::put('toggle_staff_activity/{staffMember}', 'StaffMemberController@toggleActivity')->name('toggleStaff');
         
         Route::put('toggle_visitor_activity/{visitor}', 'VisitorController@toggleActivity')->name('toggleVisitor');
+
+        Route::put('toggle_news_publish/{news}', 'NewsController@togglePublish')->name('toggleNews');
+
     }
 );

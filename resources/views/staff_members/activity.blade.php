@@ -1,13 +1,13 @@
 <td>
     <div class="toggle-btn @if($row->is_active) active @endif">
-        <input type="checkbox" @if($row->is_active) checked @endif class="cb-value" onclick="return confirm('Are You Sure?')" />
+    <input type="checkbox" @if($row->is_active) checked @endif class="cb-value" onclick="return confirm('Are You Sure?')" id="{{$row->user->first_name.$row->id}}"/>
         <span class="round-btn"></span>
     </div>
 </td>
 
 <script>
 
-$('.cb-value').click(function() {
+$('#{{$row->user->first_name.$row->id}}').click(function() {
     var mainParent = $(this).parent('.toggle-btn');
     if($(mainParent).find('input.cb-value').is(':checked')) {
         $(mainParent).addClass('active');

@@ -64,7 +64,7 @@
                 { data: 'content', name: 'content'},
                 { data: 'type', name: 'type'},
                 { data: 'author', name:'author_id'},
-                { data: 'is_published', nmae: 'is_published'},
+                { data: 'is_published', name: 'is_published'},
                 { data: 'actions', name: 'actions'}
             ],
             dom: 'Bfrtip',
