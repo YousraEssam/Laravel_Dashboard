@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
 use App\Country;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
@@ -10,7 +9,6 @@ use App\Job;
 use App\StaffMember;
 use App\Traits\ImageUpload;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -159,7 +157,9 @@ class StaffMemberController extends Controller
         //to delete image record from image table
         $staffMember->image()->delete();
 
-        return redirect()->route('staff_members.index')->with('success', 'Staff Member Deleted Successfully');
+        return redirect()
+            ->route('staff_members.index')
+            ->with('success', 'Staff Member Deleted Successfully');
     }
 
     /**

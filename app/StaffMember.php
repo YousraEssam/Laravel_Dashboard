@@ -87,4 +87,11 @@ class StaffMember extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
     
+    /**
+     * Get the news for the staffmember.
+     */
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

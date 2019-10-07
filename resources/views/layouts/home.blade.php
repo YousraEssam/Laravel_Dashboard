@@ -143,6 +143,21 @@
                         </ul>
                     </li>
                     @endcan
+                    @can('news-list')
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">News</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('news.index') }}">All</a></li>
+                            @can('news-create')
+                            <li><a href="{{ route('news.create') }}">Add</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
                 </ul>
 
             </div>
@@ -234,9 +249,12 @@
     <script src="{{ asset('theme/js/plugins/iCheck/icheck.min.js') }}"></script>
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+
     <!-- Page-Level Scripts -->
     @yield('cityscript')
+    @yield('textarea')
+    @yield('newsscript')
     @stack('JSValidatorScript')
     
     @stack('scripts')

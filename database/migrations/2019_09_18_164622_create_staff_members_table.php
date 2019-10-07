@@ -15,7 +15,7 @@ class CreateStaffMembersTable extends Migration
     {
         Schema::create(
             'staff_members', function (Blueprint $table) {
-                $table->bigIncrements('id');
+                $table->increments('id');
 
                 $table->unsignedInteger('user_id');
                 $table->string('gender');

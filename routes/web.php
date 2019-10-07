@@ -44,7 +44,8 @@ Route::group(
         Route::resource('news', 'NewsController');
         
         Route::get('get-city-list/{id}', 'CityController@getCityList');
-        
+        Route::get('get-author-list/{type}', 'NewsController@getAuthorList');
+
         Route::put('toggle_staff_activity/{staffMember}', 'StaffMemberController@toggleActivity')->name('toggleStaff');
         
         Route::put('toggle_visitor_activity/{visitor}', 'VisitorController@toggleActivity')->name('toggleVisitor');
