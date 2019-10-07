@@ -7,6 +7,9 @@
 @endsection
 
 @section('titlebreadcrumb')
+<li>
+    <a href="{{route('news.index')}}">News</a>
+</li>
 <li class="active">
     <strong>Create new News Form</strong>
 </li>

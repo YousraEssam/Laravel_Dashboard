@@ -7,6 +7,9 @@
 @endsection
 
 @section('titlebreadcrumb')
+<li>
+    <a href="{{route('visitors.index')}}">Visitors</a>
+</li>
 <li class="active">
     <strong>Edit Form</strong>
 </li>

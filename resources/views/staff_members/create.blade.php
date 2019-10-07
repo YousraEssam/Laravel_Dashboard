@@ -7,6 +7,9 @@
 @endsection
 
 @section('titlebreadcrumb')
+<li>
+    <a href="{{route('staff_members.index')}}">Staff Members</a>
+</li>
 <li class="active">
     <strong>Create New Staff Member Form</strong>
 </li>

@@ -7,6 +7,9 @@
 @endsection
 
 @section('titlebreadcrumb')
+<li>
+    <a href="{{route('cities.index')}}">Cities</a>
+</li>
 <li class="active">
     <strong>Create New City Form</strong>
 </li>

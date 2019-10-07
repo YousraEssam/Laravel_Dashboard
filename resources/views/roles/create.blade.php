@@ -7,6 +7,9 @@
 @endsection
 
 @section('titlebreadcrumb')
+<li>
+    <a href="{{route('roles.index')}}">Roles</a>
+</li>
 <li class="active">
     <strong>Create New Role Form</strong>
 </li>
