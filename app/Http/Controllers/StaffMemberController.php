@@ -37,7 +37,7 @@ class StaffMemberController extends Controller
                 ->editColumn('image', 'staff_members.image')
                 ->editColumn(
                     'name', function ($row) {
-                        return view('staff_members.fullname', compact('row'));
+                        return $row->user->getFullNameAttribute();
                     }
                 )
                 ->editColumn(

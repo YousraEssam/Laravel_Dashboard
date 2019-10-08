@@ -31,7 +31,7 @@ class NewsController extends Controller
             return DataTables::of($news)
                 ->addIndexColumn()
                 ->editColumn('author', function($row){
-                    return view('news.fullname', compact('row'));
+                    return $row->staffMember->user->getFullNameAttribute();
                 })
                 ->editColumn('is_published', function($row){
                     return view('news.publish', compact('row'));
@@ -91,7 +91,9 @@ class NewsController extends Controller
     public function show(News $news)
     {
         $staffMember = $news->staffMember();
-        return view('news.show', compact('news','staffMember'));
+        $images = $news->images();
+        $files = $news->files();
+        return view('news.show', compact('news', 'staffMember', 'images', 'files'));
     }
 
     /**

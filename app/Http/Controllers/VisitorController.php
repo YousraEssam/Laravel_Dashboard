@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Events\NewVisitorHasBeenAddedEvent;
 use App\Http\Requests\VisitorRequest;
-use App\Traits\ImageUpload;
+use App\Traits\Uploads;
 use App\User;
 use App\Visitor;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +13,7 @@ use Yajra\DataTables\DataTables;
 
 class VisitorController extends Controller
 {
-    use ImageUpload;
+    use Uploads;
 
     /**
      * Display a listing of the resource.
@@ -30,7 +30,7 @@ class VisitorController extends Controller
                 ->editColumn('image', 'visitors.image')
                 ->editColumn(
                     'name', function ($row) {
-                        return view('visitors.fullname', compact('row'));
+                        return $row->user->getFullNameAttribute();
                     }
                 )
                 ->editColumn(
