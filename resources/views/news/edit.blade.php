@@ -91,6 +91,16 @@
                                     </label>
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Choose Related News</label>
+                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]">
+                                        <option value="">Select</option>
+                                        @foreach ($all_news as $key => $value)
+                                            <option value="{{$key}}"> {{ $value }}</option>    
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div>
                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                                 </div>

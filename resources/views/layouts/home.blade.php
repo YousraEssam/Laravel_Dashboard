@@ -13,8 +13,9 @@
     <link href="{{ asset('theme/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/css/plugins/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/animate.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('status.css')}}">
+    <link href="{{ asset('status.css')}}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('theme/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet"> --}}
     {{-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> --}}
@@ -248,9 +249,14 @@
     <!-- iCheck -->
     <script src="{{ asset('theme/js/plugins/iCheck/icheck.min.js') }}"></script>
 
+    <!-- Select2 -->
+    <script src="{{ asset('theme/js/plugins/select2/select2.full.min.js') }}"></script>
+
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-
+<script>
+ $('.chosen-select').select2();
+ </script>
     <!-- Page-Level Scripts -->
     @yield('cityscript')
     @yield('textarea')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsRequest;
 use App\News;
+use App\Related;
 use App\StaffMember;
 use App\Traits\Uploads;
 // use App\Traits\ImageUpload;
@@ -50,7 +51,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('news.create');
+        $news = News::pluck('main_title', 'id')->all();
+        return view('news.create', compact('news'));
     }
 
     /**
@@ -62,6 +64,14 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $news = News::create($request->all());
+
+        if($request->related){
+            foreach($request->related as $related)
+            $news->related()->create([
+                'news_id' => $news->id,
+                'related_id' => $related,
+            ]);
+        }
 
         if($request->hasFile('image')){
             $img_path = $this->uploadImage($request, $news);
@@ -106,7 +116,15 @@ class NewsController extends Controller
     {
         $images = $news->images()->get();
         $files = $news->files()->get();
-        return view('news.edit', compact('news','images','files'));
+        // $all_related = $news->related()->pluck('news_id', 'related_id')->all();
+        // foreach($all_related as $key => $value){
+
+        //     $related_titles[] = News::select('main_title')->whereId($key)->get();
+        // }
+        // dd($related_titles);
+        
+        $all_news = News::pluck('main_title', 'id')->all();
+        return view('news.edit', compact('news', 'images', 'files', 'related_titles', 'all_news'));
     }
 
     /**
@@ -119,6 +137,15 @@ class NewsController extends Controller
     public function update(NewsRequest $request, News $news)
     {
         $news->update($request->all());
+
+        if($request->related){
+            $news->related()->delete();
+            foreach($request->related as $related)
+            $news->related()->create([
+                'news_id' => $news->id,
+                'related_id' => $related,
+            ]);
+        }
 
         if($request->hasFile('image')){
             $img_path = $this->uploadImage($request, $news);
