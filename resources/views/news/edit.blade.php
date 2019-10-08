@@ -70,6 +70,27 @@
                                             <option value="{{$news->staffMember->job->id}}">{{$news->staffMember->user->first_name}} {{$news->staffMember->user->last_name}}</option>
                                     </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Upload Images</label>
+                                    <input id="images" type="file" class="form-control" name="image[]" multiple>
+                                    <label for="images">
+                                        @foreach ($images as $image)
+                                            {{explode("/",$image->url)[4]}} <br>
+                                        @endforeach
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload Files</label>
+                                    <input type="file" class="form-control" name="file[]" multiple>
+                                    <label for="files">
+                                        @foreach ($files as $file)
+                                            {{explode("/",$file->file_url)[4]}} <br>
+                                        @endforeach
+                                    </label>
+                                </div>
+
                                 <div>
                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                                 </div>

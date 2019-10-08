@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewsRequest;
 use App\News;
 use App\StaffMember;
+use App\Traits\Uploads;
+// use App\Traits\ImageUpload;
 use Yajra\DataTables\DataTables;
 
 class NewsController extends Controller
 {
+    // use ImageUpload;
+    use Uploads;
+
     public function __construct()
     {
         $this->authorizeResource(News::class, 'news');
@@ -56,7 +61,22 @@ class NewsController extends Controller
      */
     public function store(NewsRequest $request)
     {
-        News::create($request->all());
+        $news = News::create($request->all());
+
+        if($request->hasFile('image')){
+            $img_path = $this->uploadImage($request, $news);
+            foreach($img_path as $img){
+                $news->images()->create(['url' => $img]);
+            }
+        }
+
+        if($request->hasFile('file')){
+            $file_path = $this->uploadFile($request, $news);
+            foreach($file_path as $file){
+                $news->files()->create(['file_url' => $file]);
+            }
+        }
+
         return redirect()
             ->route('news.index')
             ->with('success', 'News Has Been Added Successfully');
@@ -82,7 +102,9 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        return view('news.edit', compact('news'));
+        $images = $news->images()->get();
+        $files = $news->files()->get();
+        return view('news.edit', compact('news','images','files'));
     }
 
     /**
@@ -96,6 +118,21 @@ class NewsController extends Controller
     {
         $news->update($request->all());
 
+        if($request->hasFile('image')){
+            $img_path = $this->uploadImage($request, $news);
+            $news->images()->delete();
+            foreach($img_path as $img){
+                $news->images()->create(['url' => $img]);
+            }
+        }
+
+        if($request->hasFile('file')){
+            $file_path = $this->uploadFile($request, $news);
+            $news->files()->delete();
+            foreach($file_path as $file){
+                $news->files()->create(['file_url' => $file]);
+            }
+        }
         return redirect()
             ->route('news.index')
             ->with('success', 'News Has Been Updated Successfully');

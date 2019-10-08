@@ -28,15 +28,18 @@ class NewsRequest extends FormRequest
             'secondary_title' => 'min:3|max:150',
             'type' => 'required',
             // 'author_id' => 'required|exists:staff_members,id,'.$this->checkIdExists(),
+            // 'image' => 'image|mimes:png,jpg|max:1024',
+            // 'file' => 'file|mimes:pdf,xls|max:1024',
         ];
     }
 
     public function checkIdExists()
     {
-        if($this->id) {
-            return $this->id;
-        } else {
-            return false;
-        }
+        return $this->id ? $this->id : false;
+        // if($this->id) {
+        //     return $this->id;
+        // } else {
+        //     return false;
+        // }
     }
 }

@@ -38,6 +38,7 @@
                         <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Create News/Article</h3>
                             <form role="form" method="POST" action="{{ route('news.store') }}" enctype='multipart/form-data'>
                                 @csrf
+
                                 <div class="form-group">
                                     <label>Main Title</label>
                                     <input type="text" placeholder="Main Title" class="form-control" name="main_title" id="main">
@@ -68,6 +69,17 @@
                                         <option value="">Author</option>
                                     </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Upload Images</label>
+                                    <input type="file" class="form-control" name="image[]" multiple>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload Files</label>
+                                    <input type="file" class="form-control" name="file[]" multiple>
+                                </div>
+
                                 <div>
                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                                 </div>

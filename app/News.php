@@ -32,4 +32,20 @@ class News extends Model
     {
         return $this->belongsTo(StaffMember::class, 'author_id');
     }
+
+    /**
+     * Get all of the news's images.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    /**
+     * Get all of the news's files.
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
 }

@@ -7,7 +7,7 @@ use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
 use App\Job;
 use App\StaffMember;
-use App\Traits\ImageUpload;
+use App\Traits\Uploads;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -15,7 +15,7 @@ use Yajra\DataTables\DataTables;
 
 class StaffMemberController extends Controller
 {
-    use ImageUpload;
+    use Uploads;
 
     public function __construct()
     {
