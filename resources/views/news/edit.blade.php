@@ -96,7 +96,11 @@
                                     <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]">
                                         <option value="">Select</option>
                                         @foreach ($all_news as $key => $value)
-                                            <option value="{{$key}}"> {{ $value }}</option>    
+                                            @if(in_array($key,$related_news))
+                                                <option value="{{$key}}" selected>{{ $value }}</option>
+                                            @else
+                                                <option value="{{$key}}">{{ $value }}</option>    
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

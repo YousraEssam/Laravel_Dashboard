@@ -7,12 +7,10 @@ use App\News;
 use App\Related;
 use App\StaffMember;
 use App\Traits\Uploads;
-// use App\Traits\ImageUpload;
 use Yajra\DataTables\DataTables;
 
 class NewsController extends Controller
 {
-    // use ImageUpload;
     use Uploads;
 
     public function __construct()
@@ -116,15 +114,9 @@ class NewsController extends Controller
     {
         $images = $news->images()->get();
         $files = $news->files()->get();
-        // $all_related = $news->related()->pluck('news_id', 'related_id')->all();
-        // foreach($all_related as $key => $value){
-
-        //     $related_titles[] = News::select('main_title')->whereId($key)->get();
-        // }
-        // dd($related_titles);
-        
         $all_news = News::pluck('main_title', 'id')->all();
-        return view('news.edit', compact('news', 'images', 'files', 'related_titles', 'all_news'));
+        $related_news = Related::where('news_id', $news->id)->pluck('related_id')->all();
+        return view('news.edit', compact('news', 'images', 'files', 'related_news', 'all_news'));
     }
 
     /**

@@ -10,6 +10,21 @@ class News extends Model
     use SoftDeletes;
 
     /**
+     * to override delete behaviour
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(
+            function ($news) {
+                $news->images()->delete();
+                $news->files()->delete();
+                $news->related()->delete();
+            }
+        );
+    }
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
