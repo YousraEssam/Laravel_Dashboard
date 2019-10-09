@@ -27,6 +27,7 @@ class CreateRelatedTable extends Migration
                 ->on('news')
                 ->onDelete('cascade');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

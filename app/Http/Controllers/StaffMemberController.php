@@ -79,7 +79,7 @@ class StaffMemberController extends Controller
         $staffMember = $user->staff()->create($request->all());
         
         if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request, $staffMember);
+            $path = $this->uploadStaffOrVisitorImage($request, $staffMember);
             $staffMember->image()->create(['url' => $path]);
         }
 
@@ -129,7 +129,7 @@ class StaffMemberController extends Controller
         $staffMember->update($request->all());
         
         if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request, $staffMember);
+            $path = $this->uploadStaffOrVisitorImage($request, $staffMember);
             $staffMember->image()->update(['url' => $path]);
         }
 

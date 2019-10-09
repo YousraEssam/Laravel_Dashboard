@@ -39,6 +39,7 @@
                             <form role="form" method="POST" action="{{ route('news.store') }}" enctype='multipart/form-data'>
                                 @csrf
 
+                            
                                 <div class="form-group">
                                     <label>Main Title</label>
                                     <input type="text" placeholder="Main Title" class="form-control" name="main_title" id="main">
@@ -72,12 +73,16 @@
 
                                 <div class="form-group">
                                     <label>Upload Images</label>
-                                    <input type="file" class="form-control" name="image[]" multiple>
+                                    <div class="dropzone" id="dropzoneFormImage">
+                                        
+                                    </div>
                                 </div>
-
+                                
                                 <div class="form-group">
                                     <label>Upload Files</label>
-                                    <input type="file" class="form-control" name="file[]" multiple>
+                                    <div class="dropzone" id="dropzoneFormFile">
+                                        
+                                    </div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -108,9 +113,6 @@
 <script>
     ClassicEditor
     .create( document.querySelector('#content') )
-    .then( editor => {
-        console.log( content )
-    })
     .catch( error => {
         console.error( error )
     });
@@ -144,6 +146,74 @@
         }else{
             $("#author_name").empty();
         }
+    });
+</script>
+@endsection
+
+@section('Imagedropzone')
+<script>
+    Dropzone.autoDiscover = false;
+    var uploadedImageMap = {}
+    $(document).ready( function() {
+        var imageDropZone = new Dropzone("#dropzoneFormImage",{
+            paramName: "image", // The name that will be used to transfer the file
+            url: "{{ route('uploadImage') }}",
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+            dictDefaultMessage: "<strong>Drop Images here or click to upload. </strong></br>",
+            acceptedFiles: ".png,.jpg",
+            maxThumbnailFilesize: 1, //MB
+            addRemoveLinks: true,
+            success: function(file, response) {
+                $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
+                uploadedImageMap[file.name] = response.name
+            },
+            removedFile: function(file) {
+                file.previewElement.remove()
+                var name = ''
+                if(typeof(file.file_name !== 'undefined')){
+                    name = file.file_name
+                }else{
+                    name = uploadedImageMap[file.name]
+                }
+                $('form').find('input[name="image[]"][value="'+name+'"]').remove() 
+            },
+        });
+    });
+</script>
+@endsection
+
+@section('Filedropzone')
+<script>
+    Dropzone.autoDiscover = false;
+    var uploadedFileMap = {}
+    $(document).ready( function() {
+        var FileDropZone = new Dropzone("#dropzoneFormFile",{
+            paramName: "file", // The name that will be used to transfer the file
+            url: "{{ route('uploadFile') }}",
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+            dictDefaultMessage: "<strong>Drop Files here or click to upload. </strong></br>",
+            acceptedFiles: ".pdf,.xls",
+            maxThumbnailFilesize: 1, //MB
+            addRemoveLinks: true,
+            success: function(file, response) {
+                console.log(response.name)
+                console.log(file.name)
+                $('form').append('<input type="hidden" name="file[]" value="'+response.name+'" >')
+                uploadedFileMap[file.name] = response.name
+            },
+            removedFile: function(file) {
+                file.previewElement.remove()
+                var name = ''
+                if(typeof(file.file_name !== 'undefined')){
+                    name = file.file_name
+                }else{
+                    name = uploadedFileMap[file.name]
+                }
+                $('form').find('input[name="image[]"][value="'+name+'"]').remove() 
+            },
+        });
     });
 </script>
 @endsection

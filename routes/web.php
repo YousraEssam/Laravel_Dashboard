@@ -46,6 +46,9 @@ Route::group(
         Route::get('get-city-list/{id}', 'CityController@getCityList');
         Route::get('get-author-list/{type}', 'NewsController@getAuthorList');
 
+        Route::post('uploadImage', 'ImageController@store')->name('uploadImage');
+        Route::post('uploadFile', 'FileController@store')->name('uploadFile');
+
         Route::put('toggle_staff_activity/{staffMember}', 'StaffMemberController@toggleActivity')->name('toggleStaff');
         
         Route::put('toggle_visitor_activity/{visitor}', 'VisitorController@toggleActivity')->name('toggleVisitor');

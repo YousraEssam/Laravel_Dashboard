@@ -15,6 +15,8 @@
     <link href="{{ asset('theme/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
     <link href="{{ asset('status.css')}}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('theme/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet"> --}}
@@ -252,15 +254,23 @@
     <!-- Select2 -->
     <script src="{{ asset('theme/js/plugins/select2/select2.full.min.js') }}"></script>
 
+    <!-- DROPZONE -->
+    <script src="{{ asset('theme/js/plugins/dropzone/dropzone.js') }}"></script>
+
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <!-- CkEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-<script>
- $('.chosen-select').select2();
- </script>
+    <script>
+        $('.chosen-select').select2();
+    </script>
+
     <!-- Page-Level Scripts -->
     @yield('cityscript')
     @yield('textarea')
     @yield('newsscript')
+    @yield('Imagedropzone')
+    @yield('Filedropzone')
     @stack('JSValidatorScript')
     
     @stack('scripts')

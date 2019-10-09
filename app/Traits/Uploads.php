@@ -6,39 +6,18 @@ use Illuminate\Http\Request;
 
 trait Uploads
 {
-    public function uploadFile(Request $request, $modelInstance)
+    public function uploadFile(Request $request)
     {
-        if($this->checkSingleOrMultipleFile($request)){
-            $paths = [];
-            foreach($request->file('file') as $file){
-                $paths[] = $file->store('public/uploads/files/'.explode('\\',get_class($modelInstance))[1]);
-            }
-            return $paths;
-        }else{
-            $path = $request->file('file')->store('public/uploads/files/'.explode('\\',get_class($modelInstance))[1]);
-            return $path;
-        }
+        return $request->file('file')->store('public/uploads/files/News');
     }
 
-    public function uploadImage(Request $request, $modelInstance)
+    public function uploadImage(Request $request)
     {
-        if($this->checkSingleOrMultipleImage($request)){
-            $paths = [];
-            foreach($request->file('image') as $file){
-                $paths[] = $file->store('public/uploads/images/'.explode('\\',get_class($modelInstance))[1]);
-            }
-            return $paths;
-        }else{
-            $path = $request->file('image')->store('public/uploads/images/'.explode('\\',get_class($modelInstance))[1]);
-            return $path;
-        }
+        return $request->file('image')->store('public/uploads/images/News');
     }
 
-    public function checkSingleOrMultipleFile(Request $request){
-        return is_array($request->file('file')) ? true : false;
-    }
-
-    public function checkSingleOrMultipleImage(Request $request){
-        return is_array($request->file('image')) ? true : false;
+    public function uploadStaffOrVisitorImage(Request $request, $modelInstance)
+    {
+        return $request->file('image')->store('public/uploads/images/'.explode('\\',get_class($modelInstance))[1]);
     }
 }

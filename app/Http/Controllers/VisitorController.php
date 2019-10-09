@@ -69,7 +69,7 @@ class VisitorController extends Controller
         $visitor = $user->visitor()->create($request->all());
         
         if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request, $visitor);
+            $path = $this->uploadStaffOrVisitorImage($request, $visitor);
             $visitor->image()->create(['url' => $path]);
         }
         
@@ -117,7 +117,7 @@ class VisitorController extends Controller
         $visitor->update($request->all());
         
         if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request, $visitor);
+            $path = $this->uploadStaffOrVisitorImage($request, $visitor);
             $visitor->image()->update(['url' => $path]);
         }
 
