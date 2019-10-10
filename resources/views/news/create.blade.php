@@ -169,10 +169,10 @@
                 $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
                 uploadedImageMap[file.name] = response.name
             },
-            removedFile: function(file) {
+            removedfile: function(file) {
                 file.previewElement.remove()
                 var name = ''
-                if(typeof(file.file_name !== 'undefined')){
+                if(typeof(file.file_name) !== 'undefined'){
                     name = file.file_name
                 }else{
                     name = uploadedImageMap[file.name]
@@ -204,15 +204,15 @@
                 $('form').append('<input type="hidden" name="file[]" value="'+response.name+'" >')
                 uploadedFileMap[file.name] = response.name
             },
-            removedFile: function(file) {
+            removedfile: function(file) {
                 file.previewElement.remove()
                 var name = ''
-                if(typeof(file.file_name !== 'undefined')){
+                if(typeof(file.file_name) !== 'undefined'){
                     name = file.file_name
                 }else{
                     name = uploadedFileMap[file.name]
                 }
-                $('form').find('input[name="image[]"][value="'+name+'"]').remove() 
+                $('form').find('input[name="file[]"][value="'+name+'"]').remove()
             },
         });
     });
