@@ -43,7 +43,7 @@
 
                             <div class="form-group">
                                 <label>Member Image</label>
-                                <input type="file" value={{$visitor->user->image}} class="form-control" name="image">
+                                <input type="file" class="form-control" name="image">
                             </div>
 
                             <div class="form-group">

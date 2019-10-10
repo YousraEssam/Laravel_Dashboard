@@ -130,7 +130,11 @@ class StaffMemberController extends Controller
         
         if ($request->hasFile('image')) {
             $path = $this->uploadStaffOrVisitorImage($request, $staffMember);
-            $staffMember->image()->update(['url' => $path]);
+            if($staffMember->image()){
+                $staffMember->image()->update(['url' => $path]);
+            }else{
+                $staffMember->image()->create(['url' => $path]);
+            }
         }
 
         return redirect()

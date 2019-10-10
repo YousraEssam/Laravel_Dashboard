@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Related extends Model
 {
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -19,6 +21,6 @@ class Related extends Model
      * Get all news 
      */
     public function news(){
-        return $this->belongsTo(News::class, 'related_id');
+        return $this->belongsToMany(News::class, 'related', 'related_id', 'news_id');
     }
 }

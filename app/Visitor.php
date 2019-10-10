@@ -19,6 +19,7 @@ class Visitor extends Model
         static::deleting(
             function ($visitor) {
                 $visitor->user()->delete();
+                $visitor->image()->delete();
             }
         );
     }

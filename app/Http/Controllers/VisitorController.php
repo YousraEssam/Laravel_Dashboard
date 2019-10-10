@@ -118,7 +118,11 @@ class VisitorController extends Controller
         
         if ($request->hasFile('image')) {
             $path = $this->uploadStaffOrVisitorImage($request, $visitor);
-            $visitor->image()->update(['url' => $path]);
+            if($visitor->image()){
+                $visitor->image()->update(['url' => $path]);
+            }else{
+                $visitor->image()->create(['url' => $path]);
+            }
         }
 
         return redirect()

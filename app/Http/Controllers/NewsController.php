@@ -65,7 +65,7 @@ class NewsController extends Controller
 
         if($request->related){
             foreach($request->related as $related)
-            $news->related()->create([ 'related_id' => $related ]);
+            $news->related()->attach([ 'related_id' => $related ]);
         }
         
         if($request->input('image')){
@@ -123,26 +123,21 @@ class NewsController extends Controller
      */
     public function update(NewsRequest $request, News $news)
     {
+        $new_related = $request->input('related');
+        $news->related()->detach();
+        $news->related()->attach($new_related);
         $news->update($request->all());
 
-        if($request->related){
-            $news->related()->delete();
-            foreach($request->related as $related)
-            $news->related()->create([ 'related_id' => $related ]);
-        }
-
-        if($request->hasFile('image')){
-            $img_path = $this->uploadImage($request, $news);
+        if($request->input('image')){
             $news->images()->delete();
-            foreach($img_path as $img){
+            foreach($request->input('image') as $img){
                 $news->images()->create(['url' => $img]);
             }
         }
 
-        if($request->hasFile('file')){
-            $file_path = $this->uploadFile($request, $news);
+        if($request->input('file')){
             $news->files()->delete();
-            foreach($file_path as $file){
+            foreach($request->input('file') as $file){
                 $news->files()->create(['file_url' => $file]);
             }
         }

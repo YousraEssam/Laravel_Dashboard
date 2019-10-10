@@ -20,7 +20,6 @@ class News extends Model
             function ($news) {
                 $news->images()->delete();
                 $news->files()->delete();
-                $news->related()->delete();
             }
         );
     }
@@ -69,6 +68,6 @@ class News extends Model
      */
     public function related()
     {
-        return $this->hasMany(Related::class, 'news_id');
+        return $this->belongsToMany(Related::class, 'related', 'news_id', 'related_id');
     }
 }

@@ -19,6 +19,7 @@ class StaffMember extends Model
         static::deleting(
             function ($staffMember) {
                 $staffMember->user()->delete();
+                $staffMember->image()->delete();
             }
         );
     }
