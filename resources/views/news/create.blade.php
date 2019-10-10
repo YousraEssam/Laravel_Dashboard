@@ -87,9 +87,9 @@
                                 
                                 <div class="form-group">
                                     <label>Choose Related News</label>
-                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]">
+                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]" id="related">
                                         <option value="">Select</option>
-                                        @foreach ($news as $key => $value)
+                                        @foreach ($published_related as $key => $value)
                                             <option value="{{$key}}"> {{ $value }}</option>    
                                         @endforeach
                                     </select>
@@ -149,6 +149,7 @@
     });
 </script>
 @endsection
+
 
 @section('Imagedropzone')
 <script>
@@ -219,6 +220,6 @@
 @endsection
 
 @push('JSValidatorScript')
-{{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script> --}}
-{{-- {!! JsValidator::formRequest('App\Http\Requests\NewsRequest') !!} --}}
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\NewsRequest') !!}
 @endpush

@@ -50,7 +50,8 @@ class NewsController extends Controller
     public function create()
     {
         $news = News::pluck('main_title', 'id')->all();
-        return view('news.create', compact('news'));
+        $published_related = News::whereIsPublished(True)->pluck('main_title', 'id')->all();
+        return view('news.create', compact('news', 'published_related'));
     }
 
     /**

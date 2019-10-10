@@ -239,6 +239,6 @@
 @endsection
 
 @push('JSValidatorScript')
-{{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script> --}}
-{{-- {!! JsValidator::formRequest('App\Http\Requests\NewsRequest') !!} --}}
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\NewsRequest') !!}
 @endpush
