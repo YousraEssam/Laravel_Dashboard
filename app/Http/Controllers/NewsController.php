@@ -93,10 +93,7 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        $staffMember = $news->staffMember();
-        $images = $news->images();
-        $files = $news->files();
-        return view('news.show', compact('news', 'staffMember', 'images', 'files'));
+        return view('news.show', compact('news'));
     }
 
     /**

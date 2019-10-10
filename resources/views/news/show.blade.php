@@ -43,7 +43,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Content:</label>
-                    <h4> {{$news->content}} </h4>
+                    <h4> {!!$news->content!!} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -68,6 +68,26 @@
                     @endif
                 </div>
             </div>
+            @if($news->images)
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="status">Member Images:</label><br>
+                    @foreach($news->images as $image)
+                    <img src="{{Storage::url($image->url)}}" style="height:50px; width:50px;">
+                    @endforeach
+                </div>
+            </div>
+            @endif
+            @if($news->files)
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="status">Member Files:</label><br>
+                    @foreach($news->files as $file)
+                    <a href="{{Storage::url($file->file_url)}}" >{{explode("/",$file->file_url)[4]}}</a><br>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
