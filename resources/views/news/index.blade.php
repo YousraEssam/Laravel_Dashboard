@@ -35,7 +35,6 @@
                                 <th>Content</th>
                                 <th>Type</th>
                                 <th>Author</th>
-                                <th>Is Published?</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -64,7 +63,6 @@
                 { data: 'content', name: 'content'},
                 { data: 'type', name: 'type'},
                 { data: 'author', name:'author_id'},
-                { data: 'is_published', name: 'is_published'},
                 { data: 'actions', name: 'actions'}
             ],
             dom: 'Bfrtip',

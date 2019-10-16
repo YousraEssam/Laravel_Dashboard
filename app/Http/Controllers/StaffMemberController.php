@@ -29,7 +29,7 @@ class StaffMemberController extends Controller
      */
     public function index()
     { 
-        $staff_members = StaffMember::latest()->with('user', 'job', 'city', 'role', 'city.country', 'image');
+        $staff_members = StaffMember::latest()->with('user', 'job', 'role', 'city.country', 'image');
         if(request()->ajax()) {
 
             return DataTables::of($staff_members)
@@ -40,13 +40,12 @@ class StaffMemberController extends Controller
                         return $row->user->getFullNameAttribute();
                     }
                 )
-                ->editColumn(
-                    'is_active', function ($row) {
-                        return view('staff_members.activity', compact('row'));
+                ->addColumn(
+                    'actions', function ($row) {
+                        return view('staff_members.buttons', compact('row'));
                     }
                 )
-                ->addColumn('actions', 'staff_members.buttons')
-                ->rawColumns(['name', 'image', 'actions', 'is_active'])
+                ->rawColumns(['name', 'image', 'actions'])
                 ->make(true);
         }
         return view('staff_members.index');

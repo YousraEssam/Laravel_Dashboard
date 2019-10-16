@@ -39,7 +39,6 @@
                         <th>City</th>
                         <th>Country</th>
                         <th>Role</th>
-                        <th>Is Active?</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -73,7 +72,6 @@ $(function(){
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},
             {data: 'role.name', name:'role'},
-            {data: 'is_active', name: 'is_active'},
             {data: 'actions', name: 'actions'},
             ],
         dom: 'Bfrtip',

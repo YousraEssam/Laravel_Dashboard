@@ -70,4 +70,15 @@ class News extends Model
     {
         return $this->belongsToMany(Related::class, 'related', 'news_id', 'related_id');
     }
+
+    /**
+     * Scope a query to only include published enws.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublished($query) : void
+    {
+        $query->whereIsPublished(True);
+    }
 }

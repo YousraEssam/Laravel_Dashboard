@@ -25,18 +25,17 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::latest()->with('staffMember','staffMember.user');
+        $news = News::latest()->with('staffMember.user');
         if(request()->ajax()) {
             return DataTables::of($news)
                 ->addIndexColumn()
                 ->editColumn('author', function($row){
                     return $row->staffMember->user->getFullNameAttribute();
                 })
-                ->editColumn('is_published', function($row){
-                    return view('news.publish', compact('row'));
+                ->addColumn('actions', function($row){
+                    return view('news.buttons', compact('row'));
                 })
-                ->addColumn('actions', 'news.buttons')
-                ->rawColumns(['author', 'is_published', 'actions'])
+                ->rawColumns(['author', 'actions'])
                 ->make(true);
         }
         return view('news.index');
@@ -50,7 +49,7 @@ class NewsController extends Controller
     public function create()
     {
         $news = News::pluck('main_title', 'id')->all();
-        $published_related = News::whereIsPublished(True)->pluck('main_title', 'id')->all();
+        $published_related = News::published()->pluck('main_title', 'id')->all();
         return view('news.create', compact('news', 'published_related'));
     }
 

@@ -37,7 +37,6 @@
                         <th>Gender</th>
                         <th>City</th>
                         <th>Country</th>
-                        <th>Is Active?</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -68,7 +67,6 @@ $(function(){
             {data: 'gender', name: 'gender'},
             {data: 'city.name', name: 'city'},
             {data: 'city.country.name', name: 'country'},
-            {data: 'is_active', name: 'is_active'},
             {data: 'actions', name: 'actions'}
         ],
         dom: 'Bfrtip',

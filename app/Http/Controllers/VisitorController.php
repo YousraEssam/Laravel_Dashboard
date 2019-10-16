@@ -22,7 +22,7 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        $visitors = Visitor::latest()->with('user', 'city', 'city.country', 'image');
+        $visitors = Visitor::latest()->with('user', 'city.country', 'image');
         if(request()->ajax()) {
 
             return DataTables::of($visitors)
@@ -33,13 +33,12 @@ class VisitorController extends Controller
                         return $row->user->getFullNameAttribute();
                     }
                 )
-                ->editColumn(
-                    'is_active', function ($row) {
-                        return view('visitors.activity', compact('row'));
+                ->addColumn(
+                    'actions', function ($row) {
+                        return view('visitors.buttons', compact('row'));
                     }
                 )
-                ->addColumn('actions', 'visitors.buttons')
-                ->rawColumns(['name', 'image', 'actions', 'is_active'])
+                ->rawColumns(['name', 'image', 'actions'])
                 ->make(true);
         }
         return view('visitors.index');
