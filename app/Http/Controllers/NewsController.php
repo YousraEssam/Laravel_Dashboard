@@ -7,6 +7,7 @@ use App\News;
 use App\Related;
 use App\StaffMember;
 use App\Traits\Uploads;
+use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
 
 class NewsController extends Controller
@@ -48,9 +49,27 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $news = News::pluck('main_title', 'id')->all();
-        $published_related = News::published()->pluck('main_title', 'id')->all();
-        return view('news.create', compact('news', 'published_related'));
+        $types = News::$types;
+        return view('news.create', compact('types'));
+    }
+
+    public function getPublishedNews(Request $request){
+        // dd($request->all());
+        $term = trim($request->q);
+
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $published_related = News::published()
+            ->where('main_title', 'like', "%$term%")->get();
+
+        $published = [];
+        
+        foreach($published_related as $pub){
+            $published[] = ['id' => $pub->id, 'text' => $pub->main_title];
+        }
+        return \Response::json($published);
     }
 
     /**
@@ -108,7 +127,8 @@ class NewsController extends Controller
         $files = $news->files()->get();
         $all_news = News::pluck('main_title', 'id')->all();
         $related_news = Related::where('news_id', $news->id)->pluck('related_id')->all();
-        return view('news.edit', compact('news', 'images', 'files', 'related_news', 'all_news'));
+        $types = News::$types;
+        return view('news.edit', compact('news', 'images', 'files', 'related_news', 'all_news', 'types'));
     }
 
     /**

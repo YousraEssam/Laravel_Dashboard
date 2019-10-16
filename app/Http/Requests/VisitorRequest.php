@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Visitor;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class VisitorRequest extends FormRequest
 {
@@ -28,7 +30,7 @@ class VisitorRequest extends FormRequest
             'last_name' => 'required|string|max:150',
             'email' => 'required|string|email|unique:users,id,'.$this->checkIdExists(),
             'phone' => 'required|regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]+$/|unique:users,id,'.$this->checkIdExists(),
-            'gender' => 'required|string',
+            'gender' => 'required|'.Rule::in(Visitor::$types),
             'image' => 'image|mimes:png,jpg|max:2048',
             'city_id' => 'required|exists:cities,id',
             'country_id' => 'required|exists:countries,id',
@@ -38,11 +40,5 @@ class VisitorRequest extends FormRequest
     public function checkIdExists()
     {
         return $this->id ? $this->id : false;
-
-        // if($this->id) {
-        //     return $this->id;
-        // } else {
-        //     return false;
-        // }
     }
 }

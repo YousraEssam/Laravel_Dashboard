@@ -68,9 +68,10 @@
 
                             <div class="form-group">
                                 <label>Member Gender</label> <br>
-                                <select name="gender" class="form-control" value="{{$staffMember->gender}}">
-                                    <option value="Female">Female</option>
-                                    <option value="Male">Male</option>
+                                <select name="gender" class="form-control">
+                                    @foreach ($types as $type)
+                                        <option value="{{$type}}" {{ $type == $staffMember->gender ? "selected" : "" }}>{{$type}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

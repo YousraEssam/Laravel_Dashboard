@@ -67,8 +67,9 @@
                                 <label>Member Gender</label> <br>
                                 <select name="gender" class="form-control">
                                     <option value="">Member Gender</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Male">Male</option>
+                                    @foreach ($types as $type)
+                                        <option value="{{$type}}">{{ $type }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

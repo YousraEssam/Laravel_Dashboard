@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\StaffMember;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StaffMemberRequest extends FormRequest
 {
@@ -28,7 +30,7 @@ class StaffMemberRequest extends FormRequest
             'last_name' => 'required|string|max:150',
             'email' => 'required|string|email|unique:users,id,'.$this->checkIdExists(),
             'phone' => 'required|regex:/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[0-9]+$/|unique:users,id,'.$this->checkIdExists(),
-            'gender' => 'required|string',
+            'gender' => 'required|'.Rule::in(StaffMember::$types),
             'image' => 'image|mimes:png,jpg|max:2048',
             'job_id' => 'required|exists:jobs,id',
             'city_id' => 'required|exists:cities,id',

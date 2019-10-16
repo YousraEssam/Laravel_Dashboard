@@ -68,18 +68,18 @@
 
                             <div class="form-group">
                                 <label>Member Gender</label> <br>
-                                <select name="gender" class="form-control" value="{{$visitor->gender}}">
-                                    <option value="Female">Female</option>
-                                    <option value="Male">Male</option>
+                                <select name="gender" class="form-control">
+                                    @foreach ($types as $type)
+                                        <option value="{{$type}}" {{ $type == $visitor->gender ? "selected" : "" }}>{{$type}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             
                             <div class="form-group">
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" value="Member Country" class="form-control">
-                                    <option value="" disabled selected>{{$visitor->country->name}}</option>
                                     @foreach($countries as $key => $value)
-                                    <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
+                                    <option {{ (old("country_id", $visitor->country->id) == $key ? "selected": "") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label>Member City</label> <br>
                                 <select id="city" name="city_id" value="Member City" class="form-control">
-                                    <option value="{{$visitor->city->id}}">{{$visitor->city->name}}</option>
+                                    <option value="{{$visitor->city->id}}" selected>{{$visitor->city->name}}</option>
                                 </select>
                             </div>
 

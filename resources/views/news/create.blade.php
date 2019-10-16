@@ -58,9 +58,10 @@
                                 <div class="form-group">
                                     <label>News Type</label> <br>
                                     <select id="type" name="type" class="form-control">
-                                        <option value="">Type</option>
-                                        <option value="News">News</option>
-                                        <option value="Article">Article</option>
+                                        <option disabled value="">Type</option>
+                                        @foreach ($types as $type)
+                                        <option value="{{$type}}">{{ $type }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -87,11 +88,8 @@
                                 
                                 <div class="form-group">
                                     <label>Choose Related News</label>
-                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]" id="related">
-                                        <option value="">Select</option>
-                                        @foreach ($published_related as $key => $value)
-                                            <option value="{{$key}}"> {{ $value }}</option>    
-                                        @endforeach
+                                    <select class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]" id="related">
+
                                     </select>
                                 </div>
                                 
@@ -215,6 +213,32 @@
                 $('form').find('input[name="file[]"][value="'+name+'"]').remove()
             },
         });
+    });
+</script>
+@endsection
+
+@section('PublishedNews')
+<script>
+    $('#related').select2({
+        placeholder: 'Choose Related News',
+        minimumInputLength: 2,
+        ajax: {
+            url: '{{ route("getPublishedNews") }}',
+            dataType: 'json',
+            data: function(params){
+                return {
+                    q: $.trim(params.term)
+                }
+            },
+            processResults: function (data) {
+                console.log(data)
+                return {
+                    results: data
+                };
+            },
+            max_selected_options: 10
+            // cache: true
+        }
     });
 </script>
 @endsection

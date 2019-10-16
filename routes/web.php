@@ -55,5 +55,6 @@ Route::group(
 
         Route::put('toggle_news_publish/{news}', 'NewsController@togglePublish')->name('toggleNews');
 
+        Route::get('get_published_news', 'NewsController@getPublishedNews')->name('getPublishedNews');
     }
 );

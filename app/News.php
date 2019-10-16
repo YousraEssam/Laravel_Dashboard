@@ -9,6 +9,9 @@ class News extends Model
 {
     use SoftDeletes;
 
+    const NEWS = 'News';
+    const ARTICLE = 'Article';
+    public static $types = [self::NEWS, self::ARTICLE];
     /**
      * to override delete behaviour
      */
@@ -77,7 +80,7 @@ class News extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePublished($query) : void
+    public function scopePublished($query)
     {
         $query->whereIsPublished(True);
     }

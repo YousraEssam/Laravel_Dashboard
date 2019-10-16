@@ -52,7 +52,8 @@ class VisitorController extends Controller
     public function create()
     {
         $countries = Country::pluck('name', 'id');
-        return view('visitors.create', compact('countries'));
+        $types = Visitor::$types;
+        return view('visitors.create', compact('countries', 'types'));
     }
 
     /**
@@ -100,7 +101,8 @@ class VisitorController extends Controller
     public function edit(Visitor $visitor)
     {
         $countries = Country::pluck('name', 'id');
-        return view('visitors.edit', compact('visitor', 'countries'));
+        $types = Visitor::$types;
+        return view('visitors.edit', compact('visitor', 'countries', 'types'));
     }
 
     /**

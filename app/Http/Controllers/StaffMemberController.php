@@ -61,7 +61,8 @@ class StaffMemberController extends Controller
         $jobs = Job::pluck('name', 'id');
         $roles = Role::pluck('name', 'id');
         $countries = Country::pluck('name', 'id');
-        return view('staff_members.create', compact('jobs', 'roles', 'countries'));
+        $types = StaffMember::$types;
+        return view('staff_members.create', compact('jobs', 'roles', 'countries', 'types'));
     }
 
     /**
@@ -112,7 +113,8 @@ class StaffMemberController extends Controller
         $jobs = Job::pluck('name', 'id');
         $roles = Role::pluck('name', 'id');
         $countries = Country::pluck('name', 'id');
-        return view('staff_members.edit', compact('staffMember', 'jobs', 'roles', 'countries'));
+        $types = StaffMember::$types;
+        return view('staff_members.edit', compact('staffMember', 'jobs', 'roles', 'countries', 'types'));
     }
     
     /**

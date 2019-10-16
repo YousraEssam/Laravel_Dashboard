@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StaffMember extends Model
 {
     use SoftDeletes;
-    
+    const MALE = 'Male';
+    const FEMALE = 'Female';
+    public static $types = [self::MALE, self::FEMALE];
     /**
      * to override delete behaviour
      */

@@ -58,16 +58,16 @@
                                 <div class="form-group">
                                     <label>News Type</label> <br>
                                     <select id="type" name="type" class="form-control" >
-                                        <option {{ old("type") == $news->type ? "selected" : "" }} value="{{$news->type}}"> {{$news->type}} </option>
-                                        <option value="News">News</option>
-                                        <option value="Article">Article</option>
+                                        @foreach ($types as $type)
+                                            <option value="{{$type}}" {{ $type == $news->type ? "selected" : "" }}>{{$type}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>News Author</label> <br>
                                     <select id="author_name" name="author_id" class="form-control">
-                                            <option value="{{$news->staffMember->job->id}}">{{$news->staffMember->user->first_name}} {{$news->staffMember->user->last_name}}</option>
+                                        <option value="{{$news->staffMember->job->id}}">{{$news->staffMember->user->first_name}} {{$news->staffMember->user->last_name}}</option>
                                     </select>
                                 </div>
 
@@ -97,13 +97,11 @@
 
                                 <div class="form-group">
                                     <label>Choose Related News</label>
-                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]">
+                                    <select data-placeholder="Choose Related..." class="chosen-select" multiple style="width:350px;" tabindex="4" name="related[]" id="related">
                                         <option value="">Select</option>
                                         @foreach ($all_news as $key => $value)
-                                            @if(in_array($key,$related_news))
+                                            @if(in_array($key, $related_news))
                                                 <option value="{{$key}}" selected>{{ $value }}</option>
-                                            @else
-                                                <option value="{{$key}}">{{ $value }}</option>    
                                             @endif
                                         @endforeach
                                     </select>
@@ -234,6 +232,32 @@
                 $('form').find('input[name="image[]"][value="'+name+'"]').remove() 
             },
         });
+    });
+</script>
+@endsection
+
+@section('PublishedNews')
+<script>
+    $('#related').select2({
+        placeholder: 'Choose Related News',
+        minimumInputLength: 2,
+        ajax: {
+            url: '{{ route("getPublishedNews") }}',
+            dataType: 'json',
+            data: function(params){
+                return {
+                    q: $.trim(params.term)
+                }
+            },
+            processResults: function (data) {
+                console.log(data)
+                return {
+                    results: data
+                };
+            },
+            max_selected_options: 10
+            // cache: true
+        }
     });
 </script>
 @endsection
