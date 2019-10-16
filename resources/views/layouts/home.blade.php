@@ -266,14 +266,11 @@
     <!-- CkEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
    
+    <script src="{{ asset('app.js') }}"></script>
 
     <!-- Page-Level Scripts -->
-    @yield('cityscript')
-    @yield('textarea')
-    @yield('newsscript')
     @yield('Imagedropzone')
     @yield('Filedropzone')
-    @yield('PublishedNews')
     @stack('JSValidatorScript')
     
     @stack('scripts')

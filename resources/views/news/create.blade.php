@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label>News Type</label> <br>
                                     <select id="type" name="type" class="form-control">
-                                        <option disabled value="">Type</option>
+                                        <option value="">Type</option>
                                         @foreach ($types as $type)
                                         <option value="{{$type}}">{{ $type }}</option>
                                         @endforeach
@@ -106,48 +106,6 @@
 </div>
 
 @endsection
-
-@section('textarea')
-<script>
-    ClassicEditor
-    .create( document.querySelector('#content') )
-    .catch( error => {
-        console.error( error )
-    });
-</script>
-@endsection
-
-@section('newsscript')
-<script>
-    $('#type').change(function(){
-        var type = $(this).val();
-        if(type){
-            $.ajax({
-                type:"GET",
-                url: "{{url('get-author-list')}}/"+type,
-                success:function(res){
-                    if(res){
-                        $("#author_name").empty();
-                        $("#author_name").append('<option>Select</option>');
-                        $.each(res,function(key,value){
-                            console.log("key -> "+key);
-                            console.log("value -> ");
-                            console.log(value);
-                            console.log("value id -> "+value.id);
-                            $("#author_name").append('<option {{old("author_id")=="'+key+'" ? "selected" : "" }} value="'+value.id+'">'+value.user.first_name+' '+value.user.last_name+'</option>');
-                        });
-                    }else{
-                        $("#author_name").empty();
-                    }
-                }
-            });
-        }else{
-            $("#author_name").empty();
-        }
-    });
-</script>
-@endsection
-
 
 @section('Imagedropzone')
 <script>
@@ -213,32 +171,6 @@
                 $('form').find('input[name="file[]"][value="'+name+'"]').remove()
             },
         });
-    });
-</script>
-@endsection
-
-@section('PublishedNews')
-<script>
-    $('#related').select2({
-        placeholder: 'Choose Related News',
-        minimumInputLength: 2,
-        ajax: {
-            url: '{{ route("getPublishedNews") }}',
-            dataType: 'json',
-            data: function(params){
-                return {
-                    q: $.trim(params.term)
-                }
-            },
-            processResults: function (data) {
-                console.log(data)
-                return {
-                    results: data
-                };
-            },
-            max_selected_options: 10
-            // cache: true
-        }
     });
 </script>
 @endsection
