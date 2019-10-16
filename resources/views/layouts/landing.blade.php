@@ -49,17 +49,18 @@
                                 </li>
                             @endif
                         @else
-                            <li class="active">
+                            <li>
                                 <a class="page-scroll" href="">
-                                    Hello, {{ auth()->user()->first_name }}
+                                    Hello, {{ Auth::user()->first_name }}
                                 </a>
                             </li>
+                            @if (Auth::user()->hasAnyRole(['Admin', 'Staff Member']))
                             <li class="active">
                                 <a class="page-scroll" href="{{route('home')}}">
                                     Go To Dashboard
                                 </a>
                             </li>
-
+                            @endif
                             <li>
                                 <a class="page-scroll" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

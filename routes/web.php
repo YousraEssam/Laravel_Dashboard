@@ -32,7 +32,7 @@ Route::get(
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')
-            ->name('home');
+            ->name('home')->middleware('user');
 
 Route::group(
     ['middleware' => ['auth']], function () {
