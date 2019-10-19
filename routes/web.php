@@ -42,7 +42,8 @@ Route::group(
         Route::resource('staff_members', 'StaffMemberController');
         Route::resource('visitors', 'VisitorController');
         Route::resource('news', 'NewsController');
-        
+        Route::resource('events', 'EventController');
+
         Route::get('get-city-list/{id}', 'CityController@getCityList');
         Route::get('get-author-list/{type}', 'NewsController@getAuthorList');
 
@@ -54,6 +55,8 @@ Route::group(
         Route::put('toggle_visitor_activity/{visitor}', 'VisitorController@toggleActivity')->name('toggleVisitor');
 
         Route::put('toggle_news_publish/{news}', 'NewsController@togglePublish')->name('toggleNews');
+
+        Route::put('toggle_event_publish/{event}', 'EventController@togglePublish')->name('toggleEvent');
 
         Route::get('get_published_news', 'NewsController@getPublishedNews')->name('getPublishedNews');
     }

@@ -162,6 +162,21 @@
                         </ul>
                     </li>
                     @endcan
+                    @can('event-list')
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Events</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('events.index') }}">All</a></li>
+                            @can('event-create')
+                            <li><a href="{{ route('events.create') }}">Add</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
                 </ul>
 
             </div>

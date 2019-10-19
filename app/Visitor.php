@@ -74,5 +74,12 @@ class Visitor extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-    
+ 
+    /**
+     * The events that belong to the visitor.
+     */
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
 }

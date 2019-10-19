@@ -27,7 +27,7 @@ $('#country').change(function(){
 ClassicEditor
 .create( document.querySelector('#content') )
 .catch( error => {
-    console.error( error )
+    console.error(error)
 });
 
 //news author script

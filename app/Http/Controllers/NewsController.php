@@ -54,7 +54,6 @@ class NewsController extends Controller
     }
 
     public function getPublishedNews(Request $request){
-        // dd($request->all());
         $term = trim($request->q);
 
         if (empty($term)) {
