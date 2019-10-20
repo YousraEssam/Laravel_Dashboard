@@ -4,9 +4,10 @@ namespace App\Listeners;
 
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Mail\NewStaffMemberResetPasswordMail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendNewStaffMemberResetPasswordLinkListener
+class SendNewStaffMemberResetPasswordLinkListener implements ShouldQueue
 {
     /**
      * Handle the event.

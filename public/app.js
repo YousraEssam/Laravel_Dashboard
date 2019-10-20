@@ -80,3 +80,49 @@ $('#related').select2({
         // cache: true
     }
 });
+
+//DatePicker Script
+$(document).ready(function() {
+    $('#start_date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        todayHighlight: true,
+        format: 'dd-mm-yyyy',
+    });
+
+    $('#end_date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        todayHighlight: true,
+        format: 'dd-mm-yyyy',
+    });
+
+});
+
+//visitors script
+// $('#visitors').select2();
+
+//Event Visitors
+$('#visitors').select2({
+    placeholder: 'Choose Invited ',
+    minimumInputLength: 2,
+    ajax: {
+        url: window.location.origin + '/get_event_visitors',
+        dataType: 'json',
+        data: function(params){
+            return {
+                q: $.trim(params.term)
+            }
+        },
+        processResults: function (data) {
+            console.log(data)
+            return {
+                results: data
+            };
+        },
+    }
+});

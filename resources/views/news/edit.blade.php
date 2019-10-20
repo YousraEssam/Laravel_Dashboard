@@ -78,7 +78,7 @@
                                     </div>
                                     <label for="images">
                                         @foreach ($images as $image)
-                                            {{explode("/",$image->url)[4]}} <br>
+                                            <img src="{{Storage::url($image->url)}}" style='height:50px; width:50px;'>
                                         @endforeach
                                     </label>
                                 </div>
@@ -90,7 +90,9 @@
                                     </div>
                                     <label for="files">
                                         @foreach ($files as $file)
-                                            {{explode("/",$file->file_url)[4]}} <br>
+                                            <a src="{{Storage::url($file->file_url)}}">
+                                                {{$file->file_url}}
+                                            </a><br>
                                         @endforeach
                                     </label>
                                 </div>

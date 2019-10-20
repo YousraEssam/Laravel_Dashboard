@@ -59,5 +59,8 @@ Route::group(
         Route::put('toggle_event_publish/{event}', 'EventController@togglePublish')->name('toggleEvent');
 
         Route::get('get_published_news', 'NewsController@getPublishedNews')->name('getPublishedNews');
+
+        Route::get('get_event_visitors', 'EventController@getEventVisitors')->name('getEventVisitors');
+
     }
 );

@@ -36,7 +36,6 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Visitors</th>
-                                <th>Images</th>
                                 <th>Location</th>
                                 <th>Actions</th>
                             </tr>
@@ -67,7 +66,6 @@
                 { data: 'start_date', name: 'start_date'},
                 { data: 'end_date', name:'end_date'},
                 { data: 'visitors', name:'visitors'},
-                { data: 'images', name:'images'},
                 { data: 'location', name:'location'},
                 { data: 'actions', name: 'actions'}
             ],

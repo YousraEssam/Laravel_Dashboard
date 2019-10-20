@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Event extends Model
 {
     use SoftDeletes;
+    /**
+     * to override delete behaviour
+     */
+    public static function boot()
+    {
+        parent::boot();
 
+        static::deleting(
+            function ($event) {
+                $event->images()->delete();
+            }
+        );
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -38,6 +50,6 @@ class Event extends Model
      */
     public function visitors()
     {
-        return $this->belongsToMany(Visitor::class);
+        return $this->belongsToMany(Visitor::class)->with('user');
     }
 }

@@ -44,6 +44,7 @@
                             <div class="form-group">
                                 <label>Member Image</label>
                                 <input type="file" class="form-control" name="image">
+                                <img src="{{Storage::url($visitor->image->url)}}" style='height:50px; width:50px;'>
                             </div>
 
                             <div class="form-group">

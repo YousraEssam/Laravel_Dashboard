@@ -18,8 +18,8 @@ class CreateEventsTable extends Migration
             $table->string('main_title',150);
             $table->string('secondary_title',150);
             $table->string('content');
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->string('start_date');
+            $table->string('end_date');
             $table->string('location')->nullable();
             $table->boolean('is_published')->default(true);
 

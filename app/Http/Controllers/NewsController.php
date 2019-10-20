@@ -80,12 +80,9 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $news = News::create($request->all());
-
-        if($request->related){
-            foreach($request->related as $related)
-            $news->related()->attach([ 'related_id' => $related ]);
-        }
         
+        $news->related()->attach($request->related);
+
         if($request->input('image')){
             foreach($request->input('image') as $img){
                 $news->images()->create(['url' => $img]);
@@ -139,10 +136,10 @@ class NewsController extends Controller
      */
     public function update(NewsRequest $request, News $news)
     {
-        $new_related = $request->input('related');
-        $news->related()->detach();
-        $news->related()->attach($new_related);
         $news->update($request->all());
+        
+        $new_related = $request->input('related');
+        $news->related()->sync($new_related);
 
         if($request->input('image')){
             $news->images()->delete();

@@ -18,6 +18,7 @@
     <link href="{{ asset('theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
     <link href="{{ asset('status.css')}}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('theme/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet"> --}}
@@ -281,6 +282,9 @@
     <!-- CkEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
    
+    <!-- Data picker -->
+    <script src="{{ asset('theme/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+
     <script src="{{ asset('app.js') }}"></script>
 
     <!-- Page-Level Scripts -->
