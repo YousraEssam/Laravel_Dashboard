@@ -22,7 +22,7 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        $visitors = Visitor::latest()->with('user', 'city.country', 'image');
+        $visitors = Visitor::latest()->with('user', 'user.city.country', 'image');
         if(request()->ajax()) {
 
             return DataTables::of($visitors)
@@ -52,7 +52,7 @@ class VisitorController extends Controller
     public function create()
     {
         $countries = Country::pluck('name', 'id');
-        $types = Visitor::$types;
+        $types = User::$types;
         return view('visitors.create', compact('countries', 'types'));
     }
 
@@ -101,7 +101,7 @@ class VisitorController extends Controller
     public function edit(Visitor $visitor)
     {
         $countries = Country::pluck('name', 'id');
-        $types = Visitor::$types;
+        $types = User::$types;
         return view('visitors.edit', compact('visitor', 'countries', 'types'));
     }
 

@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Visitor extends Model
 {
     use SoftDeletes;
-    const MALE = 'Male';
-    const FEMALE = 'Female';
-    public static $types = [self::MALE, self::FEMALE];
+
     /**
      * to override delete behaviour
      */
@@ -32,7 +30,7 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'country_id', 'city_id', 'gender', 'user_id', 'is_active'
+        'user_id', 'is_active'
     ];
 
     /**
@@ -41,22 +39,6 @@ class Visitor extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-    
-    /**
-     * Get the country that owns the staff member.
-     */
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    /**
-     * Get the city that owns the staff member.
-     */
-    public function city()
-    {
-        return $this->belongsTo(City::class);
-    }
 
     /**
      * Get the user that owns the staff member

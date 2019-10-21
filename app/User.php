@@ -14,14 +14,17 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use SoftDeletes;
 
+    const MALE = 'Male';
+    const FEMALE = 'Female';
+    public static $types = [self::MALE, self::FEMALE];
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'phone', 'email'
-        , 'password',
+        'first_name', 'last_name', 'phone', 'email', 'password', 'gender', 'country_id', 'city_id',
     ];
 
     /**
@@ -55,6 +58,22 @@ class User extends Authenticatable implements MustVerifyEmail
     // public function setPasswordAttribute($value) {
     //     return $this->attributes['password'] = Hash::make($value);
     // }
+
+    /**
+     * Get the country that owns the staff member.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the city that owns the staff member.
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 
      /**
       * Get the staff member record associated with the user.

@@ -72,7 +72,7 @@
                                 <label>Member Gender</label> <br>
                                 <select name="gender" class="form-control">
                                     @foreach ($types as $type)
-                                        <option value="{{$type}}" {{ $type == $staffMember->gender ? "selected" : "" }}>{{$type}}</option>
+                                        <option value="{{$type}}" {{ $type == $staffMember->user->gender ? "selected" : "" }}>{{$type}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="form-group">
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" value="Member Country" class="form-control">
-                                    <option value="" disabled selected>{{$staffMember->country->name}}</option>
+                                    <option value="" disabled selected>{{$staffMember->user->country->name}}</option>
                                     @foreach($countries as $key => $value)
                                         <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 <label>Member City</label> <br>
                                 <select id="city" name="city_id" value="Member City" class="form-control">
-                                    <option value="{{$staffMember->city->id}}">{{$staffMember->city->name}}</option>
+                                    <option value="{{$staffMember->user->city->id}}">{{$staffMember->user->city->name}}</option>
                                 </select>
                             </div>
 

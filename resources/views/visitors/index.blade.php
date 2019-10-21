@@ -64,9 +64,9 @@ $(function(){
             {data: 'name', name: 'name'},
             {data: 'user.email', name: 'email'},
             {data: 'user.phone', name: 'phone'},
-            {data: 'gender', name: 'gender'},
-            {data: 'city.name', name: 'city'},
-            {data: 'city.country.name', name: 'country'},
+            {data: 'user.gender', name: 'gender'},
+            {data: 'user.city.name', name: 'city'},
+            {data: 'user.city.country.name', name: 'country'},
             {data: 'actions', name: 'actions'}
         ],
         dom: 'Bfrtip',

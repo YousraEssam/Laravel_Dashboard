@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StaffMember extends Model
 {
     use SoftDeletes;
-    const MALE = 'Male';
-    const FEMALE = 'Female';
-    public static $types = [self::MALE, self::FEMALE];
+
     /**
      * to override delete behaviour
      */
@@ -31,7 +29,7 @@ class StaffMember extends Model
      * @var array
      */
     protected $fillable = [
-        'job_id', 'role_id', 'country_id', 'city_id', 'gender', 'user_id', 'is_active'
+        'job_id', 'role_id', 'user_id', 'is_active'
     ];
 
     /**
@@ -47,22 +45,6 @@ class StaffMember extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
-    }
-
-    /**
-     * Get the country that owns the staff member.
-     */
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    /**
-     * Get the city that owns the staff member.
-     */
-    public function city()
-    {
-        return $this->belongsTo(City::class);
     }
 
     /**

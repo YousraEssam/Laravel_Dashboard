@@ -29,7 +29,7 @@ class StaffMemberController extends Controller
      */
     public function index()
     { 
-        $staff_members = StaffMember::latest()->with('user', 'job', 'role', 'city.country', 'image');
+        $staff_members = StaffMember::latest()->with('user', 'job', 'role', 'user.city.country', 'image');
         if(request()->ajax()) {
 
             return DataTables::of($staff_members)
@@ -61,7 +61,7 @@ class StaffMemberController extends Controller
         $jobs = Job::pluck('name', 'id');
         $roles = Role::pluck('name', 'id');
         $countries = Country::pluck('name', 'id');
-        $types = StaffMember::$types;
+        $types = User::$types;
         return view('staff_members.create', compact('jobs', 'roles', 'countries', 'types'));
     }
 
@@ -113,7 +113,7 @@ class StaffMemberController extends Controller
         $jobs = Job::pluck('name', 'id');
         $roles = Role::pluck('name', 'id');
         $countries = Country::pluck('name', 'id');
-        $types = StaffMember::$types;
+        $types = User::$types;
         return view('staff_members.edit', compact('staffMember', 'jobs', 'roles', 'countries', 'types'));
     }
     

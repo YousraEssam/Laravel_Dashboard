@@ -23,20 +23,6 @@ class CreateVisitorsTable extends Migration
                     ->on('users')
                     ->onDelete('cascade');
 
-                $table->string('gender');
-            
-                $table->unsignedInteger('city_id');
-                $table->foreign('city_id')
-                    ->references('id')
-                    ->on('cities')
-                    ->onDelete('cascade');
-
-                $table->unsignedInteger('country_id');
-                $table->foreign('country_id')
-                    ->references('id')
-                    ->on(\Config::get('countries.table_name'))
-                    ->onDelete('cascade');
-
                 $table->boolean('is_active')->default(true);
 
                 $table->softDeletes();

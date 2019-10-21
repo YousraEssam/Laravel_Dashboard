@@ -71,7 +71,7 @@
                                 <label>Member Gender</label> <br>
                                 <select name="gender" class="form-control">
                                     @foreach ($types as $type)
-                                        <option value="{{$type}}" {{ $type == $visitor->gender ? "selected" : "" }}>{{$type}}</option>
+                                        <option value="{{$type}}" {{ $type == $visitor->user->gender ? "selected" : "" }}>{{$type}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -80,7 +80,7 @@
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" value="Member Country" class="form-control">
                                     @foreach($countries as $key => $value)
-                                    <option {{ (old("country_id", $visitor->country->id) == $key ? "selected": "") }} value="{{ $key }}">{{$value}}</option>
+                                    <option {{ (old("country_id", $visitor->user->country->id) == $key ? "selected": "") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -88,7 +88,7 @@
                             <div class="form-group">
                                 <label>Member City</label> <br>
                                 <select id="city" name="city_id" value="Member City" class="form-control">
-                                    <option value="{{$visitor->city->id}}" selected>{{$visitor->city->name}}</option>
+                                    <option value="{{$visitor->user->city->id}}" selected>{{$visitor->user->city->name}}</option>
                                 </select>
                             </div>
 
