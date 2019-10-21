@@ -290,6 +290,7 @@
     <!-- Page-Level Scripts -->
     @yield('Imagedropzone')
     @yield('Filedropzone')
+    @yield('MapScript')
     @stack('JSValidatorScript')
     
     @stack('scripts')

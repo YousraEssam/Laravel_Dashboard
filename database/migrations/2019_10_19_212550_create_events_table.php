@@ -20,7 +20,9 @@ class CreateEventsTable extends Migration
             $table->string('content');
             $table->string('start_date');
             $table->string('end_date');
-            $table->string('location')->nullable();
+            $table->string('address_address')->nullable();
+            $table->double('address_latitude')->nullable();
+            $table->double('address_longitude')->nullable();
             $table->boolean('is_published')->default(true);
 
             $table->softDeletes();

@@ -36,7 +36,7 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Visitors</th>
-                                <th>Location</th>
+                                <th>Address</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -66,7 +66,7 @@
                 { data: 'start_date', name: 'start_date'},
                 { data: 'end_date', name:'end_date'},
                 { data: 'visitors', name:'visitors'},
-                { data: 'location', name:'location'},
+                { data: 'address_address', name:'address_address'},
                 { data: 'actions', name: 'actions'}
             ],
             dom: 'Bfrtip',
