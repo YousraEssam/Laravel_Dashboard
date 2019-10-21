@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\NewEventHasBeenAddedEvent;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Events\NewVisitorHasBeenAddedEvent;
+use App\Listeners\SendEventInvitationListener;
 use App\Listeners\SendNewStaffMemberResetPasswordLinkListener;
 use App\Listeners\SendNewVisitorResetPasswordLinkListener;
 use App\Listeners\WelcomeNewUserListener;
@@ -29,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewVisitorHasBeenAddedEvent::class => [
             SendNewVisitorResetPasswordLinkListener::class,
+        ],
+        NewEventHasBeenAddedEvent::class => [
+            SendEventInvitationListener::class,
         ]
 
     ];

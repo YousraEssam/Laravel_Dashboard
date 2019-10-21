@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Events\NewEventHasBeenAddedEvent;
 use App\Http\Requests\EventRequest;
 use App\Traits\Uploads;
 use App\User;
@@ -65,16 +66,12 @@ class EventController extends Controller
                         return $query->where('first_name', 'like', "%$term%")
                                     ->orWhere('last_name', 'like', "%$term%");
                     })->get();
-        // $event_visitors = Visitor::with(['user' => function ($query) use ($term){
-        //                 return $query->where('first_name', 'like', "%$term%")
-        //                             ->orWhere('last_name', 'like', "%$term%");
-        //             }])->get();
-        
+
         $visitors = [];
         foreach($event_visitors as $visitor){
             if($visitor->user)
                 $visitors[] = ['id' => $visitor->id, 'text' => $visitor->user->first_name." ".$visitor->user->last_name];
-        }
+            }
         return \Response::json($visitors);
     }
     /**
@@ -88,6 +85,8 @@ class EventController extends Controller
         $event = Event::create($request->all());
 
         $event->visitors()->attach($request->visitors);
+
+        event(new NewEventHasBeenAddedEvent($event));
 
         if($request->input('image')){
             foreach($request->input('image') as $img){
