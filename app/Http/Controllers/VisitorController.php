@@ -152,8 +152,8 @@ class VisitorController extends Controller
      */
     public function toggleActivity(Visitor $visitor)
     {
-        $status = $visitor->is_active ? 0 : 1;
-        $visitor->update(['is_active' => $status]);
+        $status = $visitor->user->is_active ? 0 : 1;
+        $visitor->user()->update(['is_active' => $status]);
         return \Response::json('success');
     }
 }

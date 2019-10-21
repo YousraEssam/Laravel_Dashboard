@@ -30,7 +30,7 @@ class Visitor extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'is_active'
+        'user_id'
     ];
 
     /**

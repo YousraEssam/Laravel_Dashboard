@@ -22,7 +22,7 @@ class CreateStaffMembersTable extends Migration
                 // $table->unsignedInteger('city_id');
                 // $table->unsignedInteger('country_id');
                 $table->unsignedInteger('role_id');            
-                $table->boolean('is_active')->default(true);
+                // $table->boolean('is_active')->default(true);
 
                 $table->softDeletes();
                 $table->timestamps();

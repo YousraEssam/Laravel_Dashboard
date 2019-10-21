@@ -172,8 +172,8 @@ class StaffMemberController extends Controller
      */
     public function toggleActivity(StaffMember $staffMember)
     {
-        $status = $staffMember->is_active ? 0 : 1;
-        $staffMember->update(['is_active' => $status]);
+        $status = $staffMember->user->is_active ? 0 : 1;
+        $staffMember->user()->update(['is_active' => $status]);
         return \Response::json('success');
     }
 }

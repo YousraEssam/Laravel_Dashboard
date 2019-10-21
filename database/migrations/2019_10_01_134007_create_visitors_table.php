@@ -23,7 +23,7 @@ class CreateVisitorsTable extends Migration
                     ->on('users')
                     ->onDelete('cascade');
 
-                $table->boolean('is_active')->default(true);
+                // $table->boolean('is_active')->default(true);
 
                 $table->softDeletes();
                 $table->timestamps();

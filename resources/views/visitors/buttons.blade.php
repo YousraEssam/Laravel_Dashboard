@@ -14,8 +14,8 @@
     </form>
     @endcan
         
-    <div class="toggle-btn @if($row->is_active) active @endif">
-        <input id="{{$row->user->first_name.$row->id}}" type="checkbox" @if($row->is_active) checked @endif 
+    <div class="toggle-btn @if($row->user->is_active) active @endif">
+        <input id="{{$row->user->first_name.$row->id}}" type="checkbox" @if($row->user->is_active) checked @endif 
             class="cb-value" onclick="return confirm('Are You Sure?')" />
         <span class="round-btn"></span>
     </div>

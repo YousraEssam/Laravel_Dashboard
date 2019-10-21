@@ -65,9 +65,9 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Visitor Status</label>
-                    @if($visitor->is_active == 1)
+                    @if($visitor->user->is_active == 1)
                     <h4> Active </h4>
-                    @elseif($visitor->is_active == 0)
+                    @elseif($visitor->user->is_active == 0)
                     <h4> InActive </h4>
                     @endif
                 </div>

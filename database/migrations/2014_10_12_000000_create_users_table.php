@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
 
                 $table->unsignedInteger('city_id')->nullable();
                 $table->unsignedInteger('country_id')->nullable();
+                
+                $table->boolean('is_active')->default(true);
 
                 $table->string('phone')->unique();
                 $table->string('password');
