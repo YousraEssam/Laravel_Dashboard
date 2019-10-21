@@ -37,6 +37,7 @@
                                 <th>End Date</th>
                                 <th>Visitors</th>
                                 <th>Address</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -67,6 +68,7 @@
                 { data: 'end_date', name:'end_date'},
                 { data: 'visitors', name:'visitors'},
                 { data: 'address_address', name:'address_address'},
+                { data: 'is_published', name:'is_published'},
                 { data: 'actions', name: 'actions'}
             ],
             dom: 'Bfrtip',

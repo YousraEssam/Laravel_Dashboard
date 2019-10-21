@@ -154,6 +154,6 @@ class VisitorController extends Controller
     {
         $status = $visitor->is_active ? 0 : 1;
         $visitor->update(['is_active' => $status]);
-        return "success";
+        return \Response::json('success');
     }
 }

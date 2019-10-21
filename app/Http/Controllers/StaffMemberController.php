@@ -174,6 +174,6 @@ class StaffMemberController extends Controller
     {
         $status = $staffMember->is_active ? 0 : 1;
         $staffMember->update(['is_active' => $status]);
-        return "success";
+        return \Response::json('success');
     }
 }

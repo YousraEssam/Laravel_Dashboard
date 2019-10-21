@@ -199,6 +199,6 @@ class NewsController extends Controller
     {
         $status = $news->is_published ? 0 : 1;
         $news->update(['is_published' => $status]);
-        return "success";
+        return \Response::json('success');
     }
 }

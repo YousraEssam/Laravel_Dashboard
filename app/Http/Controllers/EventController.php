@@ -35,9 +35,11 @@ class EventController extends Controller
                 ->editColumn('visitors', function($row){
                     return view('events.visitors', compact('row'));
                 })
-                ->addColumn('actions', function($row){
-                    return view('events.buttons', compact('row'));
+                ->editColumn('is_published', function($row){
+                    $this->checkStatus($row);
+                    return view('events.status', compact('row'));
                 })
+                ->addColumn('actions','events.buttons')
                 ->rawColumns(['actions'])
                 ->make(true);
         }
@@ -83,8 +85,9 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         $event = Event::create($request->all());
-
         $event->visitors()->attach($request->visitors);
+
+        $this->checkStatus($event);
 
         event(new NewEventHasBeenAddedEvent($event));
 
@@ -142,6 +145,8 @@ class EventController extends Controller
         $new_visitors = $request->visitors;
         $event->visitors()->sync($new_visitors);
 
+        $this->checkStatus($event);
+
         if($request->input('image')){
             $event->images()->delete();
             foreach($request->input('image') as $img){
@@ -176,6 +181,21 @@ class EventController extends Controller
     {
         $status = $event->is_published ? 0 : 1;
         $event->update(['is_published' => $status]);
-        return "success";
+
+        return \Response::json('success');
+    }
+
+    /**
+     * Check Event dates with current date to be published or not
+     */
+    public function checkStatus($event)
+    {
+        $now = today()->toDateString();
+        if(strtotime($now) <= strtotime($event->start_date) 
+            && strtotime($now) <= strtotime($event->end_date)){
+            $event->update(['is_published' => 1]);
+        }else{
+            $event->update(['is_published' => 0]);
+        }
     }
 }
