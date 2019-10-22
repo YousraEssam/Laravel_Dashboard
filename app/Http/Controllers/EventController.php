@@ -40,7 +40,6 @@ class EventController extends Controller
                 )
                 ->editColumn(
                     'is_published', function ($row) {
-                        $this->checkStatus($row);
                         return view('events.status', compact('row'));
                     }
                 )
@@ -95,8 +94,6 @@ class EventController extends Controller
     {
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
-
-        $this->checkStatus($event);
 
         event(new NewEventHasBeenAddedEvent($event));
 
@@ -154,8 +151,6 @@ class EventController extends Controller
         $new_visitors = $request->visitors;
         $event->visitors()->sync($new_visitors);
 
-        $this->checkStatus($event);
-
         if($request->input('image')) {
             $event->images()->delete();
             foreach($request->input('image') as $img){
@@ -194,19 +189,4 @@ class EventController extends Controller
         return \Response::json('success');
     }
 
-    /**
-     * Check Event dates with current date to be published or not
-     */
-    public function checkStatus($event)
-    {
-        $now = now()->toDateTimeString();
-
-        if(strtotime($now) >= strtotime($event->start_date) 
-            && strtotime($now) <= strtotime($event->end_date)
-        ) {
-            $event->update(['is_published' => true]);
-        }else{
-            $event->update(['is_published' => false]);
-        }
-    }
 }
