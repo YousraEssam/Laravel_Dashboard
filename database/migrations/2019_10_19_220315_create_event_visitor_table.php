@@ -13,23 +13,25 @@ class CreateEventVisitorTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_visitor', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('event_id');
-            $table->unsignedInteger('visitor_id');
+        Schema::create(
+            'event_visitor', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedInteger('event_id');
+                $table->unsignedInteger('visitor_id');
 
-            $table->foreign('event_id')
-                ->references('id')
-                ->on('events')
-                ->onDelete('cascade');
+                $table->foreign('event_id')
+                    ->references('id')
+                    ->on('events')
+                    ->onDelete('cascade');
 
-            $table->foreign('visitor_id')
-                ->references('id')
-                ->on('visitors')
-                ->onDelete('cascade');
+                $table->foreign('visitor_id')
+                    ->references('id')
+                    ->on('visitors')
+                    ->onDelete('cascade');
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
     }
 
     /**

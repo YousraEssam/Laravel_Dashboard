@@ -29,17 +29,21 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::latest()->with('visitors.user', 'images');
-        if(request()->ajax()){
+        if(request()->ajax()) {
             return DataTables::of($event)
                 ->addIndexColumn()
-                ->editColumn('visitors', function($row){
-                    return view('events.visitors', compact('row'));
-                })
-                ->editColumn('is_published', function($row){
-                    $this->checkStatus($row);
-                    return view('events.status', compact('row'));
-                })
-                ->addColumn('actions','events.buttons')
+                ->editColumn(
+                    'visitors', function ($row) {
+                        return view('events.visitors', compact('row'));
+                    }
+                )
+                ->editColumn(
+                    'is_published', function ($row) {
+                        $this->checkStatus($row);
+                        return view('events.status', compact('row'));
+                    }
+                )
+                ->addColumn('actions', 'events.buttons')
                 ->rawColumns(['actions'])
                 ->make(true);
         }
@@ -57,29 +61,33 @@ class EventController extends Controller
         return view('events.create', compact('visitors'));
     }
 
-    public function getEventVisitors(Request $request){
+    public function getEventVisitors(Request $request)
+    {
         $term = trim($request->q);
 
         if (empty($term)) {
             return \Response::json([]);
         }
 
-        $event_visitors = Visitor::whereHas('user', function ($query) use ($term){
+        $event_visitors = Visitor::whereHas(
+            'user', function ($query) use ($term) {
                         return $query->where('first_name', 'like', "%$term%")
-                                    ->orWhere('last_name', 'like', "%$term%");
-                    })->get();
+                            ->orWhere('last_name', 'like', "%$term%");
+            }
+        )->get();
 
         $visitors = [];
         foreach($event_visitors as $visitor){
-            if($visitor->user)
+            if($visitor->user) {
                 $visitors[] = ['id' => $visitor->id, 'text' => $visitor->user->first_name." ".$visitor->user->last_name];
             }
+        }
         return \Response::json($visitors);
     }
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(EventRequest $request)
@@ -91,7 +99,7 @@ class EventController extends Controller
 
         event(new NewEventHasBeenAddedEvent($event));
 
-        if($request->input('image')){
+        if($request->input('image')) {
             foreach($request->input('image') as $img){
                 $event->images()->create([ 'url' => $img ]);
             }
@@ -104,7 +112,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  \App\Event $event
      * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
@@ -117,7 +125,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  \App\Event $event
      * @return \Illuminate\Http\Response
      */
     public function edit(Event $event)
@@ -134,8 +142,8 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Event  $event
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Event               $event
      * @return \Illuminate\Http\Response
      */
     public function update(EventRequest $request, Event $event)
@@ -147,7 +155,7 @@ class EventController extends Controller
 
         $this->checkStatus($event);
 
-        if($request->input('image')){
+        if($request->input('image')) {
             $event->images()->delete();
             foreach($request->input('image') as $img){
                 $event->images()->create(['url' => $img]);
@@ -162,7 +170,7 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Event  $event
+     * @param  \App\Event $event
      * @return \Illuminate\Http\Response
      */
     public function destroy(Event $event)
@@ -191,8 +199,9 @@ class EventController extends Controller
     public function checkStatus($event)
     {
         $now = today()->toDateString();
-        if(strtotime($now) <= strtotime($event->start_date) 
-            && strtotime($now) <= strtotime($event->end_date)){
+        if(strtotime($now) >= strtotime($event->start_date) 
+            && strtotime($now) <= strtotime($event->end_date)
+        ) {
             $event->update(['is_published' => 1]);
         }else{
             $event->update(['is_published' => 0]);

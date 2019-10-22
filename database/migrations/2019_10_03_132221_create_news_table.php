@@ -13,19 +13,21 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('main_title',150);
-            $table->string('secondary_title',150);
-            $table->string('content');
-            $table->string('type');
-            $table->boolean('is_published')->default(true);
+        Schema::create(
+            'news', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('main_title', 150);
+                $table->string('secondary_title', 150);
+                $table->string('content');
+                $table->string('type');
+                $table->boolean('is_published')->default(true);
             
-            $table->unsignedInteger('author_id');
+                $table->unsignedInteger('author_id');
             
-            $table->softDeletes();
-            $table->timestamps();
-        });
+                $table->softDeletes();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

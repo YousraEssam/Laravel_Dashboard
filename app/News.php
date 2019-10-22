@@ -77,11 +77,11 @@ class News extends Model
     /**
      * Scope a query to only include published enws.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePublished($query)
     {
-        $query->whereIsPublished(True);
+        $query->whereIsPublished(true);
     }
 }

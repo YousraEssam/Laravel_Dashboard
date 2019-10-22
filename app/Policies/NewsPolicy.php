@@ -28,7 +28,7 @@ class NewsPolicy
      * Determine whether the user can view the news.
      *
      * @param  \App\User $user
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return mixed
      */
     public function view(User $user, News $news)
@@ -57,7 +57,7 @@ class NewsPolicy
      * Determine whether the user can update the news.
      *
      * @param  \App\User $user
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return mixed
      */
     public function update(User $user, News $news)
@@ -72,7 +72,7 @@ class NewsPolicy
      * Determine whether the user can delete the news.
      *
      * @param  \App\User $user
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return mixed
      */
     public function delete(User $user, News $news)
@@ -87,7 +87,7 @@ class NewsPolicy
      * Determine whether the user can restore the news.
      *
      * @param  \App\User $user
-     * @param  \App\news  $news
+     * @param  \App\news $news
      * @return mixed
      */
     public function restore(User $user, news $news)
@@ -99,7 +99,7 @@ class NewsPolicy
      * Determine whether the user can permanently delete the news.
      *
      * @param  \App\User $user
-     * @param  \App\news  $news
+     * @param  \App\news $news
      * @return mixed
      */
     public function forceDelete(User $user, news $news)

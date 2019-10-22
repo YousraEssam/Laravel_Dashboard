@@ -1,7 +1,7 @@
 <script>
     jQuery(document).ready(function(){
 
-        $("<?= $validator['selector']; ?>").each(function() {
+        $("<?php echo $validator['selector']; ?>").each(function() {
             $(this).validate({
                 errorElement: 'span',
                 errorClass: 'invalid-feedback',
@@ -19,9 +19,9 @@
                     $(element).closest('.form-control').removeClass('is-valid').addClass('is-invalid'); // add the Bootstrap error class to the control group
                 },
 
-                <?php if (isset($validator['ignore']) && is_string($validator['ignore'])): ?>
+                <?php if (isset($validator['ignore']) && is_string($validator['ignore'])) : ?>
 
-                ignore: "<?= $validator['ignore']; ?>",
+                ignore: "<?php echo $validator['ignore']; ?>",
                 <?php endif; ?>
 
                 
@@ -34,7 +34,7 @@
                 },
 
                 focusInvalid: false, // do not focus the last invalid input
-                <?php if (Config::get('jsvalidation.focus_on_error')): ?>
+                <?php if (Config::get('jsvalidation.focus_on_error')) : ?>
                 invalidHandler: function (form, validator) {
 
                     if (!validator.numberOfInvalids())
@@ -42,13 +42,13 @@
 
                     $('html, body').animate({
                         scrollTop: $(validator.errorList[0].element).offset().top
-                    }, <?= Config::get('jsvalidation.duration_animate') ?>);
+                    }, <?php echo Config::get('jsvalidation.duration_animate') ?>);
                     $(validator.errorList[0].element).focus();
 
                 },
                 <?php endif; ?>
 
-                rules: <?= json_encode($validator['rules']); ?>
+                rules: <?php echo json_encode($validator['rules']); ?>
             });
         });
     });

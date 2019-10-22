@@ -30,12 +30,16 @@ class NewsController extends Controller
         if(request()->ajax()) {
             return DataTables::of($news)
                 ->addIndexColumn()
-                ->editColumn('author', function($row){
-                    return $row->staffMember->user->getFullNameAttribute();
-                })
-                ->addColumn('actions', function($row){
-                    return view('news.buttons', compact('row'));
-                })
+                ->editColumn(
+                    'author', function ($row) {
+                        return $row->staffMember->user->getFullNameAttribute();
+                    }
+                )
+                ->addColumn(
+                    'actions', function ($row) {
+                        return view('news.buttons', compact('row'));
+                    }
+                )
                 ->rawColumns(['author', 'actions'])
                 ->make(true);
         }
@@ -53,7 +57,8 @@ class NewsController extends Controller
         return view('news.create', compact('types'));
     }
 
-    public function getPublishedNews(Request $request){
+    public function getPublishedNews(Request $request)
+    {
         $term = trim($request->q);
 
         if (empty($term)) {
@@ -74,7 +79,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(NewsRequest $request)
@@ -83,13 +88,13 @@ class NewsController extends Controller
         
         $news->related()->attach($request->related);
 
-        if($request->input('image')){
+        if($request->input('image')) {
             foreach($request->input('image') as $img){
                 $news->images()->create(['url' => $img]);
             }
         }
 
-        if($request->input('file')){
+        if($request->input('file')) {
             foreach($request->input('file') as $file){
                 $news->files()->create(['file_url' => $file]);
             }
@@ -103,7 +108,7 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return \Illuminate\Http\Response
      */
     public function show(News $news)
@@ -114,7 +119,7 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return \Illuminate\Http\Response
      */
     public function edit(News $news)
@@ -130,8 +135,8 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\News  $news
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\News                $news
      * @return \Illuminate\Http\Response
      */
     public function update(NewsRequest $request, News $news)
@@ -141,14 +146,14 @@ class NewsController extends Controller
         $new_related = $request->input('related');
         $news->related()->sync($new_related);
 
-        if($request->input('image')){
+        if($request->input('image')) {
             $news->images()->delete();
             foreach($request->input('image') as $img){
                 $news->images()->create(['url' => $img]);
             }
         }
 
-        if($request->input('file')){
+        if($request->input('file')) {
             $news->files()->delete();
             foreach($request->input('file') as $file){
                 $news->files()->create(['file_url' => $file]);
@@ -162,7 +167,7 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\News  $news
+     * @param  \App\News $news
      * @return \Illuminate\Http\Response
      */
     public function destroy(News $news)
@@ -177,16 +182,17 @@ class NewsController extends Controller
     /**
      * get author list for writers and reporters based on chosen type
      */
-    public function getAuthorList($type){
-        if($type == "News"){
+    public function getAuthorList($type)
+    {
+        if($type == "News") {
 
-            $reporters = StaffMember::with('user','job')->where('job_id',2)->get();
+            $reporters = StaffMember::with('user', 'job')->where('job_id', 2)->get();
 
             return response()->json($reporters);
             
-        }elseif($type == "Article"){
+        }elseif($type == "Article") {
 
-            $writers = StaffMember::with('user','job')->where('job_id',1)->get();
+            $writers = StaffMember::with('user', 'job')->where('job_id', 1)->get();
 
             return response()->json($writers);
         }

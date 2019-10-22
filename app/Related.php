@@ -20,7 +20,8 @@ class Related extends Model
     /**
      * Get all news 
      */
-    public function news(){
+    public function news()
+    {
         return $this->belongsToMany(News::class, 'related', 'related_id', 'news_id');
     }
 }

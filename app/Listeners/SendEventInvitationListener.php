@@ -14,7 +14,7 @@ class SendEventInvitationListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  NewEventHasBeenAddedEvent  $event
+     * @param  NewEventHasBeenAddedEvent $event
      * @return void
      */
     public function handle($event)

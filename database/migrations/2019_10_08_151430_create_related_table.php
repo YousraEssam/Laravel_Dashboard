@@ -13,23 +13,25 @@ class CreateRelatedTable extends Migration
      */
     public function up()
     {
-        Schema::create('related', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('news_id');
-            $table->foreign('news_id')
-                ->references('id')
-                ->on('news')
-                ->onDelete('cascade');
+        Schema::create(
+            'related', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedInteger('news_id');
+                $table->foreign('news_id')
+                    ->references('id')
+                    ->on('news')
+                    ->onDelete('cascade');
 
-            $table->unsignedInteger('related_id');
-            $table->foreign('related_id')
-                ->references('id')
-                ->on('news')
-                ->onDelete('cascade');
+                $table->unsignedInteger('related_id');
+                $table->foreign('related_id')
+                    ->references('id')
+                    ->on('news')
+                    ->onDelete('cascade');
 
-            $table->softDeletes();
-            $table->timestamps();
-        });
+                $table->softDeletes();
+                $table->timestamps();
+            }
+        );
     }
 
     /**
