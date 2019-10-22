@@ -8,6 +8,7 @@ use App\Http\Requests\EventRequest;
 use App\Traits\Uploads;
 use App\User;
 use App\Visitor;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
@@ -198,13 +199,14 @@ class EventController extends Controller
      */
     public function checkStatus($event)
     {
-        $now = today()->toDateString();
+        $now = now()->toDateTimeString();
+
         if(strtotime($now) >= strtotime($event->start_date) 
             && strtotime($now) <= strtotime($event->end_date)
         ) {
-            $event->update(['is_published' => 1]);
+            $event->update(['is_published' => true]);
         }else{
-            $event->update(['is_published' => 0]);
+            $event->update(['is_published' => false]);
         }
     }
 }
