@@ -64,7 +64,7 @@
                                     <label>Start Date</label>
                                     <div class="input-group date">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
+                                            <span class="glyphicon glyphicon-calendar"></span>                                        </span>
                                         </span>
                                         <input name="start_date" id="start_date" type="text" class="form-control"
                                             value="{{ $event->start_date }}">
@@ -75,7 +75,7 @@
                                     <label>End Date</label>
                                     <div class="input-group date">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
+                                            <span class="glyphicon glyphicon-calendar"></span>                                        </span>
                                         </span>
                                         <input name="end_date" id="end_date" type="text" class="form-control"
                                             value="{{ $event->end_date }}">

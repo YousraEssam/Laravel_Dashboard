@@ -62,23 +62,22 @@
 
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <div class="input-group date">
+                                    <div class="input-group date" id="datetimepicker1">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                                            <span class="glyphicon glyphicon-calendar"></span>                                        </span>
                                         <input name="start_date" id="start_date" type="text" class="form-control"
-                                            value="{{ date('d-m-Y H:i:sa') }}">
+                                            value="{{ date('Y-m-d H:i:s') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <div class="input-group date">
+                                    <div class="input-group date" id="datetimepicker2">
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
+                                            <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                         <input name="end_date" id="end_date" type="text" class="form-control"
-                                            value="{{ date('d-m-Y H:i:sa') }}">
+                                            value="{{ date('Y-m-d H:i:s') }}">
                                     </div>
                                 </div>
 

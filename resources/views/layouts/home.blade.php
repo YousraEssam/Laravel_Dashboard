@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>INSPINIA | Dashboard v.2</title>
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('theme/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -18,14 +17,9 @@
     <link href="{{ asset('theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
-    <link href="{{ asset('theme/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('status.css')}}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('theme/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet"> --}}
-    {{-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> --}}
-
-    {{-- Yajra Datatables --}}
-    {{-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
 </head>
@@ -273,18 +267,19 @@
 
     <!-- DROPZONE -->
     <script src="{{ asset('theme/js/plugins/dropzone/dropzone.js') }}"></script>
-
+    
     <!-- Chosen -->
     <script src="{{ asset('theme/js/plugins/chosen/chosen.jquery.js') }}"></script>
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+    
     <!-- CkEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-   
+    
     <!-- Data picker -->
-    <script src="{{ asset('theme/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
-
+    <script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    
     <script src="{{ asset('app.js') }}"></script>
 
     <!-- Page-Level Scripts -->
@@ -292,8 +287,6 @@
     @yield('Filedropzone')
     @yield('MapScript')
     @stack('JSValidatorScript')
-    
     @stack('scripts')
-    
 </body>
 </html>

@@ -81,26 +81,15 @@ $('#related').select2({
     }
 });
 
-//DatePicker Script
-$(document).ready(function() {
-    $('#start_date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: true,
-        forceParse: false,
-        calendarWeeks: true,
-        todayHighlight: true,
-        format: 'dd-mm-yyyy',
-    });
+// DatePicker Script
+const options = {
+    format: "Y-M-D H:m:s",
+    sideBySide: true,
+};
 
-    $('#end_date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: true,
-        forceParse: false,
-        calendarWeeks: true,
-        todayHighlight: true,
-        format: 'dd-mm-yyyy',
-    });
-
+$(function() {
+    $('#datetimepicker1').datetimepicker(options);
+    $('#datetimepicker2').datetimepicker(options);
 });
 
 //visitors script
