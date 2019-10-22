@@ -18,12 +18,6 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-content m-b-sm border-bottom">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="control-label" for="order_id">Visitor ID:</label>
-                    <h4> {{$visitor->id}} </h4>
-                </div>
-            </div>
             @if($visitor->image)
             <div class="col-sm-6">
                 <div class="form-group">
@@ -53,13 +47,13 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Visitor City:</label>
-                    <h4> {{$visitor->city->name}} </h4>
+                    <h4> {{$visitor->user->city->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="customer">Visitor Country:</label>
-                    <h4> {{$visitor->city->country->name}} </h4>
+                    <h4> {{$visitor->user->city->country->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-6">

@@ -45,7 +45,7 @@
                                     <input type="text" class="form-control" value="{{$role->description}}" name="description">
                                 </div>
                                 <div class="form-group">
-                                    <label>Role Permissions</label>
+                                    <label>Role Permissions</label><br>
                                     @if(!empty($allPermissions)) 
                                     @foreach($allPermissions as $rp)
                                         @if(in_array($rp->name, $rolePermissions))

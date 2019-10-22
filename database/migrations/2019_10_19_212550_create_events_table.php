@@ -18,11 +18,11 @@ class CreateEventsTable extends Migration
             $table->string('main_title',150);
             $table->string('secondary_title',150);
             $table->string('content');
-            $table->string('start_date');
-            $table->string('end_date');
-            $table->string('address_address')->nullable();
-            $table->double('address_latitude')->nullable();
-            $table->double('address_longitude')->nullable();
+            $table->dateTimeTz('start_date');
+            $table->dateTimeTz('end_date');
+            $table->string('address_address');
+            $table->double('address_latitude');
+            $table->double('address_longitude');
             $table->boolean('is_published')->default(true);
 
             $table->softDeletes();

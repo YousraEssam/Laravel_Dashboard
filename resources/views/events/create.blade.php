@@ -67,7 +67,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         <input name="start_date" id="start_date" type="text" class="form-control"
-                                            value="{{ date('d-m-Y') }}">
+                                            value="{{ date('d-m-Y H:i:sa') }}">
                                     </div>
                                 </div>
 
@@ -78,7 +78,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         <input name="end_date" id="end_date" type="text" class="form-control"
-                                            value="{{ date('d-m-Y') }}">
+                                            value="{{ date('d-m-Y H:i:sa') }}">
                                     </div>
                                 </div>
 

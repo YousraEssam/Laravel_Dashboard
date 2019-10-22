@@ -20,12 +20,6 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="order_id">Role ID</label>
-                    <h4> {{$role->id}} </h4>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
                     <label class="control-label" for="status">Role Name</label>
                     <h4> {{$role->name}} </h4>
                 </div>
@@ -38,12 +32,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
                 <div class="form-group">
                     <label class="control-label" for="date_added">Assigned Permissions</label>
                     <div class="input-group date">
                         @foreach($rolePermissions as $rp)
-                            <ul>
+                            <ul style="width:25%; display:inline-block; float:left;">
                                 <li>{{$rp->name}}</li>
                             </ul>
                         @endforeach                

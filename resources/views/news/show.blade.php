@@ -24,12 +24,6 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="control-label" for="order_id">ID:</label>
-                    <h4> {{$news->id}} </h4>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
                     <label class="control-label" for="status">Main Title:</label>
                     <h4> {{$news->main_title}} </h4>
                 </div>
@@ -83,7 +77,7 @@
                 <div class="form-group">
                     <label class="control-label" for="status">Member Files:</label><br>
                     @foreach($news->files as $file)
-                    <a href="{{Storage::url($file->file_url)}}" >{{explode("/",$file->file_url)[4]}}</a><br>
+                    <a href="{{Storage::url($file->file_url)}}" >{{explode("/",$file->file_url)[3]}}</a><br>
                     @endforeach
                 </div>
             </div>
