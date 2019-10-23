@@ -38,7 +38,7 @@ class PublishEvent extends Command
      */
     public function handle()
     {
-        $now = now()->toDateTimeString();
+        $now = now('Africa/Cairo')->toDateTimeString();
         $events = Event::all();
         foreach($events as $event){
             if(strtotime($now) >= strtotime($event->start_date) 
