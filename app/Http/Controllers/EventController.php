@@ -93,11 +93,7 @@ class EventController extends Controller
     {
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
-
-        if($request->cover_url){
-            $path = $request->cover_url->store('public/uploads/images/cover');
-            $event->cover_url = $path;
-        }
+        $event->cover_url = $this->uploadCoverImage($request);
 
         if($request->input('image')) {
             foreach($request->input('image') as $img){
