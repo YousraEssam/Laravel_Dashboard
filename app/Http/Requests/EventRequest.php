@@ -31,6 +31,9 @@ class EventRequest extends FormRequest
             'end_date' => 'required|after_or_equal:start_date',
             'visitors' => 'required|exists:visitors,id',
             'images' => 'image|mimes:png,jpg|max:1024',
+            'address_address' => 'string',
+            'address_latitude' => 'regex:/^[-]?(([1-8]?[0-9])(\.(\d{1,16})?)|(90(\.0+)?))$/i',
+            'address_longitude' => 'regex:/^[-]?((1?[0-7]?[0-9])(\.(\d{1,16})?)|(180(\.0+)?))$/i',
         ];
     }
 }
