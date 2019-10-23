@@ -42,6 +42,11 @@
                                 @csrf
 
                                 <div class="form-group">
+                                    <label>Cover Image</label>
+                                    <input type="file" class="form-control" name="cover_url">
+                                </div>
+
+                                <div class="form-group">
                                     <label>Main Title</label>
                                     <input type="text" placeholder="Main Title" class="form-control" name="main_title"
                                         id="main">
@@ -144,10 +149,7 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function (file, response) {
-                $('form').append('<input type="hidden" name="image[]" value="' + response.name +
-                    '" >')
-                let elem = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
-                $(elem).append('Set as cover <input type="radio" value="'+response.name +'" name="cover_url"/>')
+                $('form').append('<input type="hidden" name="image[]" value="' + response.name + '" >')
                 uploadedImageMap[file.name] = response.name
             },
             removedfile: function (file) {

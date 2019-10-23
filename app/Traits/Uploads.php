@@ -15,4 +15,9 @@ trait Uploads
     {
         return $request->file('image')->store('public/uploads/images');
     }
+
+    public function uploadCoverImage(Request $request)
+    {
+        return $request->file('cover_url')->store('public/uploads/images/cover');
+    }
 }

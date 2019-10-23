@@ -94,13 +94,19 @@ class EventController extends Controller
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
 
-        event(new NewEventHasBeenAddedEvent($event));
+        if($request->cover_url){
+            $path = $request->cover_url->store('public/uploads/images/cover');
+            $event->cover_url = $path;
+        }
 
         if($request->input('image')) {
             foreach($request->input('image') as $img){
                 $event->images()->create([ 'url' => $img ]);
             }
         }
+        $event->save();
+
+        event(new NewEventHasBeenAddedEvent($event));
         return redirect()
             ->route('events.index')
             ->with('success', 'New Event Has Been Added Successfully');
@@ -128,9 +134,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $images = $event->images()->get();
-
         $all_visitors = Visitor::pluck('id')->all();
-
         $visitors = $event->visitors()->with('user')->get();
 
         return view('events.edit', compact('event', 'images', 'all_visitors', 'visitors'));
@@ -147,8 +151,11 @@ class EventController extends Controller
     {
         $event->update($request->all());
 
-        $new_visitors = $request->visitors;
-        $event->visitors()->sync($new_visitors);
+        $event->visitors()->sync($request->visitors);
+
+        $path = $request->cover_url->store('public/uploads/images/cover');
+        $event->cover_url = $path;
+        $event->save();
 
         if($request->input('image')) {
             $event->images()->delete();
