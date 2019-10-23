@@ -30,6 +30,7 @@
                         <thead>
                             <tr role="row">
                                 <th>#</th>
+                                <th>Cover Url</th>
                                 <th>Main Title</th>
                                 <th>Secondary Title</th>
                                 <th>Content</th>
@@ -61,6 +62,7 @@
             ajax: '{!! route('events.index') !!}',
             columns: [
                 { data: 'id', name: 'id'},
+                { data: 'cover_url', name: 'cover_url'},
                 { data: 'main_title', name: 'main_title'},
                 { data: 'secondary_title', name: 'secondary_title'},
                 { data: 'content', name: 'content'},

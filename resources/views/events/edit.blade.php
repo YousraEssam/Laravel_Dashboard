@@ -152,6 +152,8 @@
             addRemoveLinks: true,
             success: function(file, response) {
                 $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
+                let elem = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
+                $(elem).append('Set as cover <input type="radio" value="'+response.name +'" name="cover_url"/>')
                 uploadedImageMap[file.name] = response.name
             },
             removedFile: function(file) {

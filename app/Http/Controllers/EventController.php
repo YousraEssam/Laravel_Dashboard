@@ -6,10 +6,7 @@ use App\Event;
 use App\Events\NewEventHasBeenAddedEvent;
 use App\Http\Requests\EventRequest;
 use App\Traits\Uploads;
-use App\User;
 use App\Visitor;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
 
@@ -34,17 +31,19 @@ class EventController extends Controller
             return DataTables::of($event)
                 ->addIndexColumn()
                 ->editColumn(
+                    'cover_url', function($row){
+                        return view('events.cover', compact('row'));
+                })
+                ->editColumn(
                     'visitors', function ($row) {
                         return view('events.visitors', compact('row'));
-                    }
-                )
+                    })
                 ->editColumn(
                     'is_published', function ($row) {
                         return view('events.status', compact('row'));
-                    }
-                )
+                    })
                 ->addColumn('actions', 'events.buttons')
-                ->rawColumns(['actions'])
+                ->rawColumns(['cover_url', 'visitors', 'is_published', 'actions'])
                 ->make(true);
         }
         return view('events.index');
