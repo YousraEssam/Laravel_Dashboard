@@ -28,7 +28,7 @@ class NewsRequest extends FormRequest
         return [
             'main_title' => 'required|min:3|max:150',
             'secondary_title' => 'min:3|max:150',
-            'type' => 'required|'.Rule::in(News::$types),
+            'type' => 'required|'.Rule::in(array_keys(News::NEWS_TYPE)),
             'author_id' => 'required|exists:staff_members,id',
             'images' => 'image|mimes:png,jpg|max:1024',
             'files' => 'file|mimes:pdf,xls|max:1024',

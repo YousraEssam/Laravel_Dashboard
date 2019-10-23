@@ -14,12 +14,12 @@ class JobsSeeder extends Seeder
         DB::table('jobs')->insert(
             [
             [
-                'name' => 'Writer',
+                'name' => 'writer',
                 'description' => 'cannot be editted or deleted',
                 'created_at' => now(),
             ],
             [
-                'name' => 'Reporter',
+                'name' => 'reporter',
                 'description' => 'cannot be editted or deleted',
                 'created_at' => now(),
             ]

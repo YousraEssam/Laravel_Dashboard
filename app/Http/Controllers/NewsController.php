@@ -53,7 +53,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $types = News::$types;
+        $types = News::NEWS_TYPE;
         return view('news.create', compact('types'));
     }
 
@@ -184,18 +184,14 @@ class NewsController extends Controller
      */
     public function getAuthorList($type)
     {
-        if($type == "News") {
-
-            $reporters = StaffMember::with('user', 'job')->where('job_id', 2)->get();
-
-            return response()->json($reporters);
-            
-        }elseif($type == "Article") {
-
-            $writers = StaffMember::with('user', 'job')->where('job_id', 1)->get();
-
-            return response()->json($writers);
+        if (! News::NEWS_TYPE[$type]) {
+            return response()->json(['message' => 'Article type not found'], 404);
         }
+        $staffMember = StaffMember::with(['user', 'job'])
+        ->get()->filter(function ($member) use ($type) {
+            return $member->job->name == News::NEWS_TYPE[$type];
+        });  
+        return response()->json($staffMember);
     }
 
     /**

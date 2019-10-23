@@ -59,7 +59,7 @@
                                     <label>News Type</label> <br>
                                     <select id="type" name="type" class="form-control">
                                         <option value="">Type</option>
-                                        @foreach ($types as $type)
+                                        @foreach ($types as $type => $job)
                                         <option value="{{$type}}">{{ $type }}</option>
                                         @endforeach
                                     </select>

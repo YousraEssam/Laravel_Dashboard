@@ -9,9 +9,11 @@ class News extends Model
 {
     use SoftDeletes;
 
-    const NEWS = 'News';
-    const ARTICLE = 'Article';
-    public static $types = [self::NEWS, self::ARTICLE];
+    public const NEWS_TYPE = [
+        'article' => 'writer', 
+        'news' => 'reporter'
+    ];
+
     /**
      * to override delete behaviour
      */
