@@ -146,11 +146,8 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         $event->update($request->all());
-
         $event->visitors()->sync($request->visitors);
-
-        $path = $request->cover_url->store('public/uploads/images/cover');
-        $event->cover_url = $path;
+        $event->cover_url = $this->uploadCoverImage($request);
         $event->save();
 
         if($request->input('image')) {
