@@ -45,7 +45,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Invited:</label>
-                    @foreach ($visitors as $visitor)
+                    @foreach ($event->visitors as $visitor)
                         <ul>
                             <li>{{ $visitor->user->getFullNameAttribute() }}</li>
                         </ul>

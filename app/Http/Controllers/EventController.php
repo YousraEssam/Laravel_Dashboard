@@ -7,6 +7,7 @@ use App\Events\NewEventHasBeenAddedEvent;
 use App\Http\Requests\EventRequest;
 use App\Traits\Uploads;
 use App\Visitor;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
 
@@ -32,7 +33,7 @@ class EventController extends Controller
                 ->addIndexColumn()
                 ->editColumn(
                     'cover_url', function($row){
-                        return view('events.cover', compact('row'));
+                        return "<img src=".Storage::url($row['cover_url'])." style='height:50px; width:50px;'>";
                 })
                 ->editColumn(
                     'visitors', function ($row) {
@@ -56,8 +57,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        $visitors = Visitor::with('user')->get();
-        return view('events.create', compact('visitors'));
+        return view('events.create');
     }
 
     public function getEventVisitors(Request $request)
@@ -90,21 +90,16 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(EventRequest $request)
-    {
+    {        
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
-
-        if($request->input('cover_url')){
-            $event->cover_url = $this->uploadCoverImage($request);
-        }
+        $event->cover_url = $request->cover_url;
 
         if($request->input('image')) {
             foreach($request->input('image') as $img){
                 $event->images()->create([ 'url' => $img ]);
             }
         }
-        $event->save();
-
         event(new NewEventHasBeenAddedEvent($event));
         return redirect()
             ->route('events.index')
@@ -119,9 +114,8 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $images = $event->images()->get();
-        $visitors = $event->visitors()->get();
-        return view('events.show', compact('event', 'images', 'visitors'));
+        $event->load('images', 'visitors');
+        return view('events.show', compact('event'));
     }
 
     /**
@@ -133,10 +127,8 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $images = $event->images()->get();
-        $all_visitors = Visitor::pluck('id')->all();
-        $visitors = $event->visitors()->with('user')->get();
-
-        return view('events.edit', compact('event', 'images', 'all_visitors', 'visitors'));
+        $visitors = $event->visitors()->get()->pluck('user.full_name', 'id');
+        return view('events.edit', compact('event', 'images', 'visitors'));
     }
 
     /**
@@ -150,11 +142,7 @@ class EventController extends Controller
     {
         $event->update($request->all());
         $event->visitors()->sync($request->visitors);
-        
-        if($request->input('cover_url')){
-            $event->cover_url = $this->uploadCoverImage($request);
-        }
-        $event->save();
+        $event->cover_url = $request->cover_url;
 
         if($request->input('image')) {
             $event->images()->delete();
@@ -162,7 +150,6 @@ class EventController extends Controller
                 $event->images()->create(['url' => $img]);
             }
         }
-
         return redirect()
             ->route('events.index')
             ->with('success', 'Event Has Been Updated Successfully');
@@ -188,10 +175,7 @@ class EventController extends Controller
      */
     public function togglePublish(Event $event)
     {
-        $status = $event->is_published ? 0 : 1;
-        $event->update(['is_published' => $status]);
-
+        $event->update(['is_published' => ! $event->is_published]);
         return \Response::json('success');
     }
-
 }

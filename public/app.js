@@ -92,9 +92,6 @@ $(function() {
     $('#datetimepicker2').datetimepicker(options);
 });
 
-//visitors script
-// $('#visitors').select2();
-
 //Event Visitors
 $('#visitors').select2({
     placeholder: 'Choose Invited ',

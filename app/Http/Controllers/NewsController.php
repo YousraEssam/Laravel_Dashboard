@@ -199,8 +199,7 @@ class NewsController extends Controller
      */
     public function togglePublish(News $news)
     {
-        $status = $news->is_published ? 0 : 1;
-        $news->update(['is_published' => $status]);
+        $news->update(['is_published' => ! $news->is_published]);
         return \Response::json('success');
     }
 }

@@ -43,12 +43,6 @@
                                 @method('PUT')
 
                                 <div class="form-group">
-                                    <label>Cover Image</label>
-                                    <input type="file" class="form-control" name="cover_url">
-                                    <img src="{{Storage::url($event->cover_url)}}" style='height:50px; width:50px;'>
-                                </div>
-
-                                <div class="form-group">
                                     <label>Main Title</label>
                                     <input type="text" value="{{$event->main_title}}" class="form-control"
                                         name="main_title">
@@ -92,14 +86,10 @@
                                     <label>Invited</label> <br>
                                     <select id="visitors" name="visitors[]" class="form-control chosen-select" multiple>
                                         <option disabled>Select</option>
-                                        @foreach ($all_visitors as $key => $value)
-                                            @foreach ($visitors as $visitor)
-                                                @if($value == $visitor->id))
-                                                    <option value="{{$visitor->id}}" selected>
-                                                        {{ $visitor->user->getFullNameAttribute() }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
+                                        @foreach ($visitors as $key => $value)
+                                            <option value="{{$key}}" selected>
+                                                {{ $value }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -158,6 +148,8 @@
             addRemoveLinks: true,
             success: function(file, response) {
                 $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
+                let elem = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
+                $(elem).append('Set as cover <input type="radio" value="'+response.name +'" name="cover_url"/>')
                 uploadedImageMap[file.name] = response.name
             },
             removedFile: function(file) {
