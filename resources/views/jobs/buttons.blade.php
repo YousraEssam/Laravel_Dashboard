@@ -2,7 +2,7 @@
 
         <a href="{{route('jobs.show', $id)}}" class="btn btn-success">Show</a>
 
-    @if(! ($name == 'Writer' || $name == 'Reporter' ) )
+    @if(! ($name == 'writer' || $name == 'reporter' ) )
         @can('job-edit')
         <a href="{{route('jobs.edit', $id)}}" class="btn btn-success">Edit</a>
         @endcan
