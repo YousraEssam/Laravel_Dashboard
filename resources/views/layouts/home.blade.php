@@ -157,7 +157,7 @@
                         </ul>
                     </li>
                     @endcan
-                    @can('event-list')
+                    @can('events-list')
                     <li>
                         <a href="">
                             <i class="fa fa-th-large"></i> 

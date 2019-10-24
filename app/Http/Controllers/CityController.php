@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
-use Illuminate\Support\Facades\Request;
 use Yajra\DataTables\DataTables;
 
 class CityController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(City::class, 'citiess');
+        $this->authorizeResource(City::class, 'cities');
     }
 
     /**
