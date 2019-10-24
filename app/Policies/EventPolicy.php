@@ -18,7 +18,7 @@ class EventPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->hasAnyPermission(['event-list','event-create','event-edit','event-delete'])) {
+        if ($user->hasAnyPermission(['events-list','events-create','events-edit','events-delete'])) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        if ($user->hasAnyPermission(['event-list','event-create','event-edit','event-delete'])) {
+        if ($user->hasAnyPermission(['events-list','events-create','events-edit','events-delete'])) {
             return true;
         }
         return false;
@@ -47,7 +47,7 @@ class EventPolicy
      */
     public function create(User $user)
     {
-        if ($user->hasPermissionTo('event-create')) {
+        if ($user->hasPermissionTo('events-create')) {
             return true;
         }
         return false;
@@ -62,7 +62,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        if ($user->hasPermissionTo('event-edit')) {
+        if ($user->hasPermissionTo('events-edit')) {
             return true;
         }
         return false;
@@ -77,7 +77,7 @@ class EventPolicy
      */
     public function delete(User $user, Event $event)
     {
-        if ($user->hasPermissionTo('event-delete')) {
+        if ($user->hasPermissionTo('events-delete')) {
             return true;
         }
         return false;
