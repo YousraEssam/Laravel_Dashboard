@@ -119,7 +119,7 @@ class VisitorController extends Controller
         
         if ($request->hasFile('image')) {
             $path = $this->uploadImage($request);
-            if($visitor->image()) {
+            if($visitor->image) {
                 $visitor->image()->update(['url' => $path]);
             }else{
                 $visitor->image()->create(['url' => $path]);
@@ -139,11 +139,7 @@ class VisitorController extends Controller
      */
     public function destroy(Visitor $visitor)
     {
-        // $visitor->user()->delete();
-        // Storage::delete($visitor->image->url);
         $visitor->delete();
-        $visitor->image()->delete();
-
         return redirect()->route('visitors.index')->with('success', 'Visitor Deleted Successfully');
     }
 

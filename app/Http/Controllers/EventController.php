@@ -93,7 +93,10 @@ class EventController extends Controller
     {
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
-        $event->cover_url = $this->uploadCoverImage($request);
+
+        if($request->input('cover_url')){
+            $event->cover_url = $this->uploadCoverImage($request);
+        }
 
         if($request->input('image')) {
             foreach($request->input('image') as $img){
@@ -147,7 +150,10 @@ class EventController extends Controller
     {
         $event->update($request->all());
         $event->visitors()->sync($request->visitors);
-        $event->cover_url = $this->uploadCoverImage($request);
+        
+        if($request->input('cover_url')){
+            $event->cover_url = $this->uploadCoverImage($request);
+        }
         $event->save();
 
         if($request->input('image')) {

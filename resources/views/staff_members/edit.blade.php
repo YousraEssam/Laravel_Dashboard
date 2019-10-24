@@ -43,9 +43,10 @@
 
                             <div class="form-group">
                                 <label>Member Image</label>
-                                <input type="file" value="{{$staffMember->user->image}}" class="form-control" name="image">
+                                <input type="file" class="form-control" name="image">
+                                @if($staffMember->image)
                                 <img src="{{Storage::url($staffMember->image->url)}}" style='height:50px; width:50px;'>
-
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -107,9 +108,9 @@
                             <div class="form-group">
                                 <label>Member Country</label> <br>
                                 <select id="country" name="country_id" value="Member Country" class="form-control">
-                                    <option value="" disabled selected>{{$staffMember->user->country->name}}</option>
+                                    <option value="" selected>{{$staffMember->user->country->name}}</option>
                                     @foreach($countries as $key => $value)
-                                        <option {{ (old("country_id") == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
+                                        <option {{ (old("country_id", $staffMember->user->country->id) == $key ? "selected":"") }} value="{{ $key }}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>

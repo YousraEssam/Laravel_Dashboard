@@ -128,7 +128,7 @@ class NewsController extends Controller
         $files = $news->files()->get();
         $all_news = News::pluck('main_title', 'id')->all();
         $related_news = Related::where('news_id', $news->id)->pluck('related_id')->all();
-        $types = News::$types;
+        $types = News::NEWS_TYPE;
         return view('news.edit', compact('news', 'images', 'files', 'related_news', 'all_news', 'types'));
     }
 
