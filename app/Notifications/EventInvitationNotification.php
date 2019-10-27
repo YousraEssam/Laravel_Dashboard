@@ -2,23 +2,31 @@
 
 namespace App\Notifications;
 
+use App\Events\NewEventHasBeenAddedEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EventInvitation extends Notification
+class EventInvitationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    public $event;
 
     /**
-     * Create a new notification instance.
+     * Handle the event.
      *
+     * @param  NewEventHasBeenAddedEvent $event
      * @return void
      */
-    public function __construct()
+    public function handle(NewEventHasBeenAddedEvent $event)
     {
-        //
+        $this->event = $event->event;
+        
+        foreach($event->event->visitors as $visitor){
+            app(\Illuminate\Contracts\Notifications\Dispatcher::class)
+                ->sendNow($visitor->user, $this);
+        }
     }
 
     /**
@@ -41,21 +49,10 @@ class EventInvitation extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+            ->subject('Event Invitation')
+            ->markdown('emails.event-invitation', [
+                'notifiable' => $notifiable,
+                'event' => $this->event,
+            ]);
     }
 }

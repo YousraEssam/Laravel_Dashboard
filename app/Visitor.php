@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Visitor extends Model
 {
     use SoftDeletes;
-
+    
     /**
      * to override delete behaviour
      */

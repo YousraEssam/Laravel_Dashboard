@@ -9,6 +9,7 @@ use App\Listeners\SendEventInvitationListener;
 use App\Listeners\SendNewStaffMemberResetPasswordLinkListener;
 use App\Listeners\SendNewVisitorResetPasswordLinkListener;
 use App\Listeners\WelcomeNewUserListener;
+use App\Notifications\EventInvitationNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -33,7 +34,8 @@ class EventServiceProvider extends ServiceProvider
             SendNewVisitorResetPasswordLinkListener::class,
         ],
         NewEventHasBeenAddedEvent::class => [
-            SendEventInvitationListener::class,
+            // SendEventInvitationListener::class,
+            EventInvitationNotification::class,
         ]
 
     ];

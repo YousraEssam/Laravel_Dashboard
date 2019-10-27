@@ -34,8 +34,9 @@ class EventController extends Controller
                 ->addIndexColumn()
                 ->editColumn(
                     'cover_url', function($row){
+                        // dd(str_replace('public/',"", $row->images()->whereId($row->cover_url)->first()->url), Storage::url($row->images()->whereId($row->cover_url)->first()->url));
                         return "<img src=".Storage::url($row->images()->whereId($row->cover_url)->first()->url)." style='height:50px; width:50px;'>";
-                })
+                    })
                 ->editColumn(
                     'visitors', function ($row) {
                         return view('events.visitors', compact('row'));
@@ -102,6 +103,7 @@ class EventController extends Controller
         }
 
         event(new NewEventHasBeenAddedEvent($event));
+        
         return redirect()
             ->route('events.index')
             ->with('success', 'New Event Has Been Added Successfully');

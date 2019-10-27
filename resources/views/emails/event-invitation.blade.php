@@ -1,6 +1,6 @@
 @component('mail::message')
 # Hello,
-{{ $visitor->user->first_name}} {{ $visitor->user->last_name}}
+{{ $notifiable->first_name}} {{ $notifiable->last_name}}
 
 You are Invited to {{ $event->main_title}} Event
 
