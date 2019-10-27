@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Http\Requests\NewsRequest;
+use App\Image;
 use App\News;
 use App\Related;
 use App\StaffMember;
@@ -89,15 +91,13 @@ class NewsController extends Controller
         $news->related()->attach($request->related);
 
         if($request->input('image')) {
-            foreach($request->input('image') as $img){
-                $news->images()->create(['url' => $img]);
-            }
+            $images = Image::whereIn('id', $request->input('image'))->get();
+            $news->images()->saveMany($images);
         }
 
         if($request->input('file')) {
-            foreach($request->input('file') as $file){
-                $news->files()->create(['file_url' => $file]);
-            }
+            $files = File::whereIn('id', $request->input('file'))->get();
+            $news->files()->saveMany($files);
         }
 
         return redirect()
@@ -148,16 +148,14 @@ class NewsController extends Controller
 
         if($request->input('image')) {
             $news->images()->delete();
-            foreach($request->input('image') as $img){
-                $news->images()->create(['url' => $img]);
-            }
+            $images = Image::whereIn('id', $request->input('image'))->get();
+            $news->images()->saveMany($images);
         }
 
         if($request->input('file')) {
             $news->files()->delete();
-            foreach($request->input('file') as $file){
-                $news->files()->create(['file_url' => $file]);
-            }
+            $files = File::whereIn('id', $request->input('file'))->get();
+            $news->files()->saveMany($files);
         }
         return redirect()
             ->route('news.index')

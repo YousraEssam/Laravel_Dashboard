@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Events\NewEventHasBeenAddedEvent;
 use App\Http\Requests\EventRequest;
+use App\Image;
 use App\Traits\Uploads;
 use App\Visitor;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +34,7 @@ class EventController extends Controller
                 ->addIndexColumn()
                 ->editColumn(
                     'cover_url', function($row){
-                        return "<img src=".Storage::url($row['cover_url'])." style='height:50px; width:50px;'>";
+                        return "<img src=".Storage::url($row->images()->whereId($row->cover_url)->first()->url)." style='height:50px; width:50px;'>";
                 })
                 ->editColumn(
                     'visitors', function ($row) {
@@ -94,12 +95,12 @@ class EventController extends Controller
         $event = Event::create($request->all());
         $event->visitors()->attach($request->visitors);
         $event->cover_url = $request->cover_url;
-
+        
         if($request->input('image')) {
-            foreach($request->input('image') as $img){
-                $event->images()->create([ 'url' => $img ]);
-            }
+            $images = Image::whereIn('id', $request->input('image'))->get();
+            $event->images()->saveMany($images);
         }
+
         event(new NewEventHasBeenAddedEvent($event));
         return redirect()
             ->route('events.index')
@@ -115,7 +116,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event->load('images', 'visitors');
-        return view('events.show', compact('event'));
+        $cover = $event->images()->whereId($event->cover_url)->first()->url;
+        return view('events.show', compact('event','cover'));
     }
 
     /**
@@ -146,9 +148,8 @@ class EventController extends Controller
 
         if($request->input('image')) {
             $event->images()->delete();
-            foreach($request->input('image') as $img){
-                $event->images()->create(['url' => $img]);
-            }
+            $images = Image::whereIn('id', $request->input('image'))->get();
+            $event->images()->saveMany($images);
         }
         return redirect()
             ->route('events.index')

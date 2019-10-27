@@ -53,4 +53,12 @@ class Event extends Model
     {
         return $this->belongsToMany(Visitor::class)->with('user');
     }
+
+    /**
+     * Get the cover record associated with the event.
+     */
+    public function cover()
+    {
+        return $this->hasOne(Image::class);
+    }
 }

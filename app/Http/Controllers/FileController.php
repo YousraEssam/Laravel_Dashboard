@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
 use App\Traits\Uploads;
 use Illuminate\Http\Request;
 
@@ -18,20 +17,7 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $this->uploadFile($request);
-        return response()->json(['name' => $path]);
+        $id = $this->uploadFile($request);
+        return response()->json(['id' => $id]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\File                $file
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        //
-    }
-
 }

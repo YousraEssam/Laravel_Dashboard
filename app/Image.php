@@ -31,4 +31,12 @@ class Image extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Get the event that owns the cover image.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

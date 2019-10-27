@@ -21,7 +21,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="control-label" for="status">Cover Photo:</label>
-                    <img src="{{Storage::url($event->cover_url)}}" style="height:70px; width:70px;">
+                    <img src="{{Storage::url($cover)}}" style="height:70px; width:70px;">
                 </div>
             </div>
             <div class="col-sm-6">

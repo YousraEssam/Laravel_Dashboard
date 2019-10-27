@@ -58,8 +58,9 @@
                                 <div class="form-group">
                                     <label>News Type</label> <br>
                                     <select id="type" name="type" class="form-control" >
-                                        @foreach ($types as $type)
-                                            <option value="{{$type}}" {{ $type == $news->type ? "selected" : "" }}>{{$type}}</option>
+                                        <option value="">Type</option>
+                                        @foreach ($types as $type => $job)
+                                        <option value="{{$type}}" {{ $type == $news->type ? "selected" : "" }}>{{ $type }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -138,8 +139,8 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function(file, response) {
-                $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
-                uploadedImageMap[file.name] = response.name
+                $('form').append('<input type="hidden" name="image[]" value="'+response.id+'" >')
+                uploadedImageMap[file.name] = response.id
             },
             removedFile: function(file) {
                 file.previewElement.remove()
@@ -171,10 +172,8 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function(file, response) {
-                console.log(response.name)
-                console.log(file.name)
-                $('form').append('<input type="hidden" name="file[]" value="'+response.name+'" >')
-                uploadedFileMap[file.name] = response.name
+                $('form').append('<input type="hidden" name="file[]" value="'+response.id+'" >')
+                uploadedFileMap[file.name] = response.id
             },
             removedFile: function(file) {
                 file.previewElement.remove()

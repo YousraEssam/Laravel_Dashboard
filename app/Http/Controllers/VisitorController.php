@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Events\NewVisitorHasBeenAddedEvent;
 use App\Http\Requests\VisitorRequest;
+use App\Image;
 use App\Traits\Uploads;
 use App\User;
 use App\Visitor;
@@ -65,12 +66,12 @@ class VisitorController extends Controller
     public function store(VisitorRequest $request)
     {
         $user = User::create($request->all() + ['password' => Hash::make('Visitor123')]);
- 
         $visitor = $user->visitor()->create($request->all());
         
-        if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request);
-            $visitor->image()->create(['url' => $path]);
+        if ($request->file('image')) {
+            $id = $this->uploadImage($request);
+            $image = Image::whereId($id)->first();
+            $visitor->image()->save($image);
         }
         
         event(new NewVisitorHasBeenAddedEvent($visitor));
@@ -117,15 +118,14 @@ class VisitorController extends Controller
         $visitor->user->update($request->all());
         $visitor->update($request->all());
         
-        if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request);
-            if($visitor->image) {
-                $visitor->image()->update(['url' => $path]);
-            }else{
-                $visitor->image()->create(['url' => $path]);
+        if ($request->file('image')) {
+            if ($visitor->image()){
+                $visitor->image()->delete();
             }
+            $id = $this->uploadImage($request);
+            $image = Image::whereId($id)->first();
+            $visitor->image()->save($image);
         }
-
         return redirect()
             ->route('visitors.index')
             ->with('success', 'Visitor Has Been Updated Successfully');

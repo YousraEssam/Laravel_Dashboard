@@ -147,10 +147,10 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function(file, response) {
-                $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
+                $('form').append('<input type="hidden" name="image[]" value="'+response.id+'" >')
                 let elem = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
-                $(elem).append('Set as cover <input type="radio" value="'+response.name +'" name="cover_url"/>')
-                uploadedImageMap[file.name] = response.name
+                $(elem).append('Set as cover <input type="radio" value="'+response.id +'" name="cover_url"/>')
+                uploadedImageMap[file.id] = response.id
             },
             removedFile: function(file) {
                 file.previewElement.remove()

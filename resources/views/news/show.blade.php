@@ -11,9 +11,9 @@
     <a href="{{route('news.index')}}">News</a>
 </li>
 <li class="active">
-    @if($news->type == "News")
+    @if($news->type == "news")
     <strong>News "{{$news->main_title}}" Details</strong>
-    @elseif($news->type == "Article")
+    @elseif($news->type == "article")
     <strong>Article "{{$news->main_title}}" Details</strong>
     @endif
 </li>

@@ -21,7 +21,13 @@ class CreateEventsTable extends Migration
                 $table->string('content');
                 $table->dateTimeTz('start_date');
                 $table->dateTimeTz('end_date');
-                $table->string('cover_url');
+
+                $table->unsignedInteger('cover_url');
+                $table->foreign('cover_url')
+                    ->references('id')
+                    ->on('images')
+                    ->onDelete('cascade');
+
                 $table->string('address_address');
                 $table->double('address_latitude');
                 $table->double('address_longitude');

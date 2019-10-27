@@ -17,8 +17,8 @@ class CreateFilesTable extends Migration
             'files', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('file_url');
-                $table->integer('fileable_id');
-                $table->string('fileable_type');
+                $table->integer('fileable_id')->nullable();
+                $table->string('fileable_type')->nullable();
 
                 $table->softDeletes();
                 $table->timestamps();

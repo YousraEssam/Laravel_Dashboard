@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Events\NewStaffMemberHasBeenAddedEvent;
 use App\Http\Requests\StaffMemberRequest;
+use App\Image;
 use App\Job;
 use App\StaffMember;
 use App\Traits\Uploads;
@@ -75,12 +76,12 @@ class StaffMemberController extends Controller
     {        
         $user = User::create($request->all() + ['password' => Hash::make('Staff123')]);
         $user->assignRole($request->role_id);
-
         $staffMember = $user->staff()->create($request->all());
         
-        if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request);
-            $staffMember->image()->create(['url' => $path]);
+        if ($request->file('image')) {
+            $id = $this->uploadImage($request);
+            $image = Image::whereId($id)->first();
+            $staffMember->image()->save($image);
         }
 
         event(new NewStaffMemberHasBeenAddedEvent($staffMember));
@@ -129,13 +130,13 @@ class StaffMemberController extends Controller
         $staffMember->user->update($request->all());
         $staffMember->update($request->all());
         
-        if ($request->hasFile('image')) {
-            $path = $this->uploadImage($request);
-            if($staffMember->image) {
-                $staffMember->image()->update(['url' => $path]);
-            }else{
-                $staffMember->image()->create(['url' => $path]);
+        if ($request->file('image')) {
+            if ($staffMember->image()){
+                $staffMember->image()->delete();
             }
+            $id = $this->uploadImage($request);
+            $image = Image::whereId($id)->first();
+            $staffMember->image()->save($image);
         }
 
         return redirect()

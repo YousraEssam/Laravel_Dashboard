@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
 use App\Traits\Uploads;
 use Illuminate\Http\Request;
 
@@ -18,8 +17,7 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $this->uploadImage($request);
-        return response()->json(['name' => $path]);
+        $id = $this->uploadImage($request);
+        return response()->json(['id' => $id]);
     }
-
 }

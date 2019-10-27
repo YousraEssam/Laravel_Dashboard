@@ -122,8 +122,9 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function(file, response) {
-                $('form').append('<input type="hidden" name="image[]" value="'+response.name+'" >')
-                uploadedImageMap[file.name] = response.name
+                console.log(response.id)
+                $('form').append('<input type="hidden" name="image[]" value="'+response.id+'" >')
+                uploadedImageMap[file.id] = response.id
             },
             removedfile: function(file) {
                 file.previewElement.remove()
@@ -131,7 +132,7 @@
                 if(typeof(file.file_name) !== 'undefined'){
                     name = file.file_name
                 }else{
-                    name = uploadedImageMap[file.name]
+                    name = uploadedImageMap[file.id]
                 }
                 $('form').find('input[name="image[]"][value="'+name+'"]').remove() 
             },
@@ -155,10 +156,9 @@
             maxThumbnailFilesize: 1, //MB
             addRemoveLinks: true,
             success: function(file, response) {
-                console.log(response.name)
-                console.log(file.name)
-                $('form').append('<input type="hidden" name="file[]" value="'+response.name+'" >')
-                uploadedFileMap[file.name] = response.name
+                console.log(response.id)
+                $('form').append('<input type="hidden" name="file[]" value="'+response.id+'" >')
+                uploadedFileMap[file.id] = response.id
             },
             removedfile: function(file) {
                 file.previewElement.remove()
