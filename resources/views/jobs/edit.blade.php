@@ -31,7 +31,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form role="form"  method="POST" action="{{ route('jobs.update',$job->id) }}">
+                    <form role="form" method="POST" action="{{ route('jobs.update',$job->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="row">

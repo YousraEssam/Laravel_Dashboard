@@ -19,6 +19,8 @@ class CreateFilesTable extends Migration
                 $table->string('file_url');
                 $table->integer('fileable_id')->nullable();
                 $table->string('fileable_type')->nullable();
+                $table->string('name',150)->nullable();
+                $table->string('description',250)->nullable();
 
                 $table->softDeletes();
                 $table->timestamps();

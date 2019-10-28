@@ -17,6 +17,7 @@
     <link href="{{ asset('theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
     <link href="{{ asset('theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme/css/plugins/jasny/jasny-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('status.css')}}" rel="stylesheet">
     <link href="{{ asset('theme/css/style.css') }}" rel="stylesheet">
@@ -172,6 +173,19 @@
                         </ul>
                     </li>
                     @endcan
+                    @can('folder-crud')
+                    <li>
+                        <a href="">
+                            <i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Folders</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level" style="">
+                            <li><a href="{{ route('library.folders.index') }}">All</a></li>
+                            <li><a href="{{ route('library.folders.create') }}">Add</a></li>
+                        </ul>
+                    </li>
+                    @endcan
                 </ul>
 
             </div>
@@ -275,7 +289,10 @@
     
     <!-- CkEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
-    
+
+    <!-- Jasny -->
+    <script src="{{ asset('theme/js/plugins/jasny/jasny-bootstrap.min.js') }}"></script>
+
     <!-- Data picker -->
     <script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\File;
 use App\Image;
+use App\Video;
 use Illuminate\Http\Request;
 
 trait Uploads
@@ -20,5 +21,12 @@ trait Uploads
         $path = $request->file('image')->store('public/uploads/images');
         $image = Image::create(['url' => $path]);
         return $image->id;
+    }
+
+    public function uploadVideo(Request $request)
+    {
+        $path = $request->file('video')->store('public/uploads/videos');
+        $video = Video::create(['url' => $path]);
+        return $video->id;
     }
 }

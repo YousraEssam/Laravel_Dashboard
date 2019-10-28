@@ -19,59 +19,92 @@
 @endif
 
 <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Events Table</h5>
-            </div>
-    
-            <div class="ibox-content">
-                <div class="table-responsive">
-                    <table id="events-table" class="table table-striped table-bordered table-hover" role="grid">
-                        <thead>
-                            <tr role="row">
-                                <th>#</th>
-                                <th>Cover Url</th>
-                                <th>Main Title</th>
-                                <th>Secondary Title</th>
-                                <th>Content</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Visitors</th>
-                                <th>Address</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    
-                        </tbody>
-                    </table>
-                </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Events Table</h5>
+        </div>
+
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table id="events-table" class="table table-striped table-bordered table-hover" role="grid">
+                    <thead>
+                        <tr role="row">
+                            <th>#</th>
+                            <th>Cover Url</th>
+                            <th>Main Title</th>
+                            <th>Secondary Title</th>
+                            <th>Content</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Visitors</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
+</div>
+
 @endsection
 
 @push('scripts')
 <script>
-    $(function() {
+    $(function () {
         $('#events-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('events.index') !!}',
-            columns: [
-                { data: 'id', name: 'id'},
-                { data: 'cover_url', name: 'cover_url'},
-                { data: 'main_title', name: 'main_title'},
-                { data: 'secondary_title', name: 'secondary_title'},
-                { data: 'content', name: 'content'},
-                { data: 'start_date', name: 'start_date'},
-                { data: 'end_date', name:'end_date'},
-                { data: 'visitors', name:'visitors'},
-                { data: 'address_address', name:'address_address'},
-                { data: 'is_published', name:'is_published'},
-                { data: 'actions', name: 'actions'}
+            ajax: '{!! route('
+            events.index ') !!}',
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'cover_url',
+                    name: 'cover_url'
+                },
+                {
+                    data: 'main_title',
+                    name: 'main_title'
+                },
+                {
+                    data: 'secondary_title',
+                    name: 'secondary_title'
+                },
+                {
+                    data: 'content',
+                    name: 'content'
+                },
+                {
+                    data: 'start_date',
+                    name: 'start_date'
+                },
+                {
+                    data: 'end_date',
+                    name: 'end_date'
+                },
+                {
+                    data: 'visitors',
+                    name: 'visitors'
+                },
+                {
+                    data: 'address_address',
+                    name: 'address_address'
+                },
+                {
+                    data: 'is_published',
+                    name: 'is_published'
+                },
+                {
+                    data: 'actions',
+                    name: 'actions'
+                }
             ],
             dom: 'Bfrtip',
             buttons: [
@@ -79,5 +112,6 @@
             ]
         });
     });
+
 </script>
 @endpush

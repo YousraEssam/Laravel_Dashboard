@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get(
     '/', function () {
         return view('layouts.landing');
@@ -43,6 +42,32 @@ Route::group(
         Route::resource('visitors', 'VisitorController');
         Route::resource('news', 'NewsController');
         Route::resource('events', 'EventController');
+
+        Route::name('library.')->group(function() {
+            Route::resource('folders', 'FolderController');
+        });
+
+        Route::name('library.files.')->group(function() {
+            Route::prefix('folder/{folder}/')->group( function() {
+                Route::get('images/create', 'ImageController@create')->name('images.create');
+                Route::post('images', 'ImageController@addImage')->name('images.store');
+                Route::get('images/{image}/edit', 'ImageController@edit')->name('images.edit');
+                Route::put('images/{image}', 'ImageController@update')->name('images.update');
+                Route::delete('images/{image}', 'ImageController@destroy')->name('images.destroy');
+    
+                Route::get('files/create', 'FileController@create')->name('files.create');
+                Route::post('files', 'FileController@addFile')->name('files.store');
+                Route::get('files/{file}/edit', 'FileController@edit')->name('files.edit');
+                Route::put('files/{file}', 'FileController@update')->name('files.update');
+                Route::delete('files/{file}', 'FileController@destroy')->name('files.destroy');
+                            
+                Route::get('videos/create', 'VideoController@create')->name('videos.create');
+                Route::post('videos', 'VideoController@addVideo')->name('videos.store');
+                Route::get('videos/{video}/edit', 'VideoController@edit')->name('videos.edit');
+                Route::put('videos/{video}', 'VideoController@update')->name('videos.update');
+                Route::delete('videos/{video}', 'VideoController@destroy')->name('videos.destroy');
+            });
+        });
 
         Route::get('get-city-list/{id}', 'CityController@getCityList');
         Route::get('get-author-list/{type}', 'NewsController@getAuthorList');

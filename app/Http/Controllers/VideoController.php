@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
 use App\Folder;
-use App\Http\Requests\FileRequest;
+use App\Http\Requests\VideoRequest;
 use App\Traits\Uploads;
+use App\Video;
 use Illuminate\Http\Request;
 
-class FileController extends Controller
+class VideoController extends Controller
 {
     use Uploads;
     /**
@@ -18,7 +18,7 @@ class FileController extends Controller
      */
     public function create(Folder $folder)
     {
-        return view('library.files.files.create', compact('folder'));
+        return view('library.files.videos.create', compact('folder'));
     }
 
     /**
@@ -29,7 +29,7 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $this->uploadFile($request);
+        $id = $this->uploadVideo($request);
         return response()->json(['id' => $id]);
     }
 
@@ -39,17 +39,17 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function addFile(FileRequest $request, Folder $folder)
+    public function addVideo(VideoRequest $request, Folder $folder)
     {
-        $created_file_id = $this->uploadFile($request);
-        $file = File::whereId($created_file_id)->first();
-        $file->name = $request->name;
-        $file->description = $request->description;
-        $folder->file()->save($file);
+        $created_video_id = $this->uploadVideo($request);
+        $video = Video::whereId($created_video_id)->first();
+        $video->name = $request->name;
+        $video->description = $request->description;
+        $folder->video()->save($video);
 
         return redirect()
             ->route('library.folders.show', $folder->id)
-            ->with('success', 'New file has been created Successfully');
+            ->with('success', 'New Video has been created Successfully');
     }
 
     /**
@@ -60,8 +60,8 @@ class FileController extends Controller
      */
     public function edit(Folder $folder)
     {
-        $folder = $folder->load('file');
-        return view('library.files.files.edit', compact('folder'));
+        $folder = $folder->load('video');
+        return view('library.files.videos.edit', compact('folder'));
     }
 
     /**
@@ -71,28 +71,29 @@ class FileController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(FileRequest $request, Folder $folder)
+    public function update(VideoRequest $request, Folder $folder)
     {
-        $folder->file()->delete();
-        $new_file_id = $this->uploadFile($request);        
-        $file = File::whereId($new_file_id)->first();
-        $file->name = $request->name;
-        $file->description = $request->description;
-        $folder->file()->save($file);
+        $folder->video()->delete();
+        $new_video_id = $this->uploadVideo($request);        
+        $video = Video::whereId($new_video_id)->first();
+        $video->name = $request->name;
+        $video->description = $request->description;
+        $folder->video()->save($video);
 
         return redirect()
             ->route('library.folders.show', $folder->id)
-            ->with('success', 'New file has been updated Successfully');
+            ->with('success', 'New video has been updated Successfully');
     }
-        /**
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Folder $folder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Folder $folder, File $file)
+    public function destroy(Folder $folder, Video $video)
     {
-        $folder->file()->delete();
+        $folder->video()->delete();
 
         return redirect()
             ->route('library.folders.show', $folder->id)

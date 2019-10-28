@@ -15,7 +15,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'file_url','fileable_id','fileable_type'
+        'file_url','fileable_id','fileable_type', 'name', 'description'
     ];
 
     /**
@@ -32,4 +32,5 @@ class File extends Model
     {
         return $this->morphTo();
     }
+
 }
