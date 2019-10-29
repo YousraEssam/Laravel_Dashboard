@@ -59,52 +59,19 @@
         $('#events-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('
-            events.index ') !!}',
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'cover_url',
-                    name: 'cover_url'
-                },
-                {
-                    data: 'main_title',
-                    name: 'main_title'
-                },
-                {
-                    data: 'secondary_title',
-                    name: 'secondary_title'
-                },
-                {
-                    data: 'content',
-                    name: 'content'
-                },
-                {
-                    data: 'start_date',
-                    name: 'start_date'
-                },
-                {
-                    data: 'end_date',
-                    name: 'end_date'
-                },
-                {
-                    data: 'visitors',
-                    name: 'visitors'
-                },
-                {
-                    data: 'address_address',
-                    name: 'address_address'
-                },
-                {
-                    data: 'is_published',
-                    name: 'is_published'
-                },
-                {
-                    data: 'actions',
-                    name: 'actions'
-                }
+            ajax: '{!! route('events.index ') !!}',
+            columns: [
+                {data: 'id',name: 'id'},
+                {data: 'cover_url',name: 'cover_url'},
+                {data: 'main_title',name: 'main_title'},
+                {data: 'secondary_title',name: 'secondary_title'},
+                {data: 'content',name: 'content'},
+                {data: 'start_date',name: 'start_date'},
+                {data: 'end_date',name: 'end_date'},
+                {data: 'visitors',name: 'visitors'},
+                {data: 'address_address',name: 'address_address'},
+                {data: 'is_published',name: 'is_published'},
+                {data: 'actions',name: 'actions'}
             ],
             dom: 'Bfrtip',
             buttons: [
