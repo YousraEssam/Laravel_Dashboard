@@ -77,11 +77,13 @@
                     <label class="control-label" for="customer">Image</label>
                     <img src="{{Storage::url($folder->image->url)}}" style="height:80px; width:80px;">
                 </div>
-                <a href="{{ route('library.files.images.edit', [$folder->id, $folder->image->id]) }}" class="btn btn-primary btn-sm">
+                <a href="{{ route('library.files.images.edit', [$folder->id, $folder->image->id]) }}"
+                    class="btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     Edit Image
                 </a>
-                <form action="{{route('library.files.images.destroy', [$folder->id, $folder->image->id])}}" method="POST" style="display:inline;">
+                <form action="{{route('library.files.images.destroy', [$folder->id, $folder->image->id])}}"
+                    method="POST" style="display:inline;">
                     @csrf
                     @method("DELETE")
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -93,12 +95,15 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label class="control-label" for="status">File</label><br>
-                    <a href="{{Storage::url($folder->file->file_url)}}" >{{explode("/",$folder->file->file_url)[3]}}</a><br>
-                    <a href="{{ route('library.files.files.edit', [$folder->id, $folder->file->id]) }}" class="btn btn-primary btn-sm">
+                    <a
+                        href="{{Storage::url($folder->file->file_url)}}">{{explode("/",$folder->file->file_url)[3]}}</a><br>
+                    <a href="{{ route('library.files.files.edit', [$folder->id, $folder->file->id]) }}"
+                        class="btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Edit File
                     </a>
-                    <form action="{{route('library.files.files.destroy', [$folder->id, $folder->file->id])}}" method="POST" style="display:inline;">
+                    <form action="{{route('library.files.files.destroy', [$folder->id, $folder->file->id])}}"
+                        method="POST" style="display:inline;">
                         @csrf
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -110,12 +115,18 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label class="control-label" for="status">Video</label><br>
-                    <a href="{{Storage::url($folder->video->url)}}" >{{explode("/",$folder->video->url)[3]}}</a><br>
-                    <a href="{{ route('library.files.videos.edit', [$folder->id, $folder->video->id]) }}" class="btn btn-primary btn-sm">
+                    @if(strpos($folder->video->url, 'youtube'))
+                    <a href="{{$folder->video->url}}">{{$folder->video->url}}</a><br>
+                    @else
+                    <a href="{{Storage::url($folder->video->url)}}">{{explode("/",$folder->video->url)[3]}}</a><br>
+                    @endif
+                    <a href="{{ route('library.files.videos.edit', [$folder->id, $folder->video->id]) }}"
+                        class="btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Edit Video
                     </a>
-                    <form action="{{route('library.files.videos.destroy', [$folder->id, $folder->video->id])}}" method="POST" style="display:inline;">
+                    <form action="{{route('library.files.videos.destroy', [$folder->id, $folder->video->id])}}"
+                        method="POST" style="display:inline;">
                         @csrf
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger">Delete</button>

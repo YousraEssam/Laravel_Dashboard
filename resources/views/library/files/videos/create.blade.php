@@ -66,6 +66,8 @@
                                         <a href="#" class="input-group-addon btn btn-default fileinput-exists"
                                             data-dismiss="fileinput">Remove</a>
                                     </div>
+                                    <label>OR .. Upload From Youtube</label>
+                                    <input type="text" placeholder="Upload From Youtube" class="form-control" name="video" id="video">
                                 </div>
 
                                 <div>

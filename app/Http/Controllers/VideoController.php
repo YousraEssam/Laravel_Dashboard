@@ -41,11 +41,22 @@ class VideoController extends Controller
      */
     public function addVideo(VideoRequest $request, Folder $folder)
     {
-        $created_video_id = $this->uploadVideo($request);
-        $video = Video::whereId($created_video_id)->first();
-        $video->name = $request->name;
-        $video->description = $request->description;
-        $folder->video()->save($video);
+        if($request->file('video'))
+        {
+            $created_video_id = $this->uploadVideo($request);
+            $video = Video::whereId($created_video_id)->first();
+            $video->name = $request->name;
+            $video->description = $request->description;
+            $folder->video()->save($video);
+        }elseif($request->video)
+        {
+            $video = $this->getYoutubeID($request->video);
+            $folder->video()->create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'url' => 'http://www.youtube.com/embed/'.$video,
+            ]);
+        }
 
         return redirect()
             ->route('library.folders.show', $folder->id)
@@ -99,4 +110,20 @@ class VideoController extends Controller
             ->route('library.folders.show', $folder->id)
             ->with('success', 'New Image has been deleted Successfully');
     }
+
+    public function getYoutubeID($url)
+    {
+        if(strlen($url) > 11)
+        {
+            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match))
+            {
+                return $match[1];
+            }
+            else
+                return false;
+        }
+
+        return $url;
+    }
+
 }
