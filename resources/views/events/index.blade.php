@@ -59,7 +59,7 @@
         $('#events-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('events.index ') !!}',
+            ajax: '{!! route('events.index') !!}',
             columns: [
                 {data: 'id',name: 'id'},
                 {data: 'cover_url',name: 'cover_url'},
