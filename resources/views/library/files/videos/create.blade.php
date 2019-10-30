@@ -37,7 +37,8 @@
                     <div class="row">
                         <div class="col-sm-12 b-r">
                             <h3 class="m-t-none m-b">Add Video</h3>
-                            <form role="form" method="POST" action="{{ route('library.files.videos.store', $folder->id) }}"
+                            <form role="form" method="POST"
+                                action="{{ route('library.files.videos.store', $folder->id) }}"
                                 enctype='multipart/form-data'>
                                 @csrf
 
@@ -54,20 +55,29 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                                        <div class="form-control" data-trigger="fileinput">
-                                            <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                            <span class="fileinput-filename"></span>
+                                    <div>
+                                        <input type="radio" name="radio" id="radio1" value="option1">
+                                        <label>Upload From your PC</label>
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <div class="form-control" data-trigger="fileinput">
+                                                <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                <span class="fileinput-filename"></span>
+                                            </div>
+                                            <span class="input-group-addon btn btn-default btn-file">
+                                                <span class="fileinput-new">Select Video</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input type="file" name="video">
+                                            </span>
+                                            <a href="#" class="input-group-addon btn btn-default fileinput-exists"
+                                                data-dismiss="fileinput">Remove</a>
                                         </div>
-                                        <span class="input-group-addon btn btn-default btn-file">
-                                            <span class="fileinput-new">Select Video</span>
-                                            <span class="fileinput-exists">Change</span>
-                                            <input type="file" name="video"></span>
-                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists"
-                                            data-dismiss="fileinput">Remove</a>
                                     </div>
-                                    <label>OR .. Upload From Youtube</label>
-                                    <input type="text" placeholder="Upload From Youtube" class="form-control" name="video" id="video">
+
+                                    <div>
+                                        <input type="radio" name="radio" id="radio2" value="option2">
+                                        <label>Upload From Youtube</label>
+                                        <input type="text" class="form-control" name="video" id="video">
+                                    </div>
                                 </div>
 
                                 <div>
@@ -82,6 +92,15 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('uploadVideoScript')
+<script>
+    $("input[name=radio]").click(function(){
+        let radio = $("input[name='radio']:checked");
+        radio.parent().siblings().hide();
+    })
+</script>
 @endsection
 
 @push('JSValidatorScript')

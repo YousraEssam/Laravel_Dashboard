@@ -59,9 +59,8 @@
                                     <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                                         <div class="form-control" data-trigger="fileinput">
                                             <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                            <span class="fileinput-filename"></span>
+                                            <span class="fileinput-filename">{{explode("/",$folder->file->file_url)[3]}}</span>
                                         </div>
-                                        <a href="{{Storage::url($folder->file->file_url)}}" >{{explode("/",$folder->file->file_url)[3]}}</a><br>
                                         <span class="input-group-addon btn btn-default btn-file">
                                             <span class="fileinput-new">Select File</span>
                                             <span class="fileinput-exists">Change</span>

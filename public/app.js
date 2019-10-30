@@ -27,7 +27,7 @@ $('#country').change(function(){
 ClassicEditor
 .create( document.querySelector('#content') )
 .catch( error => {
-    console.error(error)
+    console.log(error)
 });
 
 //news author script
@@ -98,6 +98,27 @@ $('#visitors').select2({
     minimumInputLength: 2,
     ajax: {
         url: window.location.origin + '/get_event_visitors',
+        dataType: 'json',
+        data: function(params){
+            return {
+                q: $.trim(params.term)
+            }
+        },
+        processResults: function (data) {
+            console.log(data)
+            return {
+                results: data
+            };
+        },
+    }
+});
+
+//Permitted Staff members
+$('#permitted_staff').select2({
+    placeholder: 'Choose Permitted Staff Members ',
+    minimumInputLength: 1,
+    ajax: {
+        url: window.location.origin + '/get_staff',
         dataType: 'json',
         data: function(params){
             return {

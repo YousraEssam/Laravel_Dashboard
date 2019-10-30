@@ -45,8 +45,10 @@ class VideoController extends Controller
         {
             $created_video_id = $this->uploadVideo($request);
             $video = Video::whereId($created_video_id)->first();
-            $video->name = $request->name;
-            $video->description = $request->description;
+            $video->update([
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
             $folder->video()->save($video);
         }elseif($request->video)
         {
@@ -85,11 +87,24 @@ class VideoController extends Controller
     public function update(VideoRequest $request, Folder $folder)
     {
         $folder->video()->delete();
-        $new_video_id = $this->uploadVideo($request);        
-        $video = Video::whereId($new_video_id)->first();
-        $video->name = $request->name;
-        $video->description = $request->description;
-        $folder->video()->save($video);
+        if($request->file('video'))
+        {
+            $new_video_id = $this->uploadVideo($request);        
+            $video = Video::whereId($new_video_id)->first();
+            $video->update([
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+            $folder->video()->save($video);
+        }elseif($request->video)
+        {
+            $video = $this->getYoutubeID($request->video);
+            $folder->video()->create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'url' => 'http://www.youtube.com/embed/'.$video,
+            ]);
+        }
 
         return redirect()
             ->route('library.folders.show', $folder->id)
@@ -122,7 +137,6 @@ class VideoController extends Controller
             else
                 return false;
         }
-
         return $url;
     }
 
