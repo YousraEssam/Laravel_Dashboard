@@ -10,6 +10,7 @@ use App\Job;
 use App\StaffMember;
 use App\Traits\Uploads;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
@@ -76,6 +77,7 @@ class StaffMemberController extends Controller
     {        
         $user = User::create($request->all() + ['password' => Hash::make('Staff123')]);
         $user->assignRole($request->role_id);
+        // $user->givePermissionTo('folder-add');
         $staffMember = $user->staff()->create($request->all());
         
         if ($request->file('image')) {
@@ -175,5 +177,28 @@ class StaffMemberController extends Controller
     {
         $staffMember->user()->update(['is_active' => ! $staffMember->user->is_active]);
         return \Response::json('success');
+    }
+
+    public function getStaff(Request $request)
+    {
+        $term = trim($request->q);
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $staff = StaffMember::whereHas(
+            'user', function ($query) use ($term) {
+                        return $query->where('first_name', 'like', "%$term%")
+                            ->orWhere('last_name', 'like', "%$term%");
+            }
+        )->get();
+        
+        $permitted_staff = [];
+        foreach($staff as $s){
+            if($s->user) {
+                $permitted_staff[] = ['id' => $s->id, 'text' => $s->user->first_name." ".$s->user->last_name];
+            }
+        }
+        return \Response::json($permitted_staff);
     }
 }

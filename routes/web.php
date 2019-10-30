@@ -87,5 +87,7 @@ Route::group(
 
         Route::get('get_event_visitors', 'EventController@getEventVisitors')->name('getEventVisitors');
 
+        Route::get('get_staff', 'StaffMemberController@getStaff')->name('getStaff');
+
     }
 );

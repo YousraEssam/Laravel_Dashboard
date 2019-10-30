@@ -46,4 +46,12 @@ class Folder extends Model
     {
         return $this->morphOne(Video::class, 'videoable');
     }
+
+    /**
+     * The staff members that belong to the folder.
+     */
+    public function staff_members()
+    {
+        return $this->belongsToMany(StaffMember::class)->with('user');
+    }
 }

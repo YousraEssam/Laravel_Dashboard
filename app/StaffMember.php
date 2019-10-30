@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StaffMember extends Model
 {
     use SoftDeletes;
-
+    protected $with= ['user'];
     /**
      * to override delete behaviour
      */
@@ -78,5 +78,13 @@ class StaffMember extends Model
     public function news()
     {
         return $this->hasMany(News::class);
+    }
+
+    /**
+     * The folder that belong to the staff member.
+     */
+    public function folders()
+    {
+        return $this->belongsToMany(Folder::class);
     }
 }

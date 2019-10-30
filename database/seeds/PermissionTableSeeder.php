@@ -20,7 +20,7 @@ class PermissionTableSeeder extends Seeder
            'visitor-list', 'visitor-create', 'visitor-edit', 'visitor-delete',
            'news-list', 'news-create', 'news-edit', 'news-delete',
            'events-list', 'events-create', 'events-edit', 'events-delete',
-           'folder-crud'
+           'folder-add',
         ];
 
         foreach ($permissions as $permission) {

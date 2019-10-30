@@ -10,6 +10,12 @@ use Yajra\DataTables\DataTables;
 class FolderController extends Controller
 {
     use Uploads;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Folder::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,22 +23,23 @@ class FolderController extends Controller
      */
     public function index()
     {
-        $folder = Folder::latest();
+        // get all folders related to the logged in user
+        if(auth()->user()->hasRole('Admin')){
+            $folders = Folder::latest();
+        }else{
+        $folders = Folder::wherehas('staff_members',function($query){
+            $query->where('staff_member_id',auth()->user()->staff->id);
+        })->get();
+        }
         if(request()->ajax()) {
-            return DataTables::of($folder)
-                ->addIndexColumn()
-                ->editColumn(
-                    'icon', function(){
-                        return "<img src='".asset('folder.jpg')."' style='height:80px; width:80px;'>";
-                    }
-                )
-                ->addColumn(
-                    'actions', function ($row) {
-                        return view('library.folders.buttons', compact('row'));
-                    }
-                )
-                ->rawColumns(['icon', 'actions'])
-                ->make(true);
+            return DataTables::of($folders)
+            ->addIndexColumn()
+            ->editColumn('icon', function(){
+                    return "<img src='".asset('folder.jpg')."' style='height:80px; width:80px;'>";
+                })
+            ->addColumn('actions', 'library.folders.buttons')
+            ->rawColumns(['icon', 'actions'])
+            ->make(true);
         }
         return view('library.folders.index');
     }
@@ -55,8 +62,9 @@ class FolderController extends Controller
      */
     public function store(FolderRequest $request)
     {
-        Folder::create($request->all());
-
+        $folder = Folder::create($request->all());
+        $folder->staff_members()->attach($request->staff);
+        
         return redirect()
             ->route('library.folders.index')
             ->with('success', 'New Folder has been created Successfully');
@@ -82,7 +90,8 @@ class FolderController extends Controller
      */
     public function edit(Folder $folder)
     {
-        return view('library.folders.edit', compact('folder'));
+        $permitted_staff = $folder->staff_members()->get()->pluck('user.full_name', 'id');
+        return view('library.folders.edit', compact('folder', 'permitted_staff'));
     }
 
     /**
@@ -94,7 +103,8 @@ class FolderController extends Controller
      */
     public function update(FolderRequest $request, Folder $folder)
     {
-        $folder->update($request->all());
+        $folder->update($request->only(['name', 'description']));
+        $folder->staff_members()->sync($request->staff);
 
         return redirect()
             ->route('library.folders.index')
@@ -110,7 +120,8 @@ class FolderController extends Controller
     public function destroy(Folder $folder)
     {
         $folder->delete();
-
+        $folder->staff_members()->detach();
+        
         return redirect()
             ->route('library.folders.index')
             ->with('success', 'Folder Deleted Successfully');

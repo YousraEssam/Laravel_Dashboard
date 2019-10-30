@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\City;
 use App\Event;
+use App\Folder;
 use App\Job;
 use App\News;
 use App\Policies\CityPolicy;
@@ -13,6 +14,7 @@ use App\Policies\StaffMemberPolicy;
 use App\Policies\VisitorPolicy;
 use App\Policies\NewsPolicy;
 use App\Policies\EventPolicy;
+use App\Policies\FolderPolicy;
 use App\Role;
 use App\StaffMember;
 use App\Visitor;
@@ -34,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Visitor::class => VisitorPolicy::class,
         News::class => NewsPolicy::class,
         Event::class => EventPolicy::class,
+        Folder::class => FolderPolicy::class,
     ];
 
     /**

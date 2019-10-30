@@ -43,7 +43,6 @@ class CreatePermissionTables extends Migration
                 $table->integer('permission_id')->unsigned();
                 $table->morphs('model');
 
-
                 $table->foreign('permission_id')
                     ->references('id')
                     ->on($tableNames['permissions'])

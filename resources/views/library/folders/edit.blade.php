@@ -52,6 +52,18 @@
                                     <input type="text" value="{{$folder->description}}" class="form-control" name="description" id="description">
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Permitted Members</label> <br>
+                                    <select id="permitted_staff" name="staff[]" class="form-control chosen-select" multiple>
+                                        <option disabled>Select</option>
+                                        @foreach ($permitted_staff as $key => $value)
+                                            <option value="{{$key}}" selected>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div>
                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
                                         type="submit"><strong>Submit</strong></button>

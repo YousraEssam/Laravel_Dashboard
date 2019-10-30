@@ -173,7 +173,7 @@
                         </ul>
                     </li>
                     @endcan
-                    @can('folder-crud')
+                    @can('folder-add')
                     <li>
                         <a href="">
                             <i class="fa fa-th-large"></i> 
@@ -303,6 +303,7 @@
     @yield('Imagedropzone')
     @yield('Filedropzone')
     @yield('MapScript')
+    @yield('uploadVideoScript')
     @stack('JSValidatorScript')
     @stack('scripts')
 </body>

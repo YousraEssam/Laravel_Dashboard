@@ -51,6 +51,13 @@
                                     <input type="text" placeholder="Description" class="form-control" name="description" id="description">
                                 </div>
 
+                                <div class="form-group">
+                                    <label>Permitted Members</label> <br>
+                                    <select id="permitted_staff" name="staff[]" class="form-control chosen-select" multiple>
+                                        
+                                    </select>
+                                </div>
+
                                 <div>
                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
                                 </div>
