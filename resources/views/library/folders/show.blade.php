@@ -55,26 +55,35 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="order_id">Folder ID</label>
+                    <label class="control-label" for="order_id">Folder ID:</label>
                     <h4> {{$folder->id}} </h4>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="status">Folder Name</label>
+                    <label class="control-label" for="status">Folder Name:</label>
                     <h4> {{$folder->name}} </h4>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Folder Description</label>
+                    <label class="control-label" for="customer">Folder Description:</label>
                     <h4> {{$folder->description}} </h4>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label" for="customer">Permitted Staff Members:</label>
+                    @foreach($folder->staff_members as $staff)
+                    <h4> {{$staff->user->full_name}} </h4>
+                    @endforeach
+                    <br>
                 </div>
             </div>
             @if($folder->image)
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label class="control-label" for="customer">Image</label>
+                    <label class="control-label" for="customer">Image:</label><br>
                     <img src="{{Storage::url($folder->image->url)}}" style="height:80px; width:80px;">
                 </div>
                 <a href="{{ route('library.files.images.edit', [$folder->id, $folder->image->id]) }}"

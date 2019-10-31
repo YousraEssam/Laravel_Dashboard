@@ -14,9 +14,13 @@ use App\Policies\StaffMemberPolicy;
 use App\Policies\VisitorPolicy;
 use App\Policies\NewsPolicy;
 use App\Policies\EventPolicy;
+use App\Policies\FilePolicy;
 use App\Policies\FolderPolicy;
+use App\Policies\ImagePolicy;
+use App\Policies\VideoPolicy;
 use App\Role;
 use App\StaffMember;
+use App\Video;
 use App\Visitor;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -37,6 +41,9 @@ class AuthServiceProvider extends ServiceProvider
         News::class => NewsPolicy::class,
         Event::class => EventPolicy::class,
         Folder::class => FolderPolicy::class,
+        Image::class => ImagePolicy::class,
+        // File::class => FilePolicy::class,
+        // Video::class => VideoPolicy::class,
     ];
 
     /**

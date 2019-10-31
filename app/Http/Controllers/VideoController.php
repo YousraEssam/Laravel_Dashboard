@@ -7,10 +7,17 @@ use App\Http\Requests\VideoRequest;
 use App\Traits\Uploads;
 use App\Video;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class VideoController extends Controller
 {
     use Uploads;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Folder::class);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -21,17 +28,17 @@ class VideoController extends Controller
         return view('library.files.videos.create', compact('folder'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $id = $this->uploadVideo($request);
-        return response()->json(['id' => $id]);
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(Request $request)
+    // {
+    //     $id = $this->uploadVideo($request);
+    //     return response()->json(['id' => $id]);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +46,7 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function addVideo(VideoRequest $request, Folder $folder)
+    public function store(VideoRequest $request, Folder $folder)
     {
         if($request->file('video'))
         {
@@ -71,10 +78,9 @@ class VideoController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Folder $folder)
+    public function edit(Folder $folder, Video $video)
     {
-        $folder = $folder->load('video');
-        return view('library.files.videos.edit', compact('folder'));
+        return view('library.files.videos.edit', compact('folder', 'video'));
     }
 
     /**
@@ -84,11 +90,11 @@ class VideoController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(VideoRequest $request, Folder $folder)
+    public function update(VideoRequest $request, Folder $folder, Video $video)
     {
-        $folder->video()->delete();
-        if($request->file('video'))
+        if($request->file('video') !== null)
         {
+            $video->delete();
             $new_video_id = $this->uploadVideo($request);        
             $video = Video::whereId($new_video_id)->first();
             $video->update([
@@ -96,6 +102,9 @@ class VideoController extends Controller
                 'description' => $request->description,
             ]);
             $folder->video()->save($video);
+        }elseif($request->file('video') == null)
+        {
+            $video->update($request->all());
         }elseif($request->video)
         {
             $video = $this->getYoutubeID($request->video);
@@ -119,7 +128,7 @@ class VideoController extends Controller
      */
     public function destroy(Folder $folder, Video $video)
     {
-        $folder->video()->delete();
+        $video->delete();
 
         return redirect()
             ->route('library.folders.show', $folder->id)

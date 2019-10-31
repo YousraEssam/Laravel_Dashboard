@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
     use Uploads;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Folder::class);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +33,7 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addFile(Request $request)
     {
         $id = $this->uploadFile($request);
         return response()->json(['id' => $id]);
@@ -39,7 +45,7 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function addFile(FileRequest $request, Folder $folder)
+    public function store(FileRequest $request, Folder $folder)
     {
         $created_file_id = $this->uploadFile($request);
         $file = File::whereId($created_file_id)->first();
@@ -58,10 +64,9 @@ class FileController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Folder $folder)
+    public function edit(Folder $folder, File $file)
     {
-        $folder = $folder->load('file');
-        return view('library.files.files.edit', compact('folder'));
+        return view('library.files.files.edit', compact('folder', 'file'));
     }
 
     /**
@@ -71,15 +76,18 @@ class FileController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(FileRequest $request, Folder $folder)
+    public function update(FileRequest $request, Folder $folder, File $file)
     {
-        $folder->file()->delete();
-        $new_file_id = $this->uploadFile($request);        
-        $file = File::whereId($new_file_id)->first();
-        $file->name = $request->name;
-        $file->description = $request->description;
-        $folder->file()->save($file);
-
+        if($request->file('file')){
+            $file->delete();
+            $new_file_id = $this->uploadFile($request);        
+            $file = File::whereId($new_file_id)->first();
+            $file->name = $request->name;
+            $file->description = $request->description;
+            $folder->file()->save($file);
+        }else{
+            $file->update($request->all());
+        }
         return redirect()
             ->route('library.folders.show', $folder->id)
             ->with('success', 'New file has been updated Successfully');
@@ -92,7 +100,7 @@ class FileController extends Controller
      */
     public function destroy(Folder $folder, File $file)
     {
-        $folder->file()->delete();
+        $file->delete();
 
         return redirect()
             ->route('library.folders.show', $folder->id)

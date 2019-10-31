@@ -38,20 +38,20 @@
                         <div class="col-sm-12 b-r">
                             <h3 class="m-t-none m-b">Edit File</h3>
                             <form role="form" method="POST"
-                                action="{{ route('library.files.files.update', [$folder->id, $folder->file->id]) }}"
+                                action="{{ route('library.files.files.update', [$folder->id, $file->id]) }}"
                                 enctype='multipart/form-data'>
                                 @csrf
                                 @method('PUT')
 
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" value="{{ $folder->file->name }}" class="form-control"
+                                    <input type="text" value="{{ $file->name }}" class="form-control"
                                         name="name" id="name">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input type="text" value="{{ $folder->file->description }}" class="form-control"
+                                    <input type="text" value="{{ $file->description }}" class="form-control"
                                         name="description" id="description">
                                 </div>
 
@@ -59,7 +59,7 @@
                                     <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                                         <div class="form-control" data-trigger="fileinput">
                                             <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                            <span class="fileinput-filename">{{explode("/",$folder->file->file_url)[3]}}</span>
+                                            <span class="fileinput-filename">{{explode("/",$file->file_url)[3]}}</span>
                                         </div>
                                         <span class="input-group-addon btn btn-default btn-file">
                                             <span class="fileinput-new">Select File</span>

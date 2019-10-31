@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Folder;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\URL;
 
 class FolderPolicy
 {
@@ -33,7 +34,8 @@ class FolderPolicy
      */
     public function view(User $user, Folder $folder)
     {
-        if($user->can('folder-add')) {
+        $all = $user->staff->folders->pluck('id')->all();
+        if($user->can('folder-add') && in_array($folder->id, $all)) {
             return true;
         }
         return false;
@@ -62,10 +64,39 @@ class FolderPolicy
      */
     public function update(User $user, Folder $folder)
     {
-        if ($user->hasPermissionTo('folder-add')) {
+        $all_staff_folders = $user->staff->folders->pluck('id')->all();
+
+        if($user->hasPermissionTo('folder-add') && (in_array($folder->id, $all_staff_folders)) ){
+
+            if( explode('/', URL::full())[5] == 'images' ){
+                if(    ($folder->image->imageable_id == $folder->id)
+                    && ($folder->image->id == $folder->image->id) 
+                    && ($folder->image->imageable_type == 'App\Folder')){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }elseif( explode('/', URL::full())[5] == 'files' ){
+                if(    ($folder->file->fileable_id == $folder->id)
+                    && ($folder->file->id == $folder->file->id) 
+                    && ($folder->file->fileable_type == 'App\Folder')){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }elseif( explode('/', URL::full())[5] == 'videos' ){
+                if(    ($folder->video->videoable_id == $folder->id)
+                    && ($folder->video->id == $folder->video->id) 
+                    && ($folder->video->videoable_type == 'App\Folder')){
+                        return true;
+                }else{
+                    return false;
+                }
+            }
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     /**
@@ -77,7 +108,8 @@ class FolderPolicy
      */
     public function delete(User $user,  Folder $folder)
     {
-        if ($user->hasPermissionTo('folder-add')) {
+        $all = $user->staff->folders->pluck('id')->all();
+        if($user->hasPermissionTo('folder-add') && in_array($folder->id, $all)) {
             return true;
         }
         return false;

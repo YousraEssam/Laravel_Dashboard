@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 class ImageController extends Controller
 {
     use Uploads;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Folder::class);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +33,7 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addImage(Request $request)
     {
         $id = $this->uploadImage($request);
         return response()->json(['id' => $id]);
@@ -39,7 +45,7 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function addImage(ImageRequest $request, Folder $folder)
+    public function store(ImageRequest $request, Folder $folder)
     {
         $created_image_id = $this->uploadImage($request);
         $image = Image::whereId($created_image_id)->first();
@@ -58,10 +64,9 @@ class ImageController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function edit(Folder $folder)
+    public function edit(Folder $folder, Image $image)
     {
-        $folder = $folder->load('image');
-        return view('library.files.images.edit', compact('folder'));
+        return view('library.files.images.edit', compact('folder' ,'image'));
     }
 
     /**
@@ -71,14 +76,18 @@ class ImageController extends Controller
      * @param  \App\Folder  $folder
      * @return \Illuminate\Http\Response
      */
-    public function update(ImageRequest $request, Folder $folder)
+    public function update(ImageRequest $request, Folder $folder, Image $image)
     {
-        $folder->image()->delete();
-        $new_image_id = $this->uploadImage($request);        
-        $image = Image::whereId($new_image_id)->first();
-        $image->name = $request->name;
-        $image->description = $request->description;
-        $folder->image()->save($image);
+        if($request->file('image')){
+            $image->delete();
+            $new_image_id = $this->uploadImage($request);        
+            $image = Image::whereId($new_image_id)->first();
+            $image->name = $request->name;
+            $image->description = $request->description;
+            $folder->image()->save($image);
+        }else{
+            $image->update($request->all());
+        }
 
         return redirect()
             ->route('library.folders.show', $folder->id)
@@ -93,7 +102,7 @@ class ImageController extends Controller
      */
     public function destroy(Folder $folder, Image $image)
     {
-        $folder->image()->delete();
+        $image->delete();
 
         return redirect()
             ->route('library.folders.show', $folder->id)

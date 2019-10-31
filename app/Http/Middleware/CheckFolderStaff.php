@@ -2,23 +2,24 @@
 
 namespace App\Http\Middleware;
 
+use App\Folder;
 use Closure;
 
-class CheckLoggedUser
+class CheckFolderStaff
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (empty($request->user()->getRoleNames()->toArray()) ) {
-            return redirect('/');
+        if($request->user()->hasRole('Admin')){
+            $folders = Folder::latest();
         }
-        
+
         return $next($request);
     }
 }

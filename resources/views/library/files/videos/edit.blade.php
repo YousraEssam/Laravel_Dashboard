@@ -38,20 +38,20 @@
                         <div class="col-sm-12 b-r">
                             <h3 class="m-t-none m-b">Edit Video</h3>
                             <form role="form" method="POST"
-                                action="{{ route('library.files.videos.update', [$folder->id, $folder->video->id]) }}"
+                                action="{{ route('library.files.videos.update', [$folder->id, $video->id]) }}"
                                 enctype='multipart/form-data'>
                                 @csrf
                                 @method('PUT')
 
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" value="{{ $folder->video->name }}" class="form-control"
+                                    <input type="text" value="{{ $video->name }}" class="form-control"
                                         name="name" id="name">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input type="text" value="{{ $folder->video->description }}" class="form-control"
+                                    <input type="text" value="{{ $video->description }}" class="form-control"
                                         name="description" id="description">
                                 </div>
 
@@ -61,9 +61,9 @@
                                         <label>Upload From your PC</label>
                                         <div class="fileinput input-group fileinput-exists" data-provides="fileinput">
                                             <div class="form-control" data-trigger="fileinput">
-                                                @if(! strpos($folder->video->url, 'youtube'))
+                                                @if(! strpos($video->url, 'youtube'))
                                                 <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                                <span class="fileinput-filename">{{$folder->video->url}}</span>
+                                                <span class="fileinput-filename">{{$video->url}}</span>
                                                 @else
                                                 <span class="fileinput-filename"></span>
                                                 @endif
@@ -81,8 +81,8 @@
                                     <div>
                                         <input type="radio" name="radio" id="radio2" value="option2">
                                         <label>Upload From Youtube</label>
-                                        @if(strpos($folder->video->url, 'youtube'))
-                                        <input type="text" value="{{$folder->video->url}}" class="form-control"
+                                        @if(strpos($video->url, 'youtube'))
+                                        <input type="text" value="{{$video->url}}" class="form-control"
                                             name="video" id="video">
                                         @else
                                         <input type="text" class="form-control" name="video" id="video">

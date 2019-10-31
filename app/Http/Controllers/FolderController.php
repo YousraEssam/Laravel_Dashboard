@@ -27,9 +27,10 @@ class FolderController extends Controller
         if(auth()->user()->hasRole('Admin')){
             $folders = Folder::latest();
         }else{
-        $folders = Folder::wherehas('staff_members',function($query){
-            $query->where('staff_member_id',auth()->user()->staff->id);
-        })->get();
+            // $folders = Folder::wherehas('staff_members',function($query){
+            //     $query->where('staff_member_id',auth()->user()->staff->id);
+            // })->get();
+            $folders = auth()->user()->staff->folders;
         }
         if(request()->ajax()) {
             return DataTables::of($folders)
@@ -78,7 +79,7 @@ class FolderController extends Controller
      */
     public function show(Folder $folder)
     {
-        $folder= $folder->load(['image', 'file', 'video']);
+        $folder= $folder->load(['image', 'file', 'video', 'staff_members']);
         return view('library.folders.show', compact('folder'));
     }
 
