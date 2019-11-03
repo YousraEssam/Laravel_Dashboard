@@ -87,17 +87,16 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $news = News::create($request->all());
-        
         $news->related()->attach($request->related);
 
         if($request->input('image')) {
             $images = Image::whereIn('id', $request->input('image'))->get();
-            $news->images()->saveMany($images);
+            $news->images()->createMany($images);
         }
 
         if($request->input('file')) {
             $files = File::whereIn('id', $request->input('file'))->get();
-            $news->files()->saveMany($files);
+            $news->files()->createMany($files);
         }
 
         return redirect()
@@ -142,7 +141,6 @@ class NewsController extends Controller
     public function update(NewsRequest $request, News $news)
     {
         $news->update($request->all());
-        
         $new_related = $request->input('related');
         $news->related()->sync($new_related);
 

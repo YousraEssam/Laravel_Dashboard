@@ -28,18 +28,6 @@ class VideoController extends Controller
         return view('library.files.videos.create', compact('folder'));
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $id = $this->uploadVideo($request);
-    //     return response()->json(['id' => $id]);
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -50,12 +38,8 @@ class VideoController extends Controller
     {
         if($request->file('video'))
         {
-            $created_video_id = $this->uploadVideo($request);
-            $video = Video::whereId($created_video_id)->first();
-            $video->update([
-                'name' => $request->name,
-                'description' => $request->description,
-            ]);
+            $created_video_path = $this->uploadVideo($request);
+            $video = Video::create($request->only(['name','description'])+['url' => $created_video_path]);
             $folder->video()->save($video);
         }elseif($request->video)
         {
@@ -92,27 +76,17 @@ class VideoController extends Controller
      */
     public function update(VideoRequest $request, Folder $folder, Video $video)
     {
-        if($request->file('video') !== null)
+        $folder->video()->update($request->only(['name', 'description']));
+
+        if($request->file('video'))
         {
-            $video->delete();
-            $new_video_id = $this->uploadVideo($request);        
-            $video = Video::whereId($new_video_id)->first();
-            $video->update([
-                'name' => $request->name,
-                'description' => $request->description,
-            ]);
-            $folder->video()->save($video);
-        }elseif($request->file('video') == null)
-        {
-            $video->update($request->all());
+            $created_video_path = $this->uploadVideo($request);
+            $folder->video()->update(['url' => $created_video_path]);
+            
         }elseif($request->video)
         {
             $video = $this->getYoutubeID($request->video);
-            $folder->video()->create([
-                'name' => $request->name,
-                'description' => $request->description,
-                'url' => 'http://www.youtube.com/embed/'.$video,
-            ]);
+            $folder->video()->update(['url' => 'http://www.youtube.com/embed/'.$video]);
         }
 
         return redirect()

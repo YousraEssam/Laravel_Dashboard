@@ -35,7 +35,7 @@ class FileController extends Controller
      */
     public function addFile(Request $request)
     {
-        $id = $this->uploadFile($request);
+        $id = $this->uploadFileDb($request);
         return response()->json(['id' => $id]);
     }
 
@@ -47,10 +47,8 @@ class FileController extends Controller
      */
     public function store(FileRequest $request, Folder $folder)
     {
-        $created_file_id = $this->uploadFile($request);
-        $file = File::whereId($created_file_id)->first();
-        $file->name = $request->name;
-        $file->description = $request->description;
+        $created_file_path = $this->uploadFile($request);
+        $file = File::create($request->only(['name','description'])+['file_url' => $created_file_path]);
         $folder->file()->save($file);
 
         return redirect()
@@ -79,12 +77,8 @@ class FileController extends Controller
     public function update(FileRequest $request, Folder $folder, File $file)
     {
         if($request->file('file')){
-            $file->delete();
-            $new_file_id = $this->uploadFile($request);        
-            $file = File::whereId($new_file_id)->first();
-            $file->name = $request->name;
-            $file->description = $request->description;
-            $folder->file()->save($file);
+            $created_file_path = $this->uploadFile($request);
+            $folder->file()->update($request->only(['name','description'])+['file_url' => $created_file_path]);
         }else{
             $file->update($request->all());
         }

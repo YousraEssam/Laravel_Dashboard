@@ -35,7 +35,7 @@ class ImageController extends Controller
      */
     public function addImage(Request $request)
     {
-        $id = $this->uploadImage($request);
+        $id = $this->uploadImageDb($request);
         return response()->json(['id' => $id]);
     }
 
@@ -47,10 +47,8 @@ class ImageController extends Controller
      */
     public function store(ImageRequest $request, Folder $folder)
     {
-        $created_image_id = $this->uploadImage($request);
-        $image = Image::whereId($created_image_id)->first();
-        $image->name = $request->name;
-        $image->description = $request->description;
+        $created_image_path = $this->uploadImage($request);
+        $image = Image::create($request->only(['name','description'])+['url' => $created_image_path]);
         $folder->image()->save($image);
 
         return redirect()
@@ -79,12 +77,8 @@ class ImageController extends Controller
     public function update(ImageRequest $request, Folder $folder, Image $image)
     {
         if($request->file('image')){
-            $image->delete();
-            $new_image_id = $this->uploadImage($request);        
-            $image = Image::whereId($new_image_id)->first();
-            $image->name = $request->name;
-            $image->description = $request->description;
-            $folder->image()->save($image);
+            $created_image_path = $this->uploadImage($request);
+            $folder->image()->update($request->only(['name','description'])+['url' => $created_image_path]);
         }else{
             $image->update($request->all());
         }
@@ -103,7 +97,6 @@ class ImageController extends Controller
     public function destroy(Folder $folder, Image $image)
     {
         $image->delete();
-
         return redirect()
             ->route('library.folders.show', $folder->id)
             ->with('success', 'New Image has been deleted Successfully');

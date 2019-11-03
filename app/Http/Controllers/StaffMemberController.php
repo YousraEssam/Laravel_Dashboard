@@ -77,17 +77,12 @@ class StaffMemberController extends Controller
     {        
         $user = User::create($request->all() + ['password' => Hash::make('Staff123')]);
         $user->assignRole($request->role_id);
-        // $user->givePermissionTo('folder-add');
         $staffMember = $user->staff()->create($request->all());
-        
         if ($request->file('image')) {
-            $id = $this->uploadImage($request);
-            $image = Image::whereId($id)->first();
-            $staffMember->image()->save($image);
+            $path = $this->uploadImage($request);
+            $staffMember->image()->create(['url' => $path]);
         }
-
         event(new NewStaffMemberHasBeenAddedEvent($staffMember));
-
         return redirect()
             ->route('staff_members.index')
             ->with('success', 'New Staff Member Has Been Added Successfully and Reset Password Link Has Been Sent');
@@ -131,14 +126,10 @@ class StaffMemberController extends Controller
     {
         $staffMember->user->update($request->all());
         $staffMember->update($request->all());
-        
+
         if ($request->file('image')) {
-            if ($staffMember->image()){
-                $staffMember->image()->delete();
-            }
-            $id = $this->uploadImage($request);
-            $image = Image::whereId($id)->first();
-            $staffMember->image()->save($image);
+            $path = $this->uploadImage($request);
+            $staffMember->image()->update(['url' => $path]);
         }
 
         return redirect()

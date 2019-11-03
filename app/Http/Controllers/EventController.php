@@ -99,7 +99,7 @@ class EventController extends Controller
         
         if($request->input('image')) {
             $images = Image::whereIn('id', $request->input('image'))->get();
-            $event->images()->saveMany($images);
+            $event->images()->createMany($images);
         }
 
         event(new NewEventHasBeenAddedEvent($event));
