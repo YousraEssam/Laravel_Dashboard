@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "laravel-dashboard-training",
+  "private_key_id": "17fae2b14aeec73787434ebf425c72f010973630",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6otWaI7fYHnIc\nfrBHScMAZfX968TIb+fCbCt/db+rI7B1MCD/E5ktJL57+brdnX3OCwbouXOTFLx3\nQH9NlMYcV16oYecw28gx5U7ITdXjHsYY7mi9XQWRTWZlAcZiNKR4WCSr4+5uUH0P\n82GFnUXk03W3jzB38RuVsMh3L5+3OqCCAqAmyBWawffvE5DiBIu+vATa+3FnRvBX\nPkrBx5bLJvJNEf6PD61pRvBz6nxJaaYIKCn17feUrjdnZiLpvj45XR7qCn50Q5JX\nsRXC+FW+8UN/NB0FVPZPIh1+u6etsRT23j4lafjb5krQSzzeaf0z3A7vXCDFclLC\nro+GMdHTAgMBAAECggEABACo/xDECRUCEn1fD3BUB8aoA2WSh0/rEv7Z4fZnAWcX\nCjRZiM7lSpQOp77/1G/juk7/O296vI1Fy3LtJ/9ITmRLSeYrnJ8iCHvn+CC/NQs8\naV13jpQXofmceA8VL5b8bf5J7wvI2cHNJNHt5f0s+g7U5/ZgrjnUAx5S9kdlr/q/\nBQEgcGF+7eRIaAqCW4TS06xitI11/wVcN1/qtvJSeJdHGNjpiPmKyQqWv7Q8ooem\nagy/ftNoqxVS6iJWJqKn5Nq67Wr/dRPvZlTuhxU5guvrM56NJuiZ4++GDPIYq6Uv\nK4HQRaJ5DNM9AwaO5E3exz2x3g5LUH5CyFyHSfTHJQKBgQDeM/dDzwzAzDBLbHDV\nLN1GaajnrdVOmvY9UX/E6DUGVN2x6/I+ph70swlX/6bH9YkeLj0gL1sBNbNRs1IM\nEPy1Ets0tSVgxGRdB/glj+AUWmog2/FkET1BUa4QyeqnxQxOaj5ODFT4xK6nWEKd\nNYGqyBPONDUxgjqNKgnGvuNONwKBgQDXBfsRwRzPxeDxNbI71tEODYufazqeM8w9\nOaFdKocauS2IHtKiVR5M9b1n834zgUT97wRY/mr7vuEIl1hudkCqTF7NIMgtnE+v\nTDOLkE4m9J1VihQ6GWKx4w72rDqe39YUG1XwBC6mDvfrL0FgNWHLnbGlxiRohDqL\neIe0kEmrRQKBgQDQ2QsJIuybsc+atJwA4aBA9EKbL1oT/bZ/v8BVtONRxiZxepE/\nrSffWv/nRBTgULnGMjOlspzYsD6RBfiR+s1q7AQ4sCInp6+leT4VH/u/ZZPmupNS\nOJnYcQsoIIB7m8uLUHSrKxAamdKG24AQ/x+XA2MKJyvwErUxxVdXBEflVQKBgF3r\nnNkKct1GX5S8kZeVo0byH7SIj9geY+2ySIt7UfwYOo0keXiymUOgaxUGxG8W3d3V\nEx8UMgK4Q28PPG8zc9du+FG9KfLSPfQh4rnpVFmrqzV71I30HKn6tcSFQi23M7kg\nn47xJLcf/qZZw8KUTp0zyi7Qt4J3j2LwSMZT5/nJAoGAW+HkexAo1nZ9phmgr7fA\nAd6vy2zdfeCu8dNkfJ9L5++ipMk9gJ5Rcb+3TEzIwohuntxHVX2WU/wpZW9F1u/d\nxepXYSef1+4ftBy6HIVlmGSVxr2/1wt0yu+NCLFu/zCh5dI2M5HhLkoVYReYq7D+\nPB5j3Fozpi7Hpq1XynrOQrU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ij059@laravel-dashboard-training.iam.gserviceaccount.com",
+  "client_id": "106414030483541796647",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ij059%40laravel-dashboard-training.iam.gserviceaccount.com"
+}

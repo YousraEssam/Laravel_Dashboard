@@ -75,5 +75,6 @@ Route::group(
 
         Route::get('get_staff', 'StaffMemberController@getStaff')->name('getStaff');
 
+        Route::get('show-firebase', 'EventController@fireBase')->name('fireBase');
     }
 );

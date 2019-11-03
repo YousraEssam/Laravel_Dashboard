@@ -9,6 +9,7 @@ use App\Image;
 use App\Traits\Uploads;
 use App\Visitor;
 use Illuminate\Support\Facades\Storage;
+use Kreait\Firebase\Factory;
 use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
 
@@ -34,7 +35,6 @@ class EventController extends Controller
                 ->addIndexColumn()
                 ->editColumn(
                     'cover_url', function($row){
-                        // dd(str_replace('public/',"", $row->images()->whereId($row->cover_url)->first()->url), Storage::url($row->images()->whereId($row->cover_url)->first()->url));
                         return "<img src=".Storage::url($row->images()->whereId($row->cover_url)->first()->url)." style='height:50px; width:50px;'>";
                     })
                 ->editColumn(
@@ -167,7 +167,6 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
-
         return redirect()
             ->route('events.index')
             ->with('success', 'Event Has Been Deleted Successfully');
@@ -180,5 +179,20 @@ class EventController extends Controller
     {
         $event->update(['is_published' => ! $event->is_published]);
         return \Response::json('success');
+    }
+
+    /**
+     * fireBase retrieve
+     */
+    public function fireBase(){
+        $factory = (new Factory)
+            ->withServiceAccount(base_path().'/laravel-firebase.json')
+            ->withDatabaseUri('https://laravel-dashboard-training.firebaseio.com/');
+
+        $database = $factory->createDatabase();
+        $reference = $database->getReference('events/');
+        $value = $reference->getValue();
+
+        return view('firebase.show', compact('value'));
     }
 }

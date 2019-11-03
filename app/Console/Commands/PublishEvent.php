@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Event;
 use Illuminate\Console\Command;
+use Kreait\Firebase\Factory;
 
 class PublishEvent extends Command
 {
@@ -40,15 +41,36 @@ class PublishEvent extends Command
     {
         $now = now('Africa/Cairo')->toDateTimeString();
         $events = Event::all();
+        $factory = (new Factory)
+            ->withServiceAccount(base_path().'/laravel-firebase.json')
+            ->withDatabaseUri('https://laravel-dashboard-training.firebaseio.com/');
+
+        $database = $factory->createDatabase();
+
         foreach($events as $event){
             if(strtotime($now) >= strtotime($event->start_date) 
                 && strtotime($now) <= strtotime($event->end_date)
             ) {
                 $event->update(['is_published' => true]);
+                $database->getReference('events/')->push($event);
+
             }else{
                 $event->update(['is_published' => false]);
             }
         }
         $this->info('Events published/unpublished check done');
     }
+
+    /**
+     * FireBase Operation
+     */
+    // public function fireBase($event)
+    // {
+    //     $factory = (new Factory)
+    //         ->withServiceAccount(base_path().'/laravel-dashboard-training-firebase-adminsdk-ij059-17fae2b14a.json')
+    //         ->withDatabaseUri('https://laravel-dashboard-training.firebaseio.com/');
+
+    //     $database = $factory->createDatabase();
+    //     $database->getReference('events/')->push($event);
+    // }
 }

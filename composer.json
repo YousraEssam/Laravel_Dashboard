@@ -18,7 +18,8 @@
         "webpatser/laravel-countries": "dev-master",
         "yajra/laravel-datatables": "^1.5",
         "yajra/laravel-datatables-oracle": "^9.0",
-        "proengsoft/laravel-jsvalidation": ">2.5.0"
+        "proengsoft/laravel-jsvalidation": ">2.5.0",
+        "kreait/firebase-php": "^4.35"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

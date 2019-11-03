@@ -126,7 +126,7 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
+@yield('content')
 <!-- Mainly scripts -->
 <script src="{{ asset('theme/js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('theme/js/bootstrap.min.js') }}"></script>

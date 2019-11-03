@@ -194,7 +194,11 @@ return [
         * Yajra Datatables Service Provider..
         */
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        
+        /*
+        * FireBase Service Provider..
+        */
+        Kreait\Laravel\Firebase\ServiceProvider::class,
 
     ],
 
